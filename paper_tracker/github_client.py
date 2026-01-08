@@ -75,7 +75,7 @@ class GitHubClient:
 
         for attempt in range(max_retries):
             try:
-                with urllib.request.urlopen(req, timeout=30) as response:
+                with urllib.request.urlopen(req, timeout=60) as response:
                     self._update_rate_limit(response)
                     return json.loads(response.read().decode())
 
@@ -119,6 +119,12 @@ class GitHubClient:
             except urllib.error.URLError as e:
                 wait_time = 2 ** attempt
                 print(f"Network error: {e}. Retrying in {wait_time}s...")
+                time.sleep(wait_time)
+                continue
+
+            except (TimeoutError, OSError) as e:
+                wait_time = 2 ** attempt
+                print(f"Timeout/connection error: {e}. Retrying in {wait_time}s...")
                 time.sleep(wait_time)
                 continue
 
