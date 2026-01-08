@@ -1,0 +1,203 @@
+# Paper Implementation Tracker Configuration
+# ==========================================
+
+# Search settings
+search:
+  min_stars: 10
+  max_results_per_query: 30
+  year_filter: "2024"
+  rate_limit_buffer: 10
+  request_delay: 1.5
+
+# Search queries for low-level vision tasks
+queries:
+  - "super resolution"
+  - "image denoising"
+  - "image deblurring"
+  - "image restoration"
+  - "low-level vision"
+  - "image enhancement"
+  - "image inpainting"
+  - "video super resolution"
+
+# Relevance filtering
+relevance:
+  strong_keywords:
+    - "super-resolution"
+    - "super resolution"
+    - "superresolution"
+    - "image restoration"
+    - "image denoising"
+    - "image deblurring"
+    - "dehaze"
+    - "derain"
+    - "desnow"
+    - "deraining"
+    - "dehazing"
+    - "low-level vision"
+    - "image enhancement"
+    - "real-esrgan"
+    - "swinir"
+    - "nafnet"
+    - "restormer"
+    - "scunet"
+    - "basicsr"
+    - "mmediting"
+    - "openmmlab"
+    - "blind sr"
+    - "real-world sr"
+    - "sisr"
+    - "upscale"
+    - "upscaling"
+    - "supir"
+    - "dasr"
+    - "bsrgan"
+    - "esrgan"
+    - "inpainting"
+    - "image inpaint"
+    - "face restoration"
+    - "gfpgan"
+    - "codeformer"
+
+  weak_keywords:
+    - "denois"
+    - "deblur"
+    - "restor"
+    - "enhanc"
+
+  exclude_keywords:
+    - "audio"
+    - "voice"
+    - "speech"
+    - "music"
+    - "sound"
+    - "nlp"
+    - "llm"
+    - "chat"
+    - "language model"
+    - "video generation"
+    - "text-to-video"
+    - "text-to-image"
+    - "3d reconstruction"
+    - "mesh"
+    - "point cloud"
+    - "nerf"
+
+  exclude_name_terms:
+    - "awesome"
+    - "list"
+    - "collection"
+    - "survey"
+    - "benchmark"
+
+# Weight detection patterns
+weight_detection:
+  huggingface:
+    - 'huggingface\.co/[^\s\)\]"<>]+'
+    - 'hf\.co/[^\s\)\]"<>]+'
+    - 'from_pretrained\s*\(\s*["\x27][^"\x27]+["\x27]'
+
+  github_release:
+    - 'github\.com/[^/]+/[^/]+/releases/download/[^\s\)\]"<>]+'
+    - 'github\.com/[^/]+/[^/]+/releases/tag/[^\s\)\]"<>]+'
+
+  cloud_drives:
+    google_drive:
+      - 'drive\.google\.com/[^\s\)\]"<>]+'
+      - 'docs\.google\.com/[^\s\)\]]*download[^\s\)\]"<>]*'
+    baidu:
+      - 'pan\.baidu\.com/[^\s\)\]"<>]+'
+      - 'yun\.baidu\.com/[^\s\)\]"<>]+'
+    dropbox:
+      - 'dropbox\.com/[^\s\)\]"<>]+'
+      - 'dl\.dropboxusercontent\.com/[^\s\)\]"<>]+'
+    onedrive:
+      - '1drv\.ms/[^\s\)\]"<>]+'
+      - 'onedrive\.live\.com/[^\s\)\]"<>]+'
+    mega:
+      - 'mega\.nz/[^\s\)\]"<>]+'
+
+  model_extensions:
+    - ".pth"
+    - ".ckpt"
+    - ".safetensors"
+    - ".onnx"
+    - ".pt"
+    - ".bin"
+    - ".h5"
+
+  weight_keywords:
+    - "download"
+    - "pretrain"
+    - "weight"
+    - "model"
+    - "checkpoint"
+    - "ckpt"
+    - "release"
+    - "trained"
+    - "inference"
+
+# Conference detection
+conferences:
+  patterns:
+    CVPR:
+      - "cvpr"
+      - "cvpr2024"
+      - "cvpr2025"
+      - "cvpr 2024"
+      - "cvpr 2025"
+    ECCV:
+      - "eccv"
+      - "eccv2024"
+      - "eccv 2024"
+    ICCV:
+      - "iccv"
+      - "iccv2023"
+      - "iccv 2023"
+    ICLR:
+      - "iclr"
+      - "iclr2024"
+      - "iclr2025"
+      - "iclr 2024"
+      - "iclr 2025"
+    NeurIPS:
+      - "neurips"
+      - "nips"
+      - "neurips2024"
+      - "neurips 2024"
+    ICML:
+      - "icml"
+      - "icml2024"
+      - "icml 2024"
+    AAAI:
+      - "aaai"
+      - "aaai2024"
+      - "aaai2025"
+      - "aaai 2024"
+      - "aaai 2025"
+    SIGGRAPH:
+      - "siggraph"
+      - "siggraph2024"
+      - "siggraph 2024"
+    WACV:
+      - "wacv"
+      - "wacv2024"
+      - "wacv2025"
+    ACMMM:
+      - "acm mm"
+      - "acmmm"
+      - "mm2024"
+
+  arxiv_pattern: 'arxiv\.org/abs/(\d{4}\.\d{4,5})'
+
+# Output settings
+output:
+  default_format: "table"
+  json_indent: 2
+  table_columns:
+    - "name"
+    - "stars"
+    - "weight_status"
+    - "conference"
+    - "updated_at"
+    - "url"

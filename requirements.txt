@@ -1,0 +1,14 @@
+# Paper Tracker Dependencies
+# ==========================
+
+# YAML parsing for config
+PyYAML==6.0.1
+
+# Environment variable loading from .env file
+python-dotenv==1.0.0
+
+# Optional: Progress bars (uncomment if needed)
+# tqdm==4.66.1
+
+# Optional: Rich output (uncomment if needed)
+# rich==13.7.0
