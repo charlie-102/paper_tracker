@@ -1,0 +1,157 @@
+name: Weekly Paper Tracker
+
+on:
+  # Run every Monday at 8:00 AM UTC
+  schedule:
+    - cron: '0 8 * * 1'
+
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      min_stars:
+        description: 'Minimum stars filter'
+        required: false
+        default: '20'
+      year:
+        description: 'Year filter (repos created after)'
+        required: false
+        default: '2024'
+
+# Permissions for creating issues/PRs and committing results
+permissions:
+  contents: write
+  issues: write
+
+env:
+  PYTHON_VERSION: '3.11'
+
+jobs:
+  track-papers:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create directories
+        run: |
+          mkdir -p data
+          mkdir -p results
+
+      - name: Run Paper Tracker (Stateful)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TRACKER_MIN_STARS: ${{ github.event.inputs.min_stars || '20' }}
+          TRACKER_YEAR: ${{ github.event.inputs.year || '2024' }}
+        run: |
+          python -m paper_tracker \
+            --history data/history.json \
+            --min-stars ${TRACKER_MIN_STARS} \
+            --year ${TRACKER_YEAR} \
+            --output results/tracker_$(date +%Y%m%d).json \
+            --md results/tracker_$(date +%Y%m%d).md \
+            --csv results/tracker_$(date +%Y%m%d).csv
+
+      - name: Update latest results
+        run: |
+          # Copy latest results to fixed filenames
+          cp results/tracker_$(date +%Y%m%d).json results/latest.json || true
+          cp results/tracker_$(date +%Y%m%d).md results/latest.md || true
+          cp results/tracker_$(date +%Y%m%d).csv results/latest.csv || true
+
+      - name: Commit state and results
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/history.json results/
+          git diff --staged --quiet || git commit -m "Update tracker state $(date +%Y-%m-%d) [skip ci]"
+          git push
+
+      - name: Create summary issue (on fresh releases)
+        if: success()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Check if we found fresh releases or repos with weights
+          if [ -f results/latest.json ]; then
+            TOTAL=$(jq '.summary.total' results/latest.json)
+            WITH_WEIGHTS=$(jq '.summary.with_weights' results/latest.json)
+            FRESH=$(jq '.summary.fresh_releases' results/latest.json)
+            COMING_SOON=$(jq '.summary.coming_soon' results/latest.json)
+
+            if [ "$FRESH" -gt 0 ] || [ "$WITH_WEIGHTS" -gt 0 ]; then
+              # Build fresh releases section
+              FRESH_SECTION=""
+              if [ "$FRESH" -gt 0 ]; then
+                FRESH_SECTION="### Fresh Releases (Weights Just Released)
+
+          $(jq -r '.repos | map(select(.status == "has_weights" and .previous_status != null)) | sort_by(-.stars) | .[0:5] | .[] | "- [\\(.name)](\\(.url)) - \\(.stars) stars \\(if .conference then \"(\\(.conference))\" else \"\" end)"' results/latest.json)
+
+          "
+              fi
+
+              # Build coming soon section
+              SOON_SECTION=""
+              if [ "$COMING_SOON" -gt 0 ]; then
+                SOON_SECTION="### Watchlist (Coming Soon)
+
+          $(jq -r '.repos | map(select(.status == "coming_soon")) | sort_by(-.stars) | .[0:5] | .[] | "- [\\(.name)](\\(.url)) - \\(.stars) stars"' results/latest.json)
+
+          "
+              fi
+
+              # Create or update tracking issue
+              gh issue create \
+                --title "Weekly Tracker Update: $(date +%Y-%m-%d)" \
+                --body "## Weekly Paper Tracker Results
+
+          **Total repos tracked:** ${TOTAL}
+          **Repos with weights:** ${WITH_WEIGHTS}
+          **Fresh releases:** ${FRESH}
+          **Coming soon (watchlist):** ${COMING_SOON}
+
+          ${FRESH_SECTION}${SOON_SECTION}### Top Repos with Pretrained Weights
+
+          $(jq -r '.repos | map(select(.status == "has_weights")) | sort_by(-.stars) | .[0:10] | .[] | "- [\\(.name)](\\(.url)) - \\(.stars) stars - \\(.weight_status) \\(if .conference then \"(\\(.conference))\" else \"\" end)"' results/latest.json)
+
+          ---
+          [Full Results](../blob/main/results/latest.md)
+          " \
+                --label "tracker" || echo "Issue creation skipped"
+            fi
+          fi
+
+  # Cleanup old results (keep last 12 weeks)
+  cleanup:
+    runs-on: ubuntu-latest
+    needs: track-papers
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cleanup old results
+        run: |
+          cd results
+          # Keep only last 12 dated files
+          ls -t tracker_*.json 2>/dev/null | tail -n +13 | xargs -r rm -f
+          ls -t tracker_*.md 2>/dev/null | tail -n +13 | xargs -r rm -f
+          ls -t tracker_*.csv 2>/dev/null | tail -n +13 | xargs -r rm -f
+
+      - name: Commit cleanup
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add -A results/
+          git diff --staged --quiet || git commit -m "Cleanup old tracker results [skip ci]"
+          git push
