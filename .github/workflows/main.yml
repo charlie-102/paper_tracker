@@ -69,14 +69,30 @@ jobs:
           cp results/tracker_$(date +%Y%m%d).md results/latest.md || true
           cp results/tracker_$(date +%Y%m%d).csv results/latest.csv || true
 
-      - name: Commit state and results
+      - name: Commit and push results
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data/history.json results/
-          git diff --staged --quiet || git commit -m "Update tracker state $(date +%Y-%m-%d) [skip ci]"
-          git pull --rebase origin main
-          git push
+
+          # Retry loop for push conflicts
+          for i in 1 2 3; do
+            git fetch origin main
+            git reset --soft origin/main
+            git add data/history.json results/
+            if git diff --staged --quiet; then
+              echo "No changes to commit"
+              exit 0
+            fi
+            git commit -m "Update tracker state $(date +%Y-%m-%d) [skip ci]"
+            if git push origin main; then
+              echo "Push successful"
+              exit 0
+            fi
+            echo "Push failed, retrying in 5s... (attempt $i/3)"
+            sleep 5
+          done
+          echo "Push failed after 3 attempts"
+          exit 1
 
       - name: Create summary issue (on fresh releases)
         if: success()
@@ -149,11 +165,27 @@ jobs:
           ls -t tracker_*.md 2>/dev/null | tail -n +13 | xargs -r rm -f
           ls -t tracker_*.csv 2>/dev/null | tail -n +13 | xargs -r rm -f
 
-      - name: Commit cleanup
+      - name: Commit and push cleanup
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add -A results/
-          git diff --staged --quiet || git commit -m "Cleanup old tracker results [skip ci]"
-          git pull --rebase origin main
-          git push
+
+          # Retry loop for push conflicts
+          for i in 1 2 3; do
+            git fetch origin main
+            git reset --soft origin/main
+            git add -A results/
+            if git diff --staged --quiet; then
+              echo "No changes to commit"
+              exit 0
+            fi
+            git commit -m "Cleanup old tracker results [skip ci]"
+            if git push origin main; then
+              echo "Push successful"
+              exit 0
+            fi
+            echo "Push failed, retrying in 5s... (attempt $i/3)"
+            sleep 5
+          done
+          echo "Push failed after 3 attempts"
+          exit 1
