@@ -1,11 +1,11 @@
 {
-  "last_updated": "2026-01-09T11:56:45.413805",
+  "last_updated": "2026-01-09T11:47:33.974092",
   "summary": {
     "total": 27,
     "with_weights": 22,
     "coming_soon": 0,
     "fresh_releases": 22,
-    "new_this_run": 0,
+    "new_this_run": 2,
     "by_status": {
       "has_weights": 22,
       "no_weights": 5
@@ -22,7 +22,7 @@
       "NeurIPS": 3,
       "ICML": 1
     },
-    "timestamp": "2026-01-09T11:56:45.429654"
+    "timestamp": "2026-01-09T11:47:33.992726"
   },
   "repos": [
     {
@@ -681,7 +681,7 @@
     {
       "name": "next-ai-draw-io",
       "full_name": "DayuanJiang/next-ai-draw-io",
-      "stars": 17489,
+      "stars": 17486,
       "url": "https://github.com/DayuanJiang/next-ai-draw-io",
       "description": "A next.js web application that integrates AI capabilities with draw.io diagrams. This app allows you to create, modify, and enhance diagrams through n",
       "created_at": "2025-03-23",
