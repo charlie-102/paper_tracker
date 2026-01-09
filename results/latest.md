@@ -4,11 +4,11 @@ Generated: 2026-01-09
 
 ## Summary
 
-- **Total repos tracked:** 25
-- **With weights:** 21
+- **Total repos tracked:** 27
+- **With weights:** 22
 - **Coming soon (watchlist):** 0
-- **Fresh releases (last 7 days):** 21
-- **New this run:** 25
+- **Fresh releases (last 7 days):** 22
+- **New this run:** 2
 
 ## Fresh Releases
 
@@ -35,6 +35,7 @@ Repos where weights were released in the last 7 days:
 | Turtle | 120 | no_weights | NeurIPS | [Link](https://github.com/Ascend-Research/Turtle) |
 | ComfyUI_LucidFlux | 57 | no_weights | - | [Link](https://github.com/smthemex/ComfyUI_LucidFlux) |
 | DeblurDiff | 45 | no_weights | NeurIPS | [Link](https://github.com/kkkls/DeblurDiff) |
+| Doctra | 32 | no_weights | - | [Link](https://github.com/AdemBoukhris457/Doctra) |
 | FDN-TIP2025 | 23 | no_weights | - | [Link](https://github.com/Jabruson/FDN-TIP2025) |
 | UltraZoom | 11 | no_weights | ICLR | [Link](https://github.com/andrewdalpino/UltraZoom) |
 
@@ -61,5 +62,6 @@ Repos where weights were released in the last 7 days:
 | Turtle **NEW** | 120 | Cloud | NeurIPS'24 | [2410.03936](https://arxiv.org/abs/2410.03936) | [Link](https://github.com/Ascend-Research/Turtle) |
 | ComfyUI_LucidFlux **NEW** | 57 | HF | - | - | [Link](https://github.com/smthemex/ComfyUI_LucidFlux) |
 | DeblurDiff **NEW** | 45 | Cloud | NeurIPS'25 | [2502.03810](https://arxiv.org/abs/2502.03810) | [Link](https://github.com/kkkls/DeblurDiff) |
+| Doctra **NEW** | 32 | HF | - | - | [Link](https://github.com/AdemBoukhris457/Doctra) |
 | FDN-TIP2025 **NEW** | 23 | Cloud | - | - | [Link](https://github.com/Jabruson/FDN-TIP2025) |
 | UltraZoom **NEW** | 11 | HF | ICLR | - | [Link](https://github.com/andrewdalpino/UltraZoom) |

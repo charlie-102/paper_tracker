@@ -1,5 +1,4 @@
 {
-  "last_updated": "2026-01-09T11:47:33.974092",
   "summary": {
     "total": 27,
     "with_weights": 22,
@@ -22,7 +21,7 @@
       "NeurIPS": 3,
       "ICML": 1
     },
-    "timestamp": "2026-01-09T11:47:33.992726"
+    "timestamp": "2026-01-09T11:47:33.994353"
   },
   "repos": [
     {
