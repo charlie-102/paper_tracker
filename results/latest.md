@@ -8,7 +8,7 @@ Generated: 2026-01-09
 - **With weights:** 22
 - **Coming soon (watchlist):** 0
 - **Fresh releases (last 7 days):** 22
-- **New this run:** 2
+- **New this run:** 0
 
 ## Fresh Releases
 
