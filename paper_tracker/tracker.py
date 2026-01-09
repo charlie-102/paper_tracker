@@ -491,3 +491,134 @@ class PaperTracker:
             f.write("\n".join(lines))
 
         print(f"Exported to {output_path}")
+
+    def load_issue_repos(self, yaml_path: str) -> List[str]:
+        """
+        Load repository URLs from the issue-added repos YAML file.
+
+        Args:
+            yaml_path: Path to repos_from_issues.yaml
+
+        Returns:
+            List of repository URLs
+        """
+        import yaml
+
+        path = Path(yaml_path)
+        if not path.exists():
+            return []
+
+        try:
+            with open(path, "r") as f:
+                data = yaml.safe_load(f)
+
+            if not data or not data.get("repos"):
+                return []
+
+            urls = []
+            for repo_entry in data["repos"]:
+                if isinstance(repo_entry, dict) and "url" in repo_entry:
+                    urls.append(repo_entry["url"])
+                elif isinstance(repo_entry, str):
+                    urls.append(repo_entry)
+
+            return urls
+
+        except Exception as e:
+            print(f"Error loading issue repos from {yaml_path}: {e}")
+            return []
+
+    def process_issue_repos(self, yaml_path: str) -> int:
+        """
+        Process repositories added via GitHub Issues.
+
+        This loads repos from the YAML file, fetches their info from GitHub,
+        runs them through the detection pipeline, and adds them to tracking.
+        After processing, the YAML file is cleared.
+
+        Args:
+            yaml_path: Path to repos_from_issues.yaml
+
+        Returns:
+            Number of new repos processed
+        """
+        urls = self.load_issue_repos(yaml_path)
+        if not urls:
+            return 0
+
+        print(f"Processing {len(urls)} repos from issues...")
+        processed = 0
+
+        for url in urls:
+            # Extract owner/repo from URL
+            # URL format: https://github.com/owner/repo
+            try:
+                parts = url.rstrip("/").split("/")
+                if len(parts) < 2:
+                    print(f"  Skipping invalid URL: {url}")
+                    continue
+                owner = parts[-2]
+                repo = parts[-1]
+                full_name = f"{owner}/{repo}"
+            except Exception:
+                print(f"  Skipping invalid URL: {url}")
+                continue
+
+            # Check if already tracked
+            if full_name in self.repos:
+                print(f"  {full_name}: already tracked, skipping")
+                continue
+
+            # Fetch repo info from GitHub
+            repo_data = self.github.get_repo_details(owner, repo)
+            if not repo_data:
+                print(f"  {full_name}: could not fetch from GitHub, skipping")
+                continue
+
+            # Process through the pipeline (skip relevance filter for user-added repos)
+            self._process_issue_repo(repo_data)
+            processed += 1
+            print(f"  {full_name}: added to tracking")
+
+        # Clear the YAML file after processing
+        if processed > 0 or urls:
+            self._clear_issue_repos(yaml_path)
+
+        return processed
+
+    def _process_issue_repo(self, repo_data: Dict):
+        """
+        Process a single repository added via issue.
+
+        This is similar to _process_repo_with_delta but skips the relevance filter
+        since the user explicitly requested tracking this repo.
+        """
+        from .models import RepoInfo
+
+        full_name = repo_data.get("full_name", "")
+        if not full_name:
+            return
+
+        # Create RepoInfo from GitHub data
+        repo_info = RepoInfo.from_github_repo(repo_data)
+
+        # Get README and analyze
+        owner, name = full_name.split("/")
+        readme = self.github.get_readme(owner, name)
+        self._update_repo_detection(repo_info, readme)
+
+        # Store the repo
+        self.repos[full_name] = repo_info
+        self._new_repos.append(full_name)
+
+    def _clear_issue_repos(self, yaml_path: str):
+        """Clear the issue repos YAML file after processing."""
+        path = Path(yaml_path)
+        try:
+            with open(path, "w") as f:
+                f.write("# Repositories added via GitHub Issues\n")
+                f.write("# These will be processed during the next scheduled update\n")
+                f.write("repos: []\n")
+            print(f"Cleared issue repos file: {yaml_path}")
+        except Exception as e:
+            print(f"Error clearing issue repos file: {e}")

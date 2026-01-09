@@ -82,6 +82,10 @@ Environment variables:
         action="store_true",
         help="Suppress progress output"
     )
+    parser.add_argument(
+        "--issue-repos",
+        help="Path to repos_from_issues.yaml file (repos added via GitHub Issues)"
+    )
 
     args = parser.parse_args()
 
@@ -104,6 +108,19 @@ Environment variables:
     # Load history if specified
     if args.history:
         tracker.load_history(args.history)
+        if not args.quiet:
+            print()
+
+    # Process repos added via GitHub Issues
+    # Look for issue repos file in the same directory as history, or use explicit path
+    issue_repos_path = args.issue_repos
+    if not issue_repos_path and args.history:
+        default_issue_repos = Path(args.history).parent / "repos_from_issues.yaml"
+        if default_issue_repos.exists():
+            issue_repos_path = str(default_issue_repos)
+
+    if issue_repos_path:
+        tracker.process_issue_repos(issue_repos_path)
         if not args.quiet:
             print()
 

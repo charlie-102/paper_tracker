@@ -1,0 +1,160 @@
+name: Add Repository from Issue
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  add-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Parse and add repository URL
+        id: parse
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          set -e
+
+          # Extract GitHub repository URL from issue body
+          # Matches: https://github.com/owner/repo or http://github.com/owner/repo
+          REPO_URL=$(echo "$ISSUE_BODY" | grep -oE 'https?://github\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+' | head -n 1 | sed 's/\.git$//' | sed 's:/$::')
+
+          if [ -z "$REPO_URL" ]; then
+            echo "valid=false" >> $GITHUB_OUTPUT
+            echo "No valid GitHub repository URL found in the issue body."
+            exit 0
+          fi
+
+          # Normalize URL to https
+          REPO_URL=$(echo "$REPO_URL" | sed 's|^http://|https://|')
+
+          # Extract owner/repo from URL
+          FULL_NAME=$(echo "$REPO_URL" | sed 's|https://github.com/||')
+
+          # Validate the repository exists on GitHub
+          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "https://api.github.com/repos/${FULL_NAME}")
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "valid=false" >> $GITHUB_OUTPUT
+            echo "Repository ${FULL_NAME} does not exist or is not accessible (HTTP ${HTTP_STATUS})."
+            exit 0
+          fi
+
+          echo "valid=true" >> $GITHUB_OUTPUT
+          echo "repo_url=${REPO_URL}" >> $GITHUB_OUTPUT
+          echo "full_name=${FULL_NAME}" >> $GITHUB_OUTPUT
+
+      - name: Check if repository already tracked
+        id: check
+        if: steps.parse.outputs.valid == 'true'
+        run: |
+          REPO_URL="${{ steps.parse.outputs.repo_url }}"
+          FULL_NAME="${{ steps.parse.outputs.full_name }}"
+
+          # Initialize data directory if needed
+          mkdir -p data
+
+          # Check if already in history.json
+          if [ -f data/history.json ]; then
+            if jq -e --arg name "$FULL_NAME" '.repos[] | select(.full_name == $name)' data/history.json > /dev/null 2>&1; then
+              echo "already_tracked=true" >> $GITHUB_OUTPUT
+              echo "Repository is already being tracked in history."
+              exit 0
+            fi
+          fi
+
+          # Check if already in repos_from_issues.yaml
+          if [ -f data/repos_from_issues.yaml ]; then
+            if grep -q "url: ${REPO_URL}" data/repos_from_issues.yaml; then
+              echo "already_tracked=true" >> $GITHUB_OUTPUT
+              echo "Repository is already queued for tracking."
+              exit 0
+            fi
+          fi
+
+          echo "already_tracked=false" >> $GITHUB_OUTPUT
+
+      - name: Add repository to queue
+        if: steps.parse.outputs.valid == 'true' && steps.check.outputs.already_tracked == 'false'
+        run: |
+          REPO_URL="${{ steps.parse.outputs.repo_url }}"
+          TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+          # Create repos_from_issues.yaml if it doesn't exist, or fix empty repos list
+          if [ ! -f data/repos_from_issues.yaml ] || grep -q "repos: \[\]" data/repos_from_issues.yaml; then
+            echo "# Repositories added via GitHub Issues" > data/repos_from_issues.yaml
+            echo "# These will be processed during the next scheduled update" >> data/repos_from_issues.yaml
+            echo "repos:" >> data/repos_from_issues.yaml
+          fi
+
+          # Append the new repository
+          echo "  - url: ${REPO_URL}" >> data/repos_from_issues.yaml
+          echo "    added_at: ${TIMESTAMP}" >> data/repos_from_issues.yaml
+
+          echo "Added ${REPO_URL} to tracking queue."
+
+      - name: Commit changes
+        if: steps.parse.outputs.valid == 'true' && steps.check.outputs.already_tracked == 'false'
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          git add data/repos_from_issues.yaml
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Add repository from issue #${{ github.event.issue.number }} [skip ci]"
+            git push
+          fi
+
+      - name: Post success comment and close issue
+        if: steps.parse.outputs.valid == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPO_URL="${{ steps.parse.outputs.repo_url }}"
+          ALREADY_TRACKED="${{ steps.check.outputs.already_tracked }}"
+          ISSUE_NUMBER="${{ github.event.issue.number }}"
+
+          if [ "$ALREADY_TRACKED" == "true" ]; then
+            gh issue comment "$ISSUE_NUMBER" --body "This repository is already being tracked or queued for tracking:
+
+**Repository:** ${REPO_URL}
+
+No action needed. Closing this issue."
+          else
+            gh issue comment "$ISSUE_NUMBER" --body "Repository added to tracking queue:
+
+**Repository:** ${REPO_URL}
+
+It will be processed during the next scheduled update and appear in the results if pretrained weights are detected.
+
+Closing this issue."
+          fi
+
+          gh issue close "$ISSUE_NUMBER"
+
+      - name: Post error comment (invalid URL)
+        if: steps.parse.outputs.valid == 'false'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          ISSUE_NUMBER="${{ github.event.issue.number }}"
+
+          gh issue comment "$ISSUE_NUMBER" --body "Could not find a valid GitHub repository URL in the issue body.
+
+**Expected format:** The issue body should contain a GitHub repository URL, for example:
+\`\`\`
+https://github.com/owner/repository
+\`\`\`
+
+Please edit the issue body to include a valid GitHub repository URL, then reopen this issue or create a new one."
