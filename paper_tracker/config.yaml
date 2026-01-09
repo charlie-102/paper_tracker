@@ -187,6 +187,87 @@ conferences:
       - "acm mm"
       - "acmmm"
       - "mm2024"
+    MICCAI:
+      - "miccai"
+      - "miccai2024"
+      - "miccai2025"
+      - "miccai 2024"
+      - "miccai 2025"
+    TPAMI:
+      - "tpami"
+      - "pami"
+      - "ieee tpami"
+      - "t-pami"
+    IJCV:
+      - "ijcv"
+      - "international journal of computer vision"
+    TIP:
+      - "ieee tip"
+      - "t-ip"
+      - "transactions on image processing"
+    TCSVT:
+      - "tcsvt"
+      - "t-csvt"
+      - "transactions on circuits and systems for video"
+    TOG:
+      - "tog"
+      - "transactions on graphics"
+      - "acm tog"
+    BMVC:
+      - "bmvc"
+      - "bmvc2024"
+      - "bmvc2025"
+      - "bmvc 2024"
+      - "bmvc 2025"
+    ACCV:
+      - "accv"
+      - "accv2024"
+      - "accv 2024"
+    ICIP:
+      - "icip"
+      - "icip2024"
+      - "icip2025"
+      - "icip 2024"
+      - "icip 2025"
+    ICPR:
+      - "icpr"
+      - "icpr2024"
+      - "icpr 2024"
+    IJCAI:
+      - "ijcai"
+      - "ijcai2024"
+      - "ijcai2025"
+      - "ijcai 2024"
+      - "ijcai 2025"
+    TMM:
+      - "tmm"
+      - "ieee tmm"
+      - "transactions on multimedia"
+    TNNLS:
+      - "tnnls"
+      - "t-nnls"
+      - "transactions on neural networks"
+    PR:
+      - "pattern recognition"
+    JMLR:
+      - "jmlr"
+      - "journal of machine learning research"
+    3DV:
+      - "3dv"
+      - "3dv2024"
+      - "3dv 2024"
+    ISBI:
+      - "isbi"
+      - "isbi2024"
+      - "isbi2025"
+      - "isbi 2024"
+      - "isbi 2025"
+    MIDL:
+      - "midl"
+      - "midl2024"
+      - "midl2025"
+      - "midl 2024"
+      - "midl 2025"
 
   arxiv_pattern: 'arxiv\.org/abs/(\d{4}\.\d{4,5})'
 
