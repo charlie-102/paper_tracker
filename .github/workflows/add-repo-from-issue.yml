@@ -126,19 +126,9 @@ jobs:
           ISSUE_NUMBER="${{ github.event.issue.number }}"
 
           if [ "$ALREADY_TRACKED" == "true" ]; then
-            gh issue comment "$ISSUE_NUMBER" --body "This repository is already being tracked or queued for tracking:
-
-**Repository:** ${REPO_URL}
-
-No action needed. Closing this issue."
+            gh issue comment "$ISSUE_NUMBER" --body $'This repository is already being tracked or queued for tracking:\n\n**Repository:** '"${REPO_URL}"$'\n\nNo action needed. Closing this issue.'
           else
-            gh issue comment "$ISSUE_NUMBER" --body "Repository added to tracking queue:
-
-**Repository:** ${REPO_URL}
-
-It will be processed during the next scheduled update and appear in the results if pretrained weights are detected.
-
-Closing this issue."
+            gh issue comment "$ISSUE_NUMBER" --body $'Repository added to tracking queue:\n\n**Repository:** '"${REPO_URL}"$'\n\nIt will be processed during the next scheduled update and appear in the results if pretrained weights are detected.\n\nClosing this issue.'
           fi
 
           gh issue close "$ISSUE_NUMBER"
@@ -150,11 +140,4 @@ Closing this issue."
         run: |
           ISSUE_NUMBER="${{ github.event.issue.number }}"
 
-          gh issue comment "$ISSUE_NUMBER" --body "Could not find a valid GitHub repository URL in the issue body.
-
-**Expected format:** The issue body should contain a GitHub repository URL, for example:
-\`\`\`
-https://github.com/owner/repository
-\`\`\`
-
-Please edit the issue body to include a valid GitHub repository URL, then reopen this issue or create a new one."
+          gh issue comment "$ISSUE_NUMBER" --body $'Could not find a valid GitHub repository URL in the issue body.\n\n**Expected format:** The issue body should contain a GitHub repository URL, for example:\n```\nhttps://github.com/owner/repository\n```\n\nPlease edit the issue body to include a valid GitHub repository URL, then reopen this issue or create a new one.'
