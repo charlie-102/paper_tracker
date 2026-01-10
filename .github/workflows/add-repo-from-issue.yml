@@ -8,6 +8,10 @@ permissions:
   contents: write
   issues: write
 
+concurrency:
+  group: add-repo-from-issue
+  cancel-in-progress: false
+
 jobs:
   add-repo:
     runs-on: ubuntu-latest
@@ -102,7 +106,7 @@ jobs:
 
           echo "Added ${REPO_URL} to tracking queue."
 
-      - name: Commit changes
+      - name: Commit and push changes
         if: steps.parse.outputs.valid == 'true' && steps.check.outputs.already_tracked == 'false'
         run: |
           git config --local user.email "action@github.com"
@@ -113,7 +117,20 @@ jobs:
             echo "No changes to commit"
           else
             git commit -m "Add repository from issue #${{ github.event.issue.number }} [skip ci]"
-            git push
+
+            # Retry push with pull --rebase in case of concurrent updates
+            for i in 1 2 3; do
+              if git push; then
+                echo "Push succeeded"
+                break
+              fi
+              echo "Push failed, attempt $i. Pulling and retrying..."
+              git pull --rebase
+              if [ $i -eq 3 ]; then
+                echo "Failed to push after 3 attempts"
+                exit 1
+              fi
+            done
           fi
 
       - name: Post success comment and close issue

@@ -1,7 +1,9 @@
 """CLI entry point for Paper Tracker."""
 
 import argparse
+import shutil
 import sys
+from datetime import datetime
 from pathlib import Path
 
 from .tracker import PaperTracker
@@ -119,6 +121,13 @@ Environment variables:
         help="Update RU candidate status (STATUS: pending|processing|completed|skipped)"
     )
 
+    # Archive argument
+    parser.add_argument(
+        "--archive",
+        action="store_true",
+        help="Create dated archive copies of output files (e.g., tracker_20260110.json)"
+    )
+
     args = parser.parse_args()
 
     # Initialize tracker
@@ -215,6 +224,23 @@ Environment variables:
         tracker.export_csv(args.csv)
     if args.markdown:
         tracker.export_markdown(args.markdown)
+
+    # Create dated archive copies if requested
+    if args.archive:
+        date_suffix = datetime.now().strftime("%Y%m%d")
+        archived_files = []
+
+        for output_path in [args.output, args.csv, args.markdown]:
+            if output_path:
+                src = Path(output_path)
+                if src.exists():
+                    archive_name = f"tracker_{date_suffix}{src.suffix}"
+                    archive_path = src.parent / archive_name
+                    shutil.copy2(src, archive_path)
+                    archived_files.append(str(archive_path))
+
+        if archived_files and not args.quiet:
+            print(f"\nArchived to: {', '.join(archived_files)}")
 
     return 0
 

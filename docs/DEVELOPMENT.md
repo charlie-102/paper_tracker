@@ -49,7 +49,19 @@ python -m paper_tracker --history data/history.json --md results/latest.md
 | `--output` | `-o` | Export to JSON file |
 | `--csv` | | Export to CSV file |
 | `--md` | | Export to Markdown file |
+| `--archive` | | Create dated archive copies (e.g., tracker_20260110.json) |
 | `--quiet` | `-q` | Suppress progress output |
+
+### RU Queue Options
+
+| Option | Description |
+|--------|-------------|
+| `--ru-queue PATH` | Path to ru_queue.yaml file |
+| `--list-ru` | List all RU candidates |
+| `--list-ru-pending` | List pending RU candidates only |
+| `--add-ru REPO` | Manually add repo to RU queue (format: owner/repo) |
+| `--remove-ru REPO` | Remove repo from RU queue |
+| `--ru-status REPO STATUS` | Update status (pending\|processing\|completed\|skipped) |
 
 ## Environment Variables
 
@@ -79,7 +91,7 @@ For each query, runs two searches:
 
 | Case | Condition | Action |
 |------|-----------|--------|
-| **A (Stable)** | In history with `HAS_WEIGHTS` | Skip (update last_checked only) |
+| **A (Stable)** | In history with `HAS_WEIGHTS` | Re-run conference detection only (skip weight detection) |
 | **B (Watchlist)** | In history with `COMING_SOON` | Re-check README for weights |
 | **C (New)** | Not in history | Full scan |
 
@@ -116,6 +128,39 @@ tracker.save_history("data/history.json")
 
 # Export
 tracker.export_markdown("results/latest.md")
+```
+
+## RU (Reproducible Unit) Queue
+
+The RU queue tracks repos that are candidates for Reproducible Unit generation.
+
+### Auto-Queue Criteria
+- Must have `HAS_WEIGHTS` status
+- Must have an arXiv ID detected
+
+### Usage
+
+```bash
+# List pending candidates
+python -m paper_tracker --history data/history.json --list-ru-pending
+
+# Manually add a repo
+python -m paper_tracker --history data/history.json --add-ru owner/repo
+
+# Mark as completed after processing
+python -m paper_tracker --history data/history.json --ru-status owner/repo completed
+```
+
+### Queue File Format (`data/ru_queue.yaml`)
+
+```yaml
+candidates:
+  - url: https://github.com/owner/repo
+    full_name: owner/repo
+    arxiv_id: "2401.12345"
+    added_at: "2026-01-10T00:00:00Z"
+    source: auto  # or "manual"
+    status: pending  # pending|processing|completed|skipped
 ```
 
 ## Configuration
@@ -177,7 +222,8 @@ paper_tracker/
 ├── tests/
 │   └── test_pipeline.py          # Tests
 ├── data/
-│   └── history.json              # Persistent state (auto-created)
+│   ├── history.json              # Persistent state (auto-created)
+│   └── ru_queue.yaml             # RU candidate queue (auto-created)
 ├── results/
 │   ├── latest.md                 # Latest markdown report
 │   ├── latest.json               # Latest JSON data

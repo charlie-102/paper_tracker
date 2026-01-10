@@ -1,6 +1,6 @@
 # Paper Implementation Tracker
 
-Automatically tracks GitHub repositories for **low-level vision** papers (super-resolution, denoising, restoration, etc.) that have **reproducible pretrained weights**.
+Automatically tracks GitHub repositories for **low-level vision** and **image processing** papers that have **reproducible pretrained weights**.
 
 This tracker runs weekly to find new papers with released weights, detect when promised weights become available, and maintain a curated list of reproducible implementations.
 
@@ -26,9 +26,19 @@ Results are committed directly to this repository, so you can:
 - **Coming soon**: Papers that promise weights will be released
 - **Fresh releases**: Papers where weights were just made available
 
+### Topics Covered
+
+| Category | Tasks |
+|----------|-------|
+| **Image Restoration** | Super-resolution, denoising, deblurring, inpainting, face restoration |
+| **Weather/Degradation** | Deraining, dehazing, desnowing, shadow removal |
+| **Enhancement** | Low-light enhancement, HDR imaging, tone mapping, JPEG artifact removal |
+| **Video Processing** | Video SR, video denoising, frame interpolation, video restoration |
+| **Medical Imaging** | CT denoising, MRI reconstruction, medical image enhancement |
+
 ### Conferences Detected
 
-CVPR, ECCV, ICCV, ICLR, NeurIPS, ICML, AAAI, SIGGRAPH, and arXiv preprints.
+CVPR, ECCV, ICCV, ICLR, NeurIPS, ICML, AAAI, SIGGRAPH, MICCAI, WACV, BMVC, and 15+ journals (TPAMI, IJCV, TIP, etc.).
 
 ## For Developers
 

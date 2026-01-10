@@ -4,6 +4,64 @@
 
 ### Added
 
+#### RU (Reproducible Unit) Queue System
+
+New system to track repositories as candidates for Reproducible Unit generation.
+
+**Features:**
+- Auto-queues repos with `HAS_WEIGHTS` status + arXiv ID when loading history or during search
+- Manual queue management via CLI
+- Queue stored in `data/ru_queue.yaml`
+
+**New CLI Arguments:**
+- `--ru-queue PATH` - Custom queue file path
+- `--list-ru` - List all RU candidates
+- `--list-ru-pending` - List pending candidates only
+- `--add-ru REPO` - Manually add repo (format: owner/repo)
+- `--remove-ru REPO` - Remove from queue
+- `--ru-status REPO STATUS` - Update status (pending|processing|completed|skipped)
+
+**Files Modified:**
+- `paper_tracker/tracker.py` - Added `RUCandidate`, `RUQueueManager` classes
+- `paper_tracker/models.py` - Added `ru_candidate` field to `RepoInfo`
+- `paper_tracker/__main__.py` - Added RU CLI arguments
+
+#### Automatic Dated Archive Creation
+
+New `--archive` flag creates dated copies of output files.
+
+```bash
+python -m paper_tracker --history data/history.json \
+  --md results/latest.md \
+  -o results/latest.json \
+  --archive
+# Creates: results/tracker_20260110.json, results/tracker_20260110.md
+```
+
+#### Expanded Search Coverage
+
+Added 24 new search queries covering:
+- **Low-level vision:** deraining, dehazing, low-light enhancement, shadow removal, HDR, desnowing, JPEG artifacts, demosaicing, face restoration
+- **Video processing:** video denoising, restoration, deblurring, frame interpolation, enhancement
+- **Medical imaging:** CT denoising, MRI reconstruction, medical image enhancement
+- **Conference-based:** CVPR/ECCV/NeurIPS/MICCAI pretrained queries
+
+Added ~40 new relevance keywords for better filtering.
+
+**Files Modified:**
+- `paper_tracker/config.yaml` - Expanded queries (8 → 32) and keywords
+
+### Fixed
+
+#### Conference Re-detection for Stable Repos
+
+Previously, repos with `HAS_WEIGHTS` status (Case A) skipped all detection including conference detection. Now conference detection always runs, allowing new conference patterns to apply to existing repos.
+
+**Files Modified:**
+- `paper_tracker/tracker.py` - Modified `_process_repo_with_delta()` Case A
+
+---
+
 #### New Feature: Add Repositories via GitHub Issues
 
 Users can now add repositories to the tracking list by opening a GitHub Issue with a repository URL.
