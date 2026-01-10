@@ -11,6 +11,7 @@ search:
 
 # Search queries for low-level vision tasks
 queries:
+  # Core low-level vision
   - "super resolution"
   - "image denoising"
   - "image deblurring"
@@ -19,6 +20,38 @@ queries:
   - "image enhancement"
   - "image inpainting"
   - "video super resolution"
+
+  # Additional low-level vision tasks
+  - "image deraining"
+  - "image dehazing"
+  - "low-light enhancement"
+  - "shadow removal"
+  - "HDR imaging"
+  - "image desnowing"
+  - "jpeg artifact removal"
+  - "image demosaicing"
+  - "face restoration"
+
+  # Video processing
+  - "video denoising"
+  - "video restoration"
+  - "frame interpolation"
+  - "video deblurring"
+  - "video enhancement"
+
+  # Medical imaging
+  - "medical image enhancement"
+  - "CT denoising"
+  - "MRI reconstruction"
+  - "medical image restoration"
+
+  # Conference-based discovery
+  - "CVPR 2024 pretrained"
+  - "CVPR 2025 pretrained"
+  - "ECCV 2024 pretrained"
+  - "NeurIPS 2024 code"
+  - "ICCV 2023 pretrained"
+  - "MICCAI 2024 code"
 
 # Relevance filtering
 relevance:
@@ -58,6 +91,53 @@ relevance:
     - "face restoration"
     - "gfpgan"
     - "codeformer"
+
+    # Low-light and HDR
+    - "low-light"
+    - "low light"
+    - "lowlight"
+    - "shadow removal"
+    - "hdr"
+    - "hdr imaging"
+    - "tone mapping"
+    - "exposure correction"
+
+    # Compression artifacts
+    - "jpeg artifact"
+    - "compression artifact"
+    - "artifact removal"
+    - "demosaicing"
+    - "demosaic"
+    - "desnowing"
+
+    # Video processing
+    - "video restoration"
+    - "video denoising"
+    - "video deblurring"
+    - "frame interpolation"
+    - "temporal super resolution"
+    - "video enhancement"
+    - "vsr"
+    - "vfi"
+
+    # Medical imaging
+    - "medical imaging"
+    - "ct reconstruction"
+    - "mri reconstruction"
+    - "medical image"
+    - "ct denoising"
+    - "medical enhancement"
+    - "low-dose ct"
+
+    # Known models/methods
+    - "retinexformer"
+    - "mirnet"
+    - "snr-net"
+    - "maxim"
+    - "uformer"
+    - "fftformer"
+    - "stripformer"
+    - "promptir"
 
   weak_keywords:
     - "denois"

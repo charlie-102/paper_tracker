@@ -48,6 +48,9 @@ class RepoInfo:
     coming_soon_detected: bool = False
     coming_soon_details: List[str] = field(default_factory=list)
 
+    # RU (Reproducible Unit) candidate status
+    ru_candidate: bool = False
+
     def __post_init__(self):
         """Initialize dates if not set."""
         if not self.last_checked:
@@ -101,6 +104,7 @@ class RepoInfo:
             "topics": self.topics,
             "coming_soon_detected": self.coming_soon_detected,
             "coming_soon_details": self.coming_soon_details,
+            "ru_candidate": self.ru_candidate,
         }
 
     @classmethod
@@ -136,6 +140,7 @@ class RepoInfo:
             topics=data.get("topics", []),
             coming_soon_detected=data.get("coming_soon_detected", False),
             coming_soon_details=data.get("coming_soon_details", []),
+            ru_candidate=data.get("ru_candidate", False),
         )
 
     @classmethod

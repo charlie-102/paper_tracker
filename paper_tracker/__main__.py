@@ -87,6 +87,38 @@ Environment variables:
         help="Path to repos_from_issues.yaml file (repos added via GitHub Issues)"
     )
 
+    # RU Queue arguments
+    parser.add_argument(
+        "--ru-queue",
+        help="Path to ru_queue.yaml file (default: data/ru_queue.yaml)"
+    )
+    parser.add_argument(
+        "--list-ru",
+        action="store_true",
+        help="List all RU candidates"
+    )
+    parser.add_argument(
+        "--list-ru-pending",
+        action="store_true",
+        help="List pending RU candidates only"
+    )
+    parser.add_argument(
+        "--add-ru",
+        metavar="REPO",
+        help="Manually add a repo to RU queue (format: owner/repo)"
+    )
+    parser.add_argument(
+        "--remove-ru",
+        metavar="REPO",
+        help="Remove a repo from RU queue (format: owner/repo)"
+    )
+    parser.add_argument(
+        "--ru-status",
+        nargs=2,
+        metavar=("REPO", "STATUS"),
+        help="Update RU candidate status (STATUS: pending|processing|completed|skipped)"
+    )
+
     args = parser.parse_args()
 
     # Initialize tracker
@@ -97,7 +129,12 @@ Environment variables:
         if default_config.exists():
             config_path = str(default_config)
 
-    tracker = PaperTracker(token=args.token, config_path=config_path)
+    # Determine RU queue path
+    ru_queue_path = args.ru_queue
+    if not ru_queue_path and args.history:
+        ru_queue_path = str(Path(args.history).parent / "ru_queue.yaml")
+
+    tracker = PaperTracker(token=args.token, config_path=config_path, ru_queue_path=ru_queue_path)
 
     # Print header
     if not args.quiet:
@@ -110,6 +147,38 @@ Environment variables:
         tracker.load_history(args.history)
         if not args.quiet:
             print()
+
+    # Handle RU queue commands (these exit early without running search)
+    if args.list_ru or args.list_ru_pending:
+        status_filter = "pending" if args.list_ru_pending else None
+        tracker.print_ru_queue(status_filter)
+        return 0
+
+    if args.add_ru:
+        if not args.history:
+            print("Error: --add-ru requires --history to be set")
+            return 1
+        tracker.add_to_ru_queue(args.add_ru)
+        tracker.ru_queue.save()
+        return 0
+
+    if args.remove_ru:
+        if not args.history:
+            print("Error: --remove-ru requires --history to be set")
+            return 1
+        tracker.remove_from_ru_queue(args.remove_ru)
+        tracker.ru_queue.save()
+        return 0
+
+    if args.ru_status:
+        repo, status = args.ru_status
+        if status not in ("pending", "processing", "completed", "skipped"):
+            print(f"Error: Invalid status '{status}'. Use: pending|processing|completed|skipped")
+            return 1
+        tracker.ru_queue.update_status(repo, status)
+        tracker.ru_queue.save()
+        print(f"Updated {repo} status to {status}")
+        return 0
 
     # Process repos added via GitHub Issues
     # Look for issue repos file in the same directory as history, or use explicit path

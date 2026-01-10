@@ -2,6 +2,8 @@
 
 import json
 import csv
+import yaml
+from dataclasses import dataclass
 from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Dict, List, Optional, Set
@@ -12,10 +14,152 @@ from .detectors import WeightDetector, ConferenceDetector, ComingSoonDetector, R
 from .models import RepoInfo, RepoState
 
 
+@dataclass
+class RUCandidate:
+    """A candidate repository for RU (Reproducible Unit) generation."""
+    url: str
+    full_name: str
+    arxiv_id: str
+    added_at: str
+    source: str  # "auto" or "manual"
+    status: str  # "pending", "processing", "completed", "skipped"
+    notes: str = ""
+
+    def to_dict(self) -> dict:
+        return {
+            "url": self.url,
+            "full_name": self.full_name,
+            "arxiv_id": self.arxiv_id,
+            "added_at": self.added_at,
+            "source": self.source,
+            "status": self.status,
+            "notes": self.notes,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "RUCandidate":
+        return cls(
+            url=data.get("url", ""),
+            full_name=data.get("full_name", ""),
+            arxiv_id=data.get("arxiv_id", ""),
+            added_at=data.get("added_at", ""),
+            source=data.get("source", "auto"),
+            status=data.get("status", "pending"),
+            notes=data.get("notes", ""),
+        )
+
+
+class RUQueueManager:
+    """Manager for RU (Reproducible Unit) candidate queue."""
+
+    def __init__(self, queue_path: str = "data/ru_queue.yaml"):
+        self.queue_path = Path(queue_path)
+        self.candidates: Dict[str, RUCandidate] = {}  # keyed by full_name
+        self._load()
+
+    def _load(self):
+        """Load queue from YAML file."""
+        if not self.queue_path.exists():
+            return
+
+        try:
+            with open(self.queue_path, "r") as f:
+                data = yaml.safe_load(f)
+
+            if data and data.get("candidates"):
+                for item in data["candidates"]:
+                    candidate = RUCandidate.from_dict(item)
+                    self.candidates[candidate.full_name] = candidate
+        except Exception as e:
+            print(f"Error loading RU queue: {e}")
+
+    def save(self):
+        """Save queue to YAML file."""
+        self.queue_path.parent.mkdir(parents=True, exist_ok=True)
+
+        data = {
+            "candidates": [c.to_dict() for c in self.candidates.values()]
+        }
+
+        with open(self.queue_path, "w") as f:
+            yaml.dump(data, f, default_flow_style=False, sort_keys=False)
+
+    def should_queue(self, repo_info: RepoInfo) -> bool:
+        """Check if a repo meets RU candidate criteria."""
+        # Must have HAS_WEIGHTS status
+        if repo_info.status != RepoState.HAS_WEIGHTS:
+            return False
+        # Must have an arXiv ID
+        if not repo_info.arxiv_id:
+            return False
+        # Not already in queue with completed/processing status
+        existing = self.candidates.get(repo_info.full_name)
+        if existing and existing.status in ("completed", "processing"):
+            return False
+        return True
+
+    def add_candidate(self, repo_info: RepoInfo, source: str = "auto") -> bool:
+        """
+        Add a repo to the RU queue if it meets criteria.
+
+        Returns True if added, False if already exists or doesn't meet criteria.
+        """
+        if source == "auto" and not self.should_queue(repo_info):
+            return False
+
+        # For manual additions, only require HAS_WEIGHTS (allow missing arXiv)
+        if source == "manual" and repo_info.status != RepoState.HAS_WEIGHTS:
+            return False
+
+        # Check if already in queue
+        existing = self.candidates.get(repo_info.full_name)
+        if existing:
+            # Don't re-add if completed or processing
+            if existing.status in ("completed", "processing"):
+                return False
+            # Already pending, no need to re-add
+            return False
+
+        candidate = RUCandidate(
+            url=repo_info.url,
+            full_name=repo_info.full_name,
+            arxiv_id=repo_info.arxiv_id or "",
+            added_at=datetime.now().isoformat(),
+            source=source,
+            status="pending",
+        )
+        self.candidates[repo_info.full_name] = candidate
+        repo_info.ru_candidate = True
+        return True
+
+    def update_status(self, full_name: str, status: str, notes: str = ""):
+        """Update the status of a candidate."""
+        if full_name in self.candidates:
+            self.candidates[full_name].status = status
+            if notes:
+                self.candidates[full_name].notes = notes
+
+    def remove_candidate(self, full_name: str) -> bool:
+        """Remove a candidate from the queue."""
+        if full_name in self.candidates:
+            del self.candidates[full_name]
+            return True
+        return False
+
+    def get_pending(self) -> List[RUCandidate]:
+        """Get all pending candidates."""
+        return [c for c in self.candidates.values() if c.status == "pending"]
+
+    def list_all(self) -> List[RUCandidate]:
+        """Get all candidates."""
+        return list(self.candidates.values())
+
+
 class PaperTracker:
     """Stateful tracker for finding reproducible ML repos."""
 
-    def __init__(self, token: Optional[str] = None, config_path: Optional[str] = None):
+    def __init__(self, token: Optional[str] = None, config_path: Optional[str] = None,
+                 ru_queue_path: Optional[str] = None):
         # Load config
         config.load(config_path)
 
@@ -25,6 +169,9 @@ class PaperTracker:
         self.conference_detector = ConferenceDetector()
         self.coming_soon_detector = ComingSoonDetector()
         self.relevance_filter = RelevanceFilter()
+
+        # RU Queue manager
+        self.ru_queue = RUQueueManager(ru_queue_path or "data/ru_queue.yaml")
 
         # Results storage (keyed by full_name)
         self.repos: Dict[str, RepoInfo] = {}
@@ -59,6 +206,16 @@ class PaperTracker:
                 self.repos[repo_info.full_name] = repo_info
 
             print(f"Loaded {len(self.repos)} repos from history")
+
+            # Auto-populate RU queue for existing repos that meet criteria
+            new_candidates = 0
+            for repo_info in self.repos.values():
+                if self.ru_queue.should_queue(repo_info):
+                    if self.ru_queue.add_candidate(repo_info, source="auto"):
+                        new_candidates += 1
+            if new_candidates > 0:
+                print(f"Added {new_candidates} repos to RU queue")
+
             return True
 
         except (json.JSONDecodeError, KeyError) as e:
@@ -85,6 +242,9 @@ class PaperTracker:
             json.dump(data, f, indent=2)
 
         print(f"Saved {len(self.repos)} repos to {json_path}")
+
+        # Also save RU queue
+        self.ru_queue.save()
 
     def search(
         self,
@@ -192,8 +352,21 @@ class PaperTracker:
             existing.updated_at = repo_data.get("updated_at", "")[:10]
 
             if existing.status == RepoState.HAS_WEIGHTS:
-                # Case A: Stable - just update last_checked
+                # Case A: Stable - skip weight detection but re-run conference detection
+                # (Conference info may be added/updated after weights are released)
+                owner, name = full_name.split("/")
+                readme = self.github.get_readme(owner, name)
+                conf_result = self.conference_detector.detect(readme, existing.description)
+                existing.conference = conf_result.conference
+                existing.conference_year = conf_result.year
+                existing.arxiv_id = conf_result.arxiv_id
+                existing.conference_details = conf_result.details
                 existing.last_checked = datetime.now().strftime("%Y-%m-%d")
+
+                # Check if repo qualifies as RU candidate (now that we have updated arXiv)
+                if self.ru_queue.should_queue(existing):
+                    if self.ru_queue.add_candidate(existing, source="auto"):
+                        print(f"  -> Added to RU queue: {existing.full_name}")
                 return
 
             elif existing.status == RepoState.COMING_SOON:
@@ -259,6 +432,11 @@ class PaperTracker:
         # Update status (tracks changes)
         repo_info.update_status(new_status)
 
+        # Auto-add to RU queue if criteria met
+        if self.ru_queue.should_queue(repo_info):
+            if self.ru_queue.add_candidate(repo_info, source="auto"):
+                print(f"  -> Added to RU queue: {repo_info.full_name}")
+
     def get_summary(self) -> Dict:
         """Get summary statistics."""
         repos = list(self.repos.values())
@@ -288,6 +466,10 @@ class PaperTracker:
         # Coming soon (watchlist)
         coming_soon = sum(1 for r in repos if r.status == RepoState.COMING_SOON)
 
+        # RU queue counts
+        ru_pending = len(self.ru_queue.get_pending())
+        ru_total = len(self.ru_queue.list_all())
+
         return {
             "total": len(repos),
             "with_weights": with_weights,
@@ -297,6 +479,8 @@ class PaperTracker:
             "by_status": status_counts,
             "by_weight_status": weight_counts,
             "by_conference": conf_counts,
+            "ru_pending": ru_pending,
+            "ru_total": ru_total,
             "timestamp": datetime.now().isoformat(),
         }
 
@@ -491,6 +675,55 @@ class PaperTracker:
             f.write("\n".join(lines))
 
         print(f"Exported to {output_path}")
+
+    # RU Queue Management Methods
+
+    def add_to_ru_queue(self, full_name: str) -> bool:
+        """Manually add a repo to the RU queue."""
+        if full_name not in self.repos:
+            print(f"Error: {full_name} not in tracked repos")
+            return False
+
+        repo_info = self.repos[full_name]
+        if self.ru_queue.add_candidate(repo_info, source="manual"):
+            print(f"Added {full_name} to RU queue")
+            return True
+        else:
+            print(f"Could not add {full_name} to RU queue (already exists or no weights)")
+            return False
+
+    def remove_from_ru_queue(self, full_name: str) -> bool:
+        """Remove a repo from the RU queue."""
+        if self.ru_queue.remove_candidate(full_name):
+            if full_name in self.repos:
+                self.repos[full_name].ru_candidate = False
+            print(f"Removed {full_name} from RU queue")
+            return True
+        else:
+            print(f"{full_name} not in RU queue")
+            return False
+
+    def list_ru_candidates(self, status: Optional[str] = None) -> List[RUCandidate]:
+        """List RU candidates, optionally filtered by status."""
+        if status:
+            return [c for c in self.ru_queue.list_all() if c.status == status]
+        return self.ru_queue.list_all()
+
+    def print_ru_queue(self, status_filter: Optional[str] = None):
+        """Print RU queue status."""
+        candidates = self.list_ru_candidates(status_filter)
+
+        if not candidates:
+            print("RU queue is empty")
+            return
+
+        print(f"\nRU Queue ({len(candidates)} candidates)")
+        print("-" * 90)
+        print(f"{'Repo':<40} {'arXiv':<15} {'Status':<12} {'Source':<8} URL")
+        print("-" * 90)
+
+        for c in sorted(candidates, key=lambda x: x.added_at, reverse=True):
+            print(f"{c.full_name[:39]:<40} {c.arxiv_id[:14]:<15} {c.status:<12} {c.source:<8} {c.url}")
 
     def load_issue_repos(self, yaml_path: str) -> List[str]:
         """
