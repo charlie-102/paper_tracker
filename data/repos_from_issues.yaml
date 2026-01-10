@@ -1,3 +1,5 @@
 # Repositories added via GitHub Issues
 # These will be processed during the next scheduled update
-repos: []
+repos:
+  - url: https://github.com/XLearning-SCU/2022-CVPR-AirNet
+    added_at: 2026-01-10T14:54:40Z
