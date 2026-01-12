@@ -1,56 +1,39 @@
 {
   "summary": {
-    "total": 116,
-    "with_weights": 88,
-    "coming_soon": 2,
-    "fresh_releases": 88,
-    "new_this_run": 14,
+    "total": 27,
+    "with_weights": 22,
+    "coming_soon": 0,
+    "fresh_releases": 22,
+    "new_this_run": 2,
     "by_status": {
-      "has_weights": 88,
-      "no_weights": 26,
-      "coming_soon": 2
+      "has_weights": 22,
+      "no_weights": 5
     },
     "by_weight_status": {
-      "HF": 41,
-      "None": 28,
-      "Cloud": 43,
-      "Release": 3,
-      "Extension": 1
+      "HF": 15,
+      "None": 5,
+      "Cloud": 7
     },
     "by_conference": {
-      "ECCV": 6,
-      "CVPR": 26,
-      "ICLR": 5,
-      "NeurIPS": 5,
-      "TIP": 2,
-      "TOG": 5,
-      "ICML": 2,
-      "TPAMI": 3,
-      "ICCV": 4,
-      "ACMMM": 4,
-      "ACCV": 1,
-      "TCSVT": 1,
-      "PR": 2,
-      "IJCV": 1,
-      "ICIP": 1,
-      "MICCAI": 7,
-      "AAAI": 1
+      "ECCV": 1,
+      "CVPR": 4,
+      "ICLR": 2,
+      "NeurIPS": 3,
+      "ICML": 1
     },
-    "ru_pending": 48,
-    "ru_total": 48,
-    "timestamp": "2026-01-12T09:09:03.211083"
+    "timestamp": "2026-01-09T11:47:33.994353"
   },
   "repos": [
     {
       "name": "MuseTalk",
       "full_name": "TMElyralab/MuseTalk",
-      "stars": 5178,
+      "stars": 5163,
       "url": "https://github.com/TMElyralab/MuseTalk",
       "description": "MuseTalk: Real-Time High Quality Lip Synchorization with Latent Space Inpainting",
       "created_at": "2024-03-26",
-      "updated_at": "2026-01-12",
+      "updated_at": "2026-01-09",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -71,19 +54,18 @@
         "virtualhumans"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
+      "coming_soon_details": []
     },
     {
       "name": "clarity-upscaler",
       "full_name": "philz1337x/clarity-upscaler",
-      "stars": 4941,
+      "stars": 4935,
       "url": "https://github.com/philz1337x/clarity-upscaler",
       "description": "Clarity AI | AI Image Upscaler & Enhancer - free and open-source Magnific Alternative",
       "created_at": "2024-03-15",
-      "updated_at": "2026-01-11",
+      "updated_at": "2026-01-09",
       "status": "no_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": null,
       "weight_status": "None",
@@ -108,19 +90,18 @@
         "upscalerimage"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "ComfyUI-SUPIR",
       "full_name": "kijai/ComfyUI-SUPIR",
-      "stars": 2201,
+      "stars": 2202,
       "url": "https://github.com/kijai/ComfyUI-SUPIR",
       "description": "SUPIR upscaling wrapper for ComfyUI",
       "created_at": "2024-02-28",
-      "updated_at": "2026-01-12",
+      "updated_at": "2026-01-09",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -135,19 +116,18 @@
       "conference_details": [],
       "topics": [],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "InstructIR",
       "full_name": "mv-lab/InstructIR",
-      "stars": 696,
+      "stars": 695,
       "url": "https://github.com/mv-lab/InstructIR",
       "description": "[ECCV 2024] InstructIR: High-Quality Image Restoration Following Human Instructions https://huggingface.co/spaces/marcosv/InstructIR",
       "created_at": "2024-01-27",
-      "updated_at": "2026-01-12",
+      "updated_at": "2026-01-05",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -186,8 +166,7 @@
       "coming_soon_detected": true,
       "coming_soon_details": [
         "unchecked: model/weights: '[ ] Upload Model'"
-      ],
-      "ru_candidate": true
+      ]
     },
     {
       "name": "DocRes",
@@ -198,7 +177,7 @@
       "created_at": "2024-05-07",
       "updated_at": "2026-01-06",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -216,8 +195,7 @@
       ],
       "topics": [],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
+      "coming_soon_details": []
     },
     {
       "name": "BIRD",
@@ -228,7 +206,7 @@
       "created_at": "2024-05-28",
       "updated_at": "2026-01-06",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "Cloud",
@@ -244,19 +222,18 @@
       ],
       "topics": [],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
+      "coming_soon_details": []
     },
     {
       "name": "DarkIR",
       "full_name": "cidautai/DarkIR",
-      "stars": 276,
+      "stars": 275,
       "url": "https://github.com/cidautai/DarkIR",
       "description": "CVPR 2025 DarkIR: Robust Low-Light Image Restoration - State of the art low light deblurring. NTIRE 2025 Best Method. [Official PyTorch Implementation",
       "created_at": "2024-06-13",
-      "updated_at": "2026-01-09",
+      "updated_at": "2026-01-07",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -290,8 +267,7 @@
         "restoration"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
+      "coming_soon_details": []
     },
     {
       "name": "ConvIR",
@@ -302,7 +278,7 @@
       "created_at": "2024-06-22",
       "updated_at": "2026-01-09",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "Cloud",
@@ -326,8 +302,7 @@
         "motion-deblurring"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "UltraZoom",
@@ -338,7 +313,7 @@
       "created_at": "2025-06-19",
       "updated_at": "2026-01-09",
       "status": "has_weights",
-      "last_checked": "2026-01-10",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -358,19 +333,18 @@
         "super-resolution"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "DeblurDiff",
       "full_name": "kkkls/DeblurDiff",
-      "stars": 47,
+      "stars": 45,
       "url": "https://github.com/kkkls/DeblurDiff",
       "description": "[NeurIPS 2025] DeblurDiff: Real-World Image Deblurring with Generative Diffusion Models",
       "created_at": "2025-02-05",
-      "updated_at": "2026-01-12",
+      "updated_at": "2026-01-09",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "Cloud",
@@ -387,8 +361,7 @@
       ],
       "topics": [],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
+      "coming_soon_details": []
     },
     {
       "name": "AdaIR",
@@ -399,7 +372,7 @@
       "created_at": "2024-03-19",
       "updated_at": "2025-12-30",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "Cloud",
@@ -424,8 +397,7 @@
         "pytorch"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "FDN-TIP2025",
@@ -436,7 +408,7 @@
       "created_at": "2025-07-09",
       "updated_at": "2026-01-08",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "Cloud",
@@ -447,12 +419,10 @@
         "baidu: pan.baidu.com/s/1eDegIuW3YfuX9J9dx-T4Ig",
         "baidu: pan.baidu.com/s/1zibBq9YPLZ2HGXsvsmOtmA"
       ],
-      "conference": "TIP",
-      "conference_year": "2025",
+      "conference": null,
+      "conference_year": null,
       "arxiv_id": null,
-      "conference_details": [
-        "TIP: IEEE TIP 2025"
-      ],
+      "conference_details": [],
       "topics": [
         "computer-vision",
         "image-enhancement",
@@ -461,8 +431,7 @@
         "low-level-vision"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "JarvisIR",
@@ -473,7 +442,7 @@
       "created_at": "2025-04-08",
       "updated_at": "2026-01-09",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -491,8 +460,7 @@
       ],
       "topics": [],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "Turtle",
@@ -503,7 +471,7 @@
       "created_at": "2024-09-27",
       "updated_at": "2026-01-05",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "Cloud",
@@ -541,8 +509,7 @@
         "video-super-resolution"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
+      "coming_soon_details": []
     },
     {
       "name": "ComfyUI_LucidFlux",
@@ -551,9 +518,9 @@
       "url": "https://github.com/smthemex/ComfyUI_LucidFlux",
       "description": " LucidFlux: Caption-Free Universal Image Restoration with a Large-Scale Diffusion Transformer\uff0cyou can use it in ComfyUI",
       "created_at": "2025-10-05",
-      "updated_at": "2026-01-12",
+      "updated_at": "2026-01-06",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -569,19 +536,18 @@
       "conference_details": [],
       "topics": [],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "ComfyUI-SeedVR2_VideoUpscaler",
       "full_name": "numz/ComfyUI-SeedVR2_VideoUpscaler",
-      "stars": 1807,
+      "stars": 1787,
       "url": "https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler",
       "description": "Official SeedVR2 Video Upscaler for ComfyUI",
       "created_at": "2025-06-20",
-      "updated_at": "2026-01-12",
+      "updated_at": "2026-01-09",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -591,12 +557,10 @@
         "HF: huggingface.co/AInVFX/SeedVR2_comfyUI/tree/main",
         "HF: huggingface.co/cmeka/SeedVR2-GGUF/tree/main"
       ],
-      "conference": "TOG",
+      "conference": null,
       "conference_year": null,
       "arxiv_id": null,
-      "conference_details": [
-        "TOG: tog"
-      ],
+      "conference_details": [],
       "topics": [
         "ai",
         "comfyui",
@@ -605,19 +569,18 @@
         "video-processing"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "FlashVSR",
       "full_name": "OpenImagingLab/FlashVSR",
-      "stars": 1207,
+      "stars": 1196,
       "url": "https://github.com/OpenImagingLab/FlashVSR",
       "description": "Towards Real-Time Diffusion-Based Streaming Video Super-Resolution \u2014 An efficient one-step diffusion framework for streaming VSR with locality-constra",
       "created_at": "2025-10-14",
-      "updated_at": "2026-01-12",
+      "updated_at": "2026-01-09",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -627,11 +590,10 @@
         "HF: huggingface.co/JunhaoZhuang/FlashVSR-v1.1",
         "HF: huggingface.co/datasets/JunhaoZhuang/VSR-120K"
       ],
-      "conference": "TOG",
+      "conference": null,
       "conference_year": null,
       "arxiv_id": "2510.12747",
       "conference_details": [
-        "TOG: tog",
         "arXiv: 2510.12747"
       ],
       "topics": [
@@ -641,19 +603,18 @@
       "coming_soon_detected": true,
       "coming_soon_details": [
         "coming soon: 'Coming Soon:'"
-      ],
-      "ru_candidate": true
+      ]
     },
     {
       "name": "DreamClear",
       "full_name": "shallowdream204/DreamClear",
-      "stars": 1188,
+      "stars": 1186,
       "url": "https://github.com/shallowdream204/DreamClear",
       "description": "[NeurIPS 2024] DreamClear: High-Capacity Real-World Image Restoration with Privacy-Safe Dataset Curation",
       "created_at": "2024-10-24",
-      "updated_at": "2026-01-10",
+      "updated_at": "2026-01-09",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -677,19 +638,18 @@
         "super-resolution"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
+      "coming_soon_details": []
     },
     {
       "name": "EvTexture",
       "full_name": "DachunKai/EvTexture",
-      "stars": 1187,
+      "stars": 1186,
       "url": "https://github.com/DachunKai/EvTexture",
       "description": "[ICML 2024] EvTexture: Event-driven Texture Enhancement for Video Super-Resolution",
       "created_at": "2024-05-18",
-      "updated_at": "2026-01-12",
+      "updated_at": "2026-01-08",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "Cloud",
@@ -715,19 +675,18 @@
         "video-super-resolution"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
+      "coming_soon_details": []
     },
     {
       "name": "next-ai-draw-io",
       "full_name": "DayuanJiang/next-ai-draw-io",
-      "stars": 18005,
+      "stars": 17486,
       "url": "https://github.com/DayuanJiang/next-ai-draw-io",
       "description": "A next.js web application that integrates AI capabilities with draw.io diagrams. This app allows you to create, modify, and enhance diagrams through n",
       "created_at": "2025-03-23",
-      "updated_at": "2026-01-12",
+      "updated_at": "2026-01-09",
       "status": "no_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": null,
       "weight_status": "None",
@@ -743,8 +702,7 @@
         "productivity"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "Face-Swapper",
@@ -786,19 +744,18 @@
         "webcam"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "comic-translate",
       "full_name": "ogkalu2/comic-translate",
-      "stars": 2323,
+      "stars": 2318,
       "url": "https://github.com/ogkalu2/comic-translate",
       "description": "Desktop app for automatically translating comics - BDs, Manga, Manhwa, Fumetti and more in a variety of formats (Image, Pdf, Epub, cbr, cbz, etc) and ",
       "created_at": "2024-01-25",
-      "updated_at": "2026-01-10",
+      "updated_at": "2026-01-09",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -808,11 +765,10 @@
         "HF: huggingface.co/dreMaz/AnimeMangaInpainting",
         "HF: huggingface.co/dreMaz"
       ],
-      "conference": "TOG",
+      "conference": null,
       "conference_year": null,
       "arxiv_id": "2104.01431",
       "conference_details": [
-        "TOG: tog",
         "arXiv: 2104.01431"
       ],
       "topics": [
@@ -838,19 +794,18 @@
         "webtoons"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
+      "coming_soon_details": []
     },
     {
       "name": "gemini-watermark-remover",
       "full_name": "journey-ad/gemini-watermark-remover",
-      "stars": 2007,
+      "stars": 1938,
       "url": "https://github.com/journey-ad/gemini-watermark-remover",
       "description": "A high-performance, 100% client-side tool for removing Gemini AI watermarks. Built with pure JavaScript, it leverages a mathematically precise Reverse",
       "created_at": "2025-12-19",
-      "updated_at": "2026-01-12",
+      "updated_at": "2026-01-09",
       "status": "no_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": null,
       "weight_status": "None",
@@ -862,19 +817,18 @@
       "conference_details": [],
       "topics": [],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "local-dream",
       "full_name": "xororz/local-dream",
-      "stars": 1509,
+      "stars": 1492,
       "url": "https://github.com/xororz/local-dream",
       "description": "Run Stable Diffusion on Android Devices with Snapdragon NPU acceleration. Also supports CPU/GPU inference.",
       "created_at": "2025-01-25",
-      "updated_at": "2026-01-12",
+      "updated_at": "2026-01-09",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -896,19 +850,18 @@
         "txt2img"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "comfyui-inpaint-nodes",
       "full_name": "Acly/comfyui-inpaint-nodes",
-      "stars": 1108,
+      "stars": 1107,
       "url": "https://github.com/Acly/comfyui-inpaint-nodes",
       "description": "Nodes for better inpainting with ComfyUI: Fooocus inpaint model for SDXL, LaMa, MAT, and various other tools for pre-filling inpaint & outpaint areas.",
       "created_at": "2024-01-24",
-      "updated_at": "2026-01-10",
+      "updated_at": "2026-01-09",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -928,8 +881,7 @@
         "stable-diffusion"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "Doctra",
@@ -940,7 +892,7 @@
       "created_at": "2025-08-13",
       "updated_at": "2025-12-16",
       "status": "has_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": "no_weights",
       "weight_status": "HF",
@@ -967,8 +919,7 @@
         "vlm"
       ],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
+      "coming_soon_details": []
     },
     {
       "name": "Single-Image-Deblur",
@@ -979,7 +930,7 @@
       "created_at": "2024-01-31",
       "updated_at": "2025-12-30",
       "status": "no_weights",
-      "last_checked": "2026-01-12",
+      "last_checked": "2026-01-09",
       "status_changed_date": "2026-01-09",
       "previous_status": null,
       "weight_status": "None",
@@ -994,2865 +945,7 @@
       ],
       "topics": [],
       "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "Warlock-Studio",
-      "full_name": "Ivan-Ayub97/Warlock-Studio",
-      "stars": 31,
-      "url": "https://github.com/Ivan-Ayub97/Warlock-Studio",
-      "description": "Suite for Windows with Real-ESRGAN, RealESRNet, RealESRAnime, BSRGAN , IRCNN, GFPGAN & RIFE. Upscaling, face restoration, frame interpolation, denoisi",
-      "created_at": "2025-05-17",
-      "updated_at": "2026-01-10",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Release",
-      "weight_confidence": "high",
-      "weight_details": [
-        "Release: github.com/Ivan-Ayub97/Warlock-Studio/releases/download/v5.1..."
-      ],
-      "conference": "ECCV",
-      "conference_year": "2022",
-      "arxiv_id": null,
-      "conference_details": [
-        "ECCV: ECCV2022"
-      ],
-      "topics": [
-        "artificial-intelligence",
-        "esrgan",
-        "face-restoration",
-        "ffmpeg",
-        "gfpgan",
-        "image-processing",
-        "machine-learning",
-        "onnx",
-        "onnx-models",
-        "python",
-        "python3",
-        "real-esrgan",
-        "upscale-video",
-        "upscalerimage",
-        "upscaling",
-        "video",
-        "video-interpolation",
-        "windows"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "Event-based-Vision_Resources",
-      "full_name": "chakravarthi589/Event-based-Vision_Resources",
-      "stars": 279,
-      "url": "https://github.com/chakravarthi589/Event-based-Vision_Resources",
-      "description": "Resources Related to Event-based Vision | Event Cameras | DVS",
-      "created_at": "2024-02-13",
-      "updated_at": "2026-01-12",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": "CVPR",
-      "conference_year": "2025",
-      "arxiv_id": "2408.13627",
-      "conference_details": [
-        "CVPR: CVPR 2025",
-        "arXiv: 2408.13627"
-      ],
-      "topics": [
-        "acm",
-        "computer-vision",
-        "cvpr",
-        "dvs",
-        "dynamic-vision-sensors",
-        "eccv",
-        "event-based-camera",
-        "event-based-vision",
-        "event-cameras",
-        "iccv",
-        "ieee",
-        "ieee-transactions",
-        "inivation",
-        "low-light-vision",
-        "neuromorphic-computing",
-        "neuromorphic-vision",
-        "prophesee",
-        "prophesee-event",
-        "wacv"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "OneRestore",
-      "full_name": "gy65896/OneRestore",
-      "stars": 229,
-      "url": "https://github.com/gy65896/OneRestore",
-      "description": "[ECCV 2024] OneRestore: A Universal Restoration Framework for Composite Degradation",
-      "created_at": "2024-07-02",
-      "updated_at": "2026-01-12",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/spaces/gy65896/OneRestore",
-        "HF: huggingface.co/spaces/gy65896/OneRestore",
-        "HF: huggingface.co/gy65896/OneRestore/tree/main"
-      ],
-      "conference": "CVPR",
-      "conference_year": "2021",
-      "arxiv_id": "2407.04621",
-      "conference_details": [
-        "CVPR: CVPR2021",
-        "arXiv: 2407.04621"
-      ],
-      "topics": [
-        "dehazing",
-        "deraining",
-        "desnowing",
-        "eccv",
-        "eccv2024",
-        "image-restoration",
-        "imgae-enhancement",
-        "low-light-image-enhancement",
-        "pytorch",
-        "restoration"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "VmambaIR",
-      "full_name": "AlphacatPlus/VmambaIR",
-      "stars": 217,
-      "url": "https://github.com/AlphacatPlus/VmambaIR",
-      "description": "This is official implementtaion of \"VmambaIR: Visual State Space Model for Image Restoration\"",
-      "created_at": "2024-03-18",
-      "updated_at": "2026-01-09",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/10Pogbp2hkCadGPcuCr...",
-        "google_drive: drive.google.com/drive/folders/10Pogbp2hkCadGPcuCr..."
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2403.11423",
-      "conference_details": [
-        "arXiv: 2403.11423"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "NeRD-Rain",
-      "full_name": "cschenxiang/NeRD-Rain",
-      "stars": 210,
-      "url": "https://github.com/cschenxiang/NeRD-Rain",
-      "description": "Bidirectional Multi-Scale Implicit Neural Representations for Image Deraining (CVPR 2024)",
-      "created_at": "2024-03-15",
-      "updated_at": "2026-01-10",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/file/d/1Grzb8ga_1tZEIMGXhtF_W2cDH...",
-        "google_drive: drive.google.com/file/d/14pAgjJu8txIy7KD-7iB089U7j...",
-        "baidu: pan.baidu.com/s/1rTb4qU3fCEA4MRpQss__DA?pwd=s2yx",
-        "baidu: pan.baidu.com/s/1KK8R2bPKgcOX8gMXSuKtCQ?pwd=z9br"
-      ],
-      "conference": "CVPR",
-      "conference_year": "2024",
-      "arxiv_id": "2404.01547",
-      "conference_details": [
-        "CVPR: CVPR 2024",
-        "arXiv: 2404.01547"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "UVM-Net",
-      "full_name": "zzr-idam/UVM-Net",
-      "stars": 163,
-      "url": "https://github.com/zzr-idam/UVM-Net",
-      "description": "U-shaped Vision Mamba for Single Image Dehazing",
-      "created_at": "2024-02-07",
-      "updated_at": "2026-01-01",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1Yy_GH6_bydYPU6_JJz...",
-        "baidu: pan.baidu.com/s/1WVdNccqDMnJ5k5Q__Y2dsg?pwd=gtuw"
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "FADformer",
-      "full_name": "deng-ai-lab/FADformer",
-      "stars": 142,
-      "url": "https://github.com/deng-ai-lab/FADformer",
-      "description": "The official implementation of \"Efficient Frequency-Domain Image Deraining with Contrastive Regularization\" \u3010ECCV2024\u3011",
-      "created_at": "2024-07-09",
-      "updated_at": "2026-01-10",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "baidu: pan.baidu.com/s/14-xuieEB4gW6VO5KHCcNFQ?pwd=cozn",
-        "baidu: pan.baidu.com/s/1kTEeWv6FvicdAa-m49M33A?pwd=qw5d"
-      ],
-      "conference": "ECCV",
-      "conference_year": "2024",
-      "arxiv_id": null,
-      "conference_details": [
-        "ECCV: ECCV2024"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "DA-RCOT",
-      "full_name": "xl-tang3/DA-RCOT",
-      "stars": 143,
-      "url": "https://github.com/xl-tang3/DA-RCOT",
-      "description": "(TPAMI' 25) Degradation-Aware Residual-Conditioned Optimal Transport for Unified Image Restoration",
-      "created_at": "2024-11-03",
-      "updated_at": "2026-01-11",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/file/d/1idKFDkAHJGAFDn1OyXZxsTbOS...",
-        "google_drive: drive.google.com/file/d/19_mCE_GXfmE5yYsm-HEzuZQqm..."
-      ],
-      "conference": "TPAMI",
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [
-        "TPAMI: TPAMI"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "DGSolver",
-      "full_name": "MiliLab/DGSolver",
-      "stars": 139,
-      "url": "https://github.com/MiliLab/DGSolver",
-      "description": "Official repo for [NeurlPS 2025] \"DGSolver: Diffusion Generalist Solver with Universal Posterior Sampling for Image Restoration\"",
-      "created_at": "2025-04-23",
-      "updated_at": "2026-01-09",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/BaiXuYa/DGSolver"
-      ],
-      "conference": "ICCV",
-      "conference_year": "2021",
-      "arxiv_id": "2504.21487",
-      "conference_details": [
-        "ICCV: ICCV2021",
-        "arXiv: 2504.21487"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "RainMamba",
-      "full_name": "TonyHongtaoWu/RainMamba",
-      "stars": 124,
-      "url": "https://github.com/TonyHongtaoWu/RainMamba",
-      "description": "[ACM MM'24 Oral] RainMamba: Enhanced Locality Learning with State Space Models for Video Deraining",
-      "created_at": "2024-07-30",
-      "updated_at": "2026-01-03",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/file/d/1iIkImRsHLYOdeSNvCRlm3SZvW...",
-        "google_drive: drive.google.com/file/d/1kKrwo5n5W2ELWwMsLlpjjUkpK..."
-      ],
-      "conference": "ACMMM",
-      "conference_year": null,
-      "arxiv_id": "2407.21773",
-      "conference_details": [
-        "ACMMM: ACM MM",
-        "arXiv: 2407.21773"
-      ],
-      "topics": [
-        "acmmm2024",
-        "deraining",
-        "image-restoration",
-        "low-level-vision",
-        "mamba",
-        "mamba-state-space-models",
-        "restoration",
-        "state-space-models",
-        "video-deraining",
-        "video-enhancement",
-        "video-mamba",
-        "video-processing",
-        "video-restoration",
-        "vision-mamba"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "Noise-DA",
-      "full_name": "KangLiao929/Noise-DA",
-      "stars": 117,
-      "url": "https://github.com/KangLiao929/Noise-DA",
-      "description": "[ICLR 2025] Denoising as Adaptation: Noise-Space Domain Adaptation for Image Restoration",
-      "created_at": "2024-05-29",
-      "updated_at": "2026-01-07",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1H-cdUzW7nkw3MBNi9i..."
-      ],
-      "conference": "ICLR",
-      "conference_year": "2025",
-      "arxiv_id": "2406.18516",
-      "conference_details": [
-        "ICLR: ICLR 2025",
-        "arXiv: 2406.18516"
-      ],
-      "topics": [],
-      "coming_soon_detected": true,
-      "coming_soon_details": [
-        "unchecked: model/weights: '[ ] Release more pre-trained restoration model'",
-        "unchecked: release/download: '[ ] Release'"
-      ],
-      "ru_candidate": true
-    },
-    {
-      "name": "RCOT",
-      "full_name": "xl-tang3/RCOT",
-      "stars": 113,
-      "url": "https://github.com/xl-tang3/RCOT",
-      "description": "(ICML' 24) Residual-Conditioned Optimal Transport: Towards Structure-Preserving Unpaired and Paired Image Restoration",
-      "created_at": "2024-05-14",
-      "updated_at": "2026-01-08",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/file/d/1idKFDkAHJGAFDn1OyXZxsTbOS...",
-        "google_drive: drive.google.com/file/d/19_mCE_GXfmE5yYsm-HEzuZQqm..."
-      ],
-      "conference": "ICML",
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [
-        "ICML: ICML"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "SFHformer",
-      "full_name": "deng-ai-lab/SFHformer",
-      "stars": 107,
-      "url": "https://github.com/deng-ai-lab/SFHformer",
-      "description": "When Fast Fourier Transform Meets Transformer for Image Restoration (ECCV 2024)",
-      "created_at": "2024-07-09",
-      "updated_at": "2025-12-29",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "baidu: pan.baidu.com/s/1OCaSuwQRgkpm3kU55Hef0Q?pwd=sakm",
-        "baidu: pan.baidu.com/s/1zknuXnv5MR6yhS0I8u2uZg?pwd=h8vv"
-      ],
-      "conference": "ECCV",
-      "conference_year": "2024",
-      "arxiv_id": null,
-      "conference_details": [
-        "ECCV: ECCV 2024"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "SADT",
-      "full_name": "csxyhe/SADT",
-      "stars": 33,
-      "url": "https://github.com/csxyhe/SADT",
-      "description": "The official implementation of the paper \"A Universal Scale-Adaptive Deformable Transformer for Image Restoration across Diverse Artifacts (CVPR 2025)",
-      "created_at": "2025-03-17",
-      "updated_at": "2026-01-07",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/datasets/zxbsmk/TIP-2018"
-      ],
-      "conference": "CVPR",
-      "conference_year": "2025",
-      "arxiv_id": null,
-      "conference_details": [
-        "CVPR: CVPR 2025"
-      ],
-      "topics": [
-        "debanding",
-        "deformable-transformers",
-        "demoireing",
-        "deraining",
-        "image-restoration"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "CPRAformer",
-      "full_name": "zs1314/CPRAformer",
-      "stars": 65,
-      "url": "https://github.com/zs1314/CPRAformer",
-      "description": "\u3010ACM MM 2025\u3011PyTorch code for our  paper \"Cross Paradigm Representation and Alignment Transformer for Image Deraining\"",
-      "created_at": "2025-02-10",
-      "updated_at": "2025-12-27",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1Hnnlc5kI0v9_BtfMyt...",
-        "google_drive: drive.google.com/drive/folders/1PDWggNh8ylevFmrjo-...",
-        "baidu: pan.baidu.com/s/1uYgoetlYGK_iOQ4XMbRExw?pwd=wzkw",
-        "baidu: pan.baidu.com/s/1uYgoetlYGK_iOQ4XMbRExw?pwd=wzkw"
-      ],
-      "conference": "ACMMM",
-      "conference_year": "2025",
-      "arxiv_id": "2504.16455",
-      "conference_details": [
-        "ACMMM: ACM MM 2025",
-        "arXiv: 2504.16455"
-      ],
-      "topics": [
-        "computer-vision",
-        "deraining",
-        "low-level-vision"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "DFSSM",
-      "full_name": "ShugoYamashita/DFSSM",
-      "stars": 14,
-      "url": "https://github.com/ShugoYamashita/DFSSM",
-      "description": "The official code of the ACCV 2024 paper \"Image Deraining with Frequency-Enhanced State Space Model (DFSSM)\"",
-      "created_at": "2024-10-11",
-      "updated_at": "2025-12-06",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1LsdsVkCgNhPpN5-8nj...",
-        "google_drive: drive.google.com/drive/folders/1LsdsVkCgNhPpN5-8nj..."
-      ],
-      "conference": "ACCV",
-      "conference_year": "2024",
-      "arxiv_id": "2405.16470",
-      "conference_details": [
-        "ACCV: ACCV 2024",
-        "arXiv: 2405.16470"
-      ],
-      "topics": [
-        "computer-vision",
-        "deep-learning",
-        "deraining",
-        "image-restoration",
-        "pytorch",
-        "rain-removal"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "UHDRes",
-      "full_name": "Zhao0100/UHDRes",
-      "stars": 17,
-      "url": "https://github.com/Zhao0100/UHDRes",
-      "description": "\ud83d\udd25\ud83d\udd25\ud83d\udd25UHDRes 2025: Ultra-High-Definition Image Restoration via Dual-Domain Decoupled Spectral Modulation",
-      "created_at": "2025-10-26",
-      "updated_at": "2025-11-19",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/datasets/fengyanzi/8KDehaze_mini"
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2511.05009",
-      "conference_details": [
-        "arXiv: 2511.05009"
-      ],
-      "topics": [
-        "debluring",
-        "dehazing",
-        "deraining",
-        "image-restoration",
-        "llie",
-        "uhd-image"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "UHDDIP",
-      "full_name": "wlydlut/UHDDIP",
-      "stars": 12,
-      "url": "https://github.com/wlydlut/UHDDIP",
-      "description": "[IEEE TCSVT 2025] Ultra-High-De\ufb01nition Image Restoration: New Benchmarks and A Dual Interaction Prior-Driven Solution",
-      "created_at": "2024-05-30",
-      "updated_at": "2025-10-21",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/u/1/folders/1LaQvEBdjH5MwTw...",
-        "google_drive: drive.google.com/drive/folders/17ppzNdPzLbx0htrBgu..."
-      ],
-      "conference": "TCSVT",
-      "conference_year": "2025",
-      "arxiv_id": null,
-      "conference_details": [
-        "TCSVT: TCSVT 2025"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "comfyui-vrgamedevgirl",
-      "full_name": "vrgamegirl19/comfyui-vrgamedevgirl",
-      "stars": 234,
-      "url": "https://github.com/vrgamegirl19/comfyui-vrgamedevgirl",
-      "description": "Custom ComfyUI nodes for film grain, color matching, and video enhancement.",
-      "created_at": "2025-07-03",
-      "updated_at": "2026-01-10",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "DiffUIR",
-      "full_name": "iSEE-Laboratory/DiffUIR",
-      "stars": 191,
-      "url": "https://github.com/iSEE-Laboratory/DiffUIR",
-      "description": "(CVPR2024) Official implementation of paper: \"Selective Hourglass Mapping for Universal Image Restoration Based on Diffusion Model\"",
-      "created_at": "2024-02-29",
-      "updated_at": "2026-01-06",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/file/d/1zgALzrLCC_tcXKu_iHQTHukKU...",
-        "google_drive: drive.google.com/file/d/157bjO1_cFuSd0HWDUuAmcHRJD...",
-        "baidu: pan.baidu.com/s/1c2rW4hi#list/path=%2F",
-        "onedrive: 1drv.ms/u/c/1470175ad127c62d/EWtfgLYXQWdKoTy_16cdz...",
-        "onedrive: 1drv.ms/u/c/1470175ad127c62d/EancdsJNBA1Fgz3ceoz2R..."
-      ],
-      "conference": "CVPR",
-      "conference_year": "2024",
-      "arxiv_id": "2403.11157",
-      "conference_details": [
-        "CVPR: CVPR2024",
-        "arXiv: 2403.11157"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "AST",
-      "full_name": "joshyZhou/AST",
-      "stars": 169,
-      "url": "https://github.com/joshyZhou/AST",
-      "description": "Adapt or Perish: Adaptive Sparse Transformer with Attentive Feature Refinement for Image Restoration",
-      "created_at": "2024-03-15",
-      "updated_at": "2026-01-06",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/spaces/suncongcong/AST-Demo"
-      ],
-      "conference": "CVPR",
-      "conference_year": "2024",
-      "arxiv_id": null,
-      "conference_details": [
-        "CVPR: CVPR 2024"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "EENet",
-      "full_name": "c-yn/EENet",
-      "stars": 10,
-      "url": "https://github.com/c-yn/EENet",
-      "description": "An effective and efficient network for single image dehazing",
-      "created_at": "2024-12-30",
-      "updated_at": "2026-01-08",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/file/d/16j2dwVIa9q_0RtpIXMzhu-7Q6...",
-        "google_drive: drive.google.com/drive/folders/1_uosQNp7rTwGDi-8qs...",
-        "baidu: pan.baidu.com/s/1R6qWri7sG1hC_Ifj-H6DOQ?pwd=o5sk",
-        "baidu: pan.baidu.com/s/10nHUyP-o6UWug6a1ZVaeRw?pwd=9dym"
-      ],
-      "conference": "PR",
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [
-        "PR: Pattern Recognition"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "BioIR",
-      "full_name": "c-yn/BioIR",
-      "stars": 14,
-      "url": "https://github.com/c-yn/BioIR",
-      "description": "Bio-Inspired Image Restoration",
-      "created_at": "2025-10-01",
-      "updated_at": "2026-01-09",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1VrFxqox3fewPUmP-i0...",
-        "google_drive: drive.google.com/drive/folders/1-KVJEk25jV3Ds4AG0Q...",
-        "baidu: pan.baidu.com/s/18EIFlLx-xSQRIoLc62Qt6A?pwd=x65n",
-        "baidu: pan.baidu.com/s/1AEieYLl5i-afkr-bF47a_g?pwd=ja58"
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [
-        "all-in-one",
-        "composite",
-        "single-degradation"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "DehazingAttributionMap",
-      "full_name": "fengyanzi/DehazingAttributionMap",
-      "stars": 10,
-      "url": "https://github.com/fengyanzi/DehazingAttributionMap",
-      "description": "[CVPR 2025] \ud83c\udfc6Tokenize Image Patches: Global Context Fusion for Effective Haze Removal in Large Images",
-      "created_at": "2025-02-27",
-      "updated_at": "2026-01-03",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/datasets/fengyanzi/8KDehaze_mini",
-        "HF: huggingface.co/datasets/fengyanzi/8KDehaze_mini"
-      ],
-      "conference": "CVPR",
-      "conference_year": "2025",
-      "arxiv_id": "2504.09621",
-      "conference_details": [
-        "CVPR: CVPR 2025",
-        "arXiv: 2504.09621"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "RRSHID",
-      "full_name": "AeroVILab-AHU/RRSHID",
-      "stars": 34,
-      "url": "https://github.com/AeroVILab-AHU/RRSHID",
-      "description": "[TGRS 2025] Real-World Remote Sensing Image Dehazing: Benchmark and Baseline",
-      "created_at": "2025-03-20",
-      "updated_at": "2025-12-29",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/datasets/lwCVer/RRSHID/blob/main/RRSHID.zip"
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2503.17966",
-      "conference_details": [
-        "arXiv: 2503.17966"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "CORUN-Colabator",
-      "full_name": "cnyvfang/CORUN-Colabator",
-      "stars": 72,
-      "url": "https://github.com/cnyvfang/CORUN-Colabator",
-      "description": "[NeurIPS2024 Spotlight] Real-world Image Dehazing with Coherence-based Pseudo Labeling and Cooperative Unfolding Network",
-      "created_at": "2024-05-28",
-      "updated_at": "2025-12-20",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/file/d/1B29LsNhBWoRHDk2R_cc5nNqcn...",
-        "google_drive: drive.google.com/file/d/1bIlKYouxwizQXbud7SXd5F5oO..."
-      ],
-      "conference": "NeurIPS",
-      "conference_year": "2024",
-      "arxiv_id": null,
-      "conference_details": [
-        "NeurIPS: NeurIPS2024"
-      ],
-      "topics": [
-        "deep-unfolding",
-        "dehaze",
-        "dehazing",
-        "image-dehazing",
-        "image-processing",
-        "image-restoration",
-        "low-level-vision",
-        "mean-teacher",
-        "real-world"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "DehazeXL",
-      "full_name": "CastleChen339/DehazeXL",
-      "stars": 65,
-      "url": "https://github.com/CastleChen339/DehazeXL",
-      "description": "[CVPR 2025] Tokenize Image Patches: Global Context Fusion for Effective Haze Removal in Large Images",
-      "created_at": "2025-03-11",
-      "updated_at": "2026-01-12",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/datasets/fengyanzi/8KDehaze_mini",
-        "HF: huggingface.co/datasets/CastleChen339/8KDehaze/tree/main"
-      ],
-      "conference": "CVPR",
-      "conference_year": "2025",
-      "arxiv_id": "2504.09621",
-      "conference_details": [
-        "CVPR: CVPR 2025",
-        "arXiv: 2504.09621"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "MoCE-IR",
-      "full_name": "eduardzamfir/MoCE-IR",
-      "stars": 122,
-      "url": "https://github.com/eduardzamfir/MoCE-IR",
-      "description": "[CVPR 2025] Complexity Experts are Task-Discriminative Learners for Any Image Restoration",
-      "created_at": "2024-11-27",
-      "updated_at": "2026-01-12",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1pQBceb8cCPdIzbqbNN..."
-      ],
-      "conference": "CVPR",
-      "conference_year": "2025",
-      "arxiv_id": "2411.18466",
-      "conference_details": [
-        "CVPR: CVPR 2025",
-        "arXiv: 2411.18466"
-      ],
-      "topics": [
-        "all-in-one-restoration",
-        "computer-vision",
-        "cvpr",
-        "cvpr2025",
-        "efficiency",
-        "image-restoration",
-        "low-level-vision",
-        "mixture-of-experts"
-      ],
-      "coming_soon_detected": true,
-      "coming_soon_details": [
-        "stay tuned: 'Stay tuned'"
-      ],
-      "ru_candidate": true
-    },
-    {
-      "name": "MP-HSIR",
-      "full_name": "ZhehuiWu/MP-HSIR",
-      "stars": 21,
-      "url": "https://github.com/ZhehuiWu/MP-HSIR",
-      "description": "MP-HSIR: A Multi-Prompt Framework for Universal Hyperspectral Image Restoration",
-      "created_at": "2025-03-11",
-      "updated_at": "2025-12-17",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1EcX6AY63sylH00ixqc...",
-        "google_drive: drive.google.com/drive/folders/1J4OA_gUiZHGvYNvXDi..."
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2503.09131",
-      "conference_details": [
-        "arXiv: 2503.09131"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "HazeFlow",
-      "full_name": "cloor/HazeFlow",
-      "stars": 21,
-      "url": "https://github.com/cloor/HazeFlow",
-      "description": "HazeFlow: Revisit Haze Physical Model as ODE and Non-Homogeneous Haze Generation for Real-World Dehazing [ICCV 2025]",
-      "created_at": "2025-07-18",
-      "updated_at": "2025-12-26",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/file/d/1m8OVRi-3m7-u0bGWFS5W2ZpZM...",
-        "google_drive: drive.google.com/drive/folders/1mH36eROxST_-MR9drC..."
-      ],
-      "conference": "ICCV",
-      "conference_year": "2025",
-      "arxiv_id": "2509.18190",
-      "conference_details": [
-        "ICCV: ICCV 2025",
-        "arXiv: 2509.18190"
-      ],
-      "topics": [
-        "asm",
-        "atmospheric-scattering",
-        "defogging",
-        "dehaze",
-        "dehazing",
-        "fog-removal",
-        "haze-generation",
-        "haze-removal",
-        "hazeflow",
-        "ode",
-        "real-world-haze",
-        "rectified-flow",
-        "transmission-map"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "HazeSpace2M_ACMMN_2024",
-      "full_name": "tanvirnwu/HazeSpace2M_ACMMN_2024",
-      "stars": 27,
-      "url": "https://github.com/tanvirnwu/HazeSpace2M_ACMMN_2024",
-      "description": "HazeSpace2M is a large scale paired hazy dataset for training and evaluating haze type classification models and single image dehazing models.",
-      "created_at": "2024-07-16",
-      "updated_at": "2025-11-22",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/datasets/tanvirnwu/HazeSpace2M/tree/main/Sate...",
-        "HF: huggingface.co/datasets/tanvirnwu/HazeSpace2M/tree/main/Stre...",
-        "HF: huggingface.co/datasets/tanvirnwu/HazeSpace2M/tree/main/Outd..."
-      ],
-      "conference": "ACMMM",
-      "conference_year": "2024",
-      "arxiv_id": null,
-      "conference_details": [
-        "ACMMM: acmmm"
-      ],
-      "topics": [
-        "classification",
-        "dataset",
-        "dehazer",
-        "dehazing",
-        "dehazing-algorithm",
-        "haze",
-        "hazeawaredehazing",
-        "hazeclassification",
-        "hazespace2m",
-        "hazetypeclassification",
-        "singleimage",
-        "singleimagedehazing"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "HVI-CIDNet",
-      "full_name": "Fediory/HVI-CIDNet",
-      "stars": 710,
-      "url": "https://github.com/Fediory/HVI-CIDNet",
-      "description": "[CVPR2025 && NTIRE2025] HVI: A New Color Space for Low-light Image Enhancement (Official Implementation)",
-      "created_at": "2024-02-08",
-      "updated_at": "2026-01-12",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/spaces/Fediory/HVI-CIDNet_Low-light-Image-Enh...",
-        "HF: huggingface.co/papers/2502.20272",
-        "HF: huggingface.co/papers/2502.20272"
-      ],
-      "conference": "CVPR",
-      "conference_year": "2025",
-      "arxiv_id": "2402.05809",
-      "conference_details": [
-        "CVPR: CVPR2025",
-        "arXiv: 2402.05809"
-      ],
-      "topics": [
-        "cvpr",
-        "hvi-color-space",
-        "image-enhancement",
-        "image-processing",
-        "low-light-image-enhancement",
-        "transformer"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "LightenDiffusion",
-      "full_name": "JianghaiSCU/LightenDiffusion",
-      "stars": 255,
-      "url": "https://github.com/JianghaiSCU/LightenDiffusion",
-      "description": "Official pytorch implementation for \"LightenDiffusion: Unsupervised Low-Light Image Enhancement with Latent-Retinex Diffusion Models\"",
-      "created_at": "2024-07-09",
-      "updated_at": "2026-01-04",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/file/d/18bs_mAREhLipaM2qvhxs7u7ff...",
-        "google_drive: drive.google.com/drive/folders/1m3t15rWw76IDDWJ0ex...",
-        "baidu: pan.baidu.com/s/1spt0kYU3OqsQSND-be4UaA",
-        "baidu: pan.baidu.com/s/1XHWQAS0ZNrnCyZ-bq7MKvA"
-      ],
-      "conference": "ECCV",
-      "conference_year": "2024",
-      "arxiv_id": null,
-      "conference_details": [
-        "ECCV: ECCV 2024"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "GMNet",
-      "full_name": "qtlark/GMNet",
-      "stars": 19,
-      "url": "https://github.com/qtlark/GMNet",
-      "description": "[ICLR2025] Learning Gain Map for Inverse Tone Mapping",
-      "created_at": "2025-02-17",
-      "updated_at": "2026-01-10",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "baidu: pan.baidu.com/s/1E3mrAjdfib2H9ZOOe_EOug?pwd=1958",
-        "baidu: pan.baidu.com/s/1E3mrAjdfib2H9ZOOe_EOug?pwd=1958",
-        "mega: mega.nz/folder/P9Z3jBDb#nclbhFCndJspx6wivcuE0Q",
-        "mega: mega.nz/folder/P9Z3jBDb#nclbhFCndJspx6wivcuE0Q"
-      ],
-      "conference": "ICLR",
-      "conference_year": "2025",
-      "arxiv_id": null,
-      "conference_details": [
-        "ICLR: ICLR2025"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "RestorMixer",
-      "full_name": "ClimBin/RestorMixer",
-      "stars": 47,
-      "url": "https://github.com/ClimBin/RestorMixer",
-      "description": "The official implementation of \"An Efficient and Mixed Heterogeneous Model for Image Restoration\"",
-      "created_at": "2025-04-11",
-      "updated_at": "2025-12-31",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2504.10967",
-      "conference_details": [
-        "arXiv: 2504.10967"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "GridFormer",
-      "full_name": "TaoWangzj/GridFormer",
-      "stars": 36,
-      "url": "https://github.com/TaoWangzj/GridFormer",
-      "description": "The code release of paper \" GridFormer: Residual Dense Transformer with Grid Structure for Image Restoration in Adverse Weather Conditions\", IJCV 2024",
-      "created_at": "2024-06-24",
-      "updated_at": "2025-12-04",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/18OnOUkwfbpltn_i384...",
-        "google_drive: drive.google.com/drive/folders/1TPDn9_5Lww7OWKf_zq...",
-        "baidu: pan.baidu.com/s/1MDeL3O8qfDuBp3ItOsGlbA?pwd=65h2",
-        "baidu: pan.baidu.com/s/1Ezik5nUv4TwbIs2NTWutgg?pwd=yx6c"
-      ],
-      "conference": "IJCV",
-      "conference_year": "2024",
-      "arxiv_id": null,
-      "conference_details": [
-        "IJCV: IJCV 2024"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "SWFormer",
-      "full_name": "deng-ai-lab/SWFormer",
-      "stars": 23,
-      "url": "https://github.com/deng-ai-lab/SWFormer",
-      "description": "Image Restoration via Multi-domain Learning",
-      "created_at": "2025-05-06",
-      "updated_at": "2025-12-25",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "baidu: pan.baidu.com/s/1OCaSuwQRgkpm3kU55Hef0Q?pwd=sakm",
-        "baidu: pan.baidu.com/s/1zknuXnv5MR6yhS0I8u2uZg?pwd=h8vv"
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "HINT",
-      "full_name": "joshyZhou/HINT",
-      "stars": 22,
-      "url": "https://github.com/joshyZhou/HINT",
-      "description": "Devil is in the Uniformity: Exploring Diverse Learners within Transformer for Image Restoration",
-      "created_at": "2025-03-18",
-      "updated_at": "2026-01-07",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/spaces/yssszzzzzzzzy/HINT",
-        "HF: huggingface.co/spaces/yssszzzzzzzzy/HINT"
-      ],
-      "conference": "ICCV",
-      "conference_year": "2025",
-      "arxiv_id": null,
-      "conference_details": [
-        "ICCV: ICCV 2025"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "ASTv2",
-      "full_name": "joshyZhou/ASTv2",
-      "stars": 10,
-      "url": "https://github.com/joshyZhou/ASTv2",
-      "description": "Learning An Adaptive Sparse Transformer for Efficient Image Restoration",
-      "created_at": "2025-06-26",
-      "updated_at": "2025-12-30",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/spaces/yssszzzzzzzzy/AStv2",
-        "HF: huggingface.co/spaces/yssszzzzzzzzy/AStv2"
-      ],
-      "conference": "TPAMI",
-      "conference_year": "2025",
-      "arxiv_id": null,
-      "conference_details": [
-        "TPAMI: TPAMI 2025"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "CODiff",
-      "full_name": "jp-guo/CODiff",
-      "stars": 69,
-      "url": "https://github.com/jp-guo/CODiff",
-      "description": "[ICCV'25] Compression-Aware One-Step Diffusion Model for JPEG Artifact Removal",
-      "created_at": "2025-02-12",
-      "updated_at": "2025-12-29",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/stabilityai/stable-diffusion-2-1-base"
-      ],
-      "conference": "ICCV",
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [
-        "ICCV: ICCV"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "ComfyUI-FBCNN",
-      "full_name": "Miosp/ComfyUI-FBCNN",
-      "stars": 34,
-      "url": "https://github.com/Miosp/ComfyUI-FBCNN",
-      "description": "JPEG artifacts removal using FBCNN model ported to ComfyUI",
-      "created_at": "2024-01-19",
-      "updated_at": "2025-11-21",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "OAPT",
-      "full_name": "QMoQ/OAPT",
-      "stars": 11,
-      "url": "https://github.com/QMoQ/OAPT",
-      "description": "[ECCV-2024] OAPT: Offset-Aware Partition Transformer for Double JPEG Artifacts Removal",
-      "created_at": "2024-07-08",
-      "updated_at": "2025-11-05",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1yZcczbsVdxmsocQMaC...",
-        "baidu: pan.baidu.com/s/1CAXtSt9oEcBHp8zqCBnrzg?pwd=hm52"
-      ],
-      "conference": "ECCV",
-      "conference_year": "2024",
-      "arxiv_id": "2408.11480",
-      "conference_details": [
-        "ECCV: ECCV",
-        "arXiv: 2408.11480"
-      ],
-      "topics": [
-        "computer-vision",
-        "double-compression",
-        "eccv2024",
-        "image-restoration",
-        "jpeg-artifacts-removal",
-        "low-level-vision",
-        "transformer"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "Unveiling-Hidden-Details-A-RAW-Data-Enhanced-RealSR",
-      "full_name": "peylnog/Unveiling-Hidden-Details-A-RAW-Data-Enhanced-RealSR",
-      "stars": 152,
-      "url": "https://github.com/peylnog/Unveiling-Hidden-Details-A-RAW-Data-Enhanced-RealSR",
-      "description": "Official Code for \u201cUnveiling Hidden Details: A RAW Data-Enhanced Paradigm for Real-World Super-Resolution\u201d",
-      "created_at": "2024-11-16",
-      "updated_at": "2025-12-10",
-      "status": "coming_soon",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [],
-      "coming_soon_detected": true,
-      "coming_soon_details": [
-        "unchecked: release/download: '[ ] Release'"
-      ],
-      "ru_candidate": false
-    },
-    {
-      "name": "Unsupervised-Spectral-Demosaicing",
-      "full_name": "fkmajiji/Unsupervised-Spectral-Demosaicing",
-      "stars": 22,
-      "url": "https://github.com/fkmajiji/Unsupervised-Spectral-Demosaicing",
-      "description": "This is an official PyTorch implementation for \"Unsupervised Spectral Demosaicing with Lightweight Spectral Attention Networks\".",
-      "created_at": "2024-03-25",
-      "updated_at": "2025-12-30",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1zTyM5pDkrbMa6c7QjN...",
-        "google_drive: drive.google.com/drive/folders/1v1eWW0GJqxw734JJEv...",
-        "baidu: pan.baidu.com/s/1REEnuPON7pcok4H0nBWtFg?pwd=mig2"
-      ],
-      "conference": "TIP",
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [
-        "TIP: Transactions on Image Processing"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "DemosaicFormer",
-      "full_name": "QUEAHREN/DemosaicFormer",
-      "stars": 15,
-      "url": "https://github.com/QUEAHREN/DemosaicFormer",
-      "description": "Official PyTorch implementation of the Winner Award solution of MIPI 2024 Demosaic for HybridEVS Camera Challenge (CVPR Workshop 2024).",
-      "created_at": "2024-03-06",
-      "updated_at": "2025-11-27",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1Yi4ZqNm-0AfdWm8gzL...",
-        "google_drive: drive.google.com/file/d/1Fc9LA5KRoprYMlQ8gZmsddKHd..."
-      ],
-      "conference": "CVPR",
-      "conference_year": "2024",
-      "arxiv_id": "2405.04867",
-      "conference_details": [
-        "CVPR: CVPR",
-        "arXiv: 2405.04867"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "unified-demosaicing",
-      "full_name": "SamsungLabs/unified-demosaicing",
-      "stars": 10,
-      "url": "https://github.com/SamsungLabs/unified-demosaicing",
-      "description": "Code for paper: Examining Joint Demosaicing and Denoising for Single-, Quad- and Nona-Bayer Patterns",
-      "created_at": "2025-04-28",
-      "updated_at": "2026-01-09",
-      "status": "no_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2504.07145",
-      "conference_details": [
-        "arXiv: 2504.07145"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "isethdrsensor",
-      "full_name": "ISET/isethdrsensor",
-      "stars": 10,
-      "url": "https://github.com/ISET/isethdrsensor",
-      "description": "Test ideas about sensor architectures for HDR imaging",
-      "created_at": "2024-05-07",
-      "updated_at": "2025-11-09",
-      "status": "no_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "SeedVR",
-      "full_name": "ByteDance-Seed/SeedVR",
-      "stars": 893,
-      "url": "https://github.com/ByteDance-Seed/SeedVR",
-      "description": "Repo for SeedVR2 & SeedVR (CVPR2025 Highlight)",
-      "created_at": "2025-06-10",
-      "updated_at": "2026-01-12",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/collections/ByteDance-Seed/seedvr-6849deeb461...",
-        "HF: huggingface.co/spaces/ByteDance-Seed/SeedVR2-3B",
-        "HF: huggingface.co/collections/ByteDance-Seed/seedvr-6849deeb461..."
-      ],
-      "conference": "CVPR",
-      "conference_year": "2025",
-      "arxiv_id": "2501.01320",
-      "conference_details": [
-        "CVPR: CVPR2025",
-        "arXiv: 2501.01320"
-      ],
-      "topics": [
-        "diffusion-transformer",
-        "image-restoration",
-        "one-step-diffusion-model",
-        "video-restoration"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "PMRF",
-      "full_name": "ohayonguy/PMRF",
-      "stars": 732,
-      "url": "https://github.com/ohayonguy/PMRF",
-      "description": "[ICLR 2025] Official implementation of Posterior-Mean Rectified Flow: Towards Minimum MSE Photo-Realistic Image Restoration",
-      "created_at": "2024-09-30",
-      "updated_at": "2026-01-07",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/spaces/ohayonguy/PMRF",
-        "HF: huggingface.co/spaces/ohayonguy/PMRF",
-        "HF: huggingface.co/ohayonguy/PMRF_blind_face_image_restoration"
-      ],
-      "conference": "ICLR",
-      "conference_year": "2025",
-      "arxiv_id": "2410.00418",
-      "conference_details": [
-        "ICLR: ICLR 2025",
-        "arXiv: 2410.00418"
-      ],
-      "topics": [
-        "blind-face-restoration",
-        "colorization",
-        "computer-vision",
-        "denoising",
-        "diffusion-models",
-        "flow-matching",
-        "generative-models",
-        "image-manipulation",
-        "image-processing",
-        "image-restoration",
-        "inpainting",
-        "inverse-problems",
-        "rectified-flow"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "fusion_bench",
-      "full_name": "tanganke/fusion_bench",
-      "stars": 197,
-      "url": "https://github.com/tanganke/fusion_bench",
-      "description": "FusionBench: A Comprehensive Benchmark/Toolkit of Deep Model Fusion",
-      "created_at": "2024-05-13",
-      "updated_at": "2026-01-12",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": "NeurIPS",
-      "conference_year": "2025",
-      "arxiv_id": "2406.03280",
-      "conference_details": [
-        "NeurIPS: NeurIPS 2025",
-        "arXiv: 2406.03280"
-      ],
-      "topics": [
-        "deep-neural-networks",
-        "fusion-bench",
-        "large-language-models",
-        "machine-learning-algorithms",
-        "model-ensemble",
-        "model-fusion",
-        "model-merging",
-        "model-mixing",
-        "model-upscaling",
-        "multi-tasking"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "vs_undistort",
-      "full_name": "pifroggi/vs_undistort",
-      "stars": 14,
-      "url": "https://github.com/pifroggi/vs_undistort",
-      "description": "Vapoursynth function to remove video distortions, turbulance, wobble, warp, heat haze, or similar",
-      "created_at": "2024-05-12",
-      "updated_at": "2026-01-09",
-      "status": "no_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": "TOG",
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [
-        "TOG: tog"
-      ],
-      "topics": [
-        "dehaze",
-        "distortion-correction",
-        "haze-removal",
-        "rectification",
-        "undistort",
-        "vapoursynth",
-        "vapoursynth-functions"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "FMA-Net",
-      "full_name": "KAIST-VICLab/FMA-Net",
-      "stars": 696,
-      "url": "https://github.com/KAIST-VICLab/FMA-Net",
-      "description": "[CVPR 2024 Oral] Official repository of FMA-Net",
-      "created_at": "2024-01-05",
-      "updated_at": "2026-01-12",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "dropbox: dropbox.com/scl/fo/qgzadp9cqnmzyvghjk4v6/AN-b711qS...",
-        "dropbox: dropbox.com/scl/fo/4392nxna1wptrw06ktv6r/AIyy20JrX..."
-      ],
-      "conference": "CVPR",
-      "conference_year": "2024",
-      "arxiv_id": "2401.03707",
-      "conference_details": [
-        "CVPR: CVPR 2024",
-        "arXiv: 2401.03707"
-      ],
-      "topics": [
-        "deblurring",
-        "super-resolution"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "temporal-motion-deblur",
-      "full_name": "zhan994/temporal-motion-deblur",
-      "stars": 11,
-      "url": "https://github.com/zhan994/temporal-motion-deblur",
-      "description": "[ICIP 2025] Image Motion Blur Removal in the Temporal Dimension with Video Diffusion Models",
-      "created_at": "2025-01-10",
-      "updated_at": "2025-12-25",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/zhan994/temporal-motion-deblur",
-        "HF: huggingface.co/zhan994/temporal-motion-deblur"
-      ],
-      "conference": "ICIP",
-      "conference_year": "2025",
-      "arxiv_id": "2501.12604",
-      "conference_details": [
-        "ICIP: ICIP 2025",
-        "arXiv: 2501.12604"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "FMA-Net-PlusPlus",
-      "full_name": "KAIST-VICLab/FMA-Net-PlusPlus",
-      "stars": 70,
-      "url": "https://github.com/KAIST-VICLab/FMA-Net-PlusPlus",
-      "description": "Official repository of \"FMA-Net++: Motion- and Exposure-Aware Real-World Joint Video Super-Resolution and Deblurring\"",
-      "created_at": "2025-12-04",
-      "updated_at": "2026-01-11",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": "CVPR",
-      "conference_year": "2024",
-      "arxiv_id": "2512.04390",
-      "conference_details": [
-        "CVPR: CVPR 2024",
-        "arXiv: 2512.04390"
-      ],
-      "topics": [
-        "deblurring",
-        "super-resolution"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "claritycore",
-      "full_name": "Bezdarnost/claritycore",
-      "stars": 13,
-      "url": "https://github.com/Bezdarnost/claritycore",
-      "description": "Next-generation Open Source toolkit for low-level vision. Engineered for state-of-the-art performance in image and video pixel2pixel tasks, including ",
-      "created_at": "2025-09-29",
-      "updated_at": "2025-11-30",
-      "status": "no_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [
-        "clarity",
-        "claritycore",
-        "computer-vision",
-        "deblurring",
-        "denoising",
-        "image-segmentation",
-        "low-level-vision",
-        "super-resolution",
-        "training",
-        "transformer",
-        "variational-autoencoder"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "DSTNet-plus",
-      "full_name": "sunny2109/DSTNet-plus",
-      "stars": 22,
-      "url": "https://github.com/sunny2109/DSTNet-plus",
-      "description": "[TPAMI 2025] Learning Efficient Deep Discriminative Spatial and Temporal Networks for Video Deblurring",
-      "created_at": "2024-01-08",
-      "updated_at": "2025-12-13",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/Meloo/DSTNetPlus",
-        "HF: huggingface.co/Meloo/DSTNetPlus/tree/main",
-        "HF: huggingface.co/Meloo/DSTNetPlus/tree/main"
-      ],
-      "conference": "TPAMI",
-      "conference_year": "2025",
-      "arxiv_id": null,
-      "conference_details": [
-        "TPAMI: TPAMI 2025"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "SelfHVD",
-      "full_name": "cshonglei/SelfHVD",
-      "stars": 14,
-      "url": "https://github.com/cshonglei/SelfHVD",
-      "description": "SelfHVD: Self-Supervised Handheld Video Deblurring for Mobile Phones",
-      "created_at": "2025-05-21",
-      "updated_at": "2025-12-19",
-      "status": "coming_soon",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2508.08605",
-      "conference_details": [
-        "arXiv: 2508.08605"
-      ],
-      "topics": [],
-      "coming_soon_detected": true,
-      "coming_soon_details": [
-        "coming soon: 'Code is coming soon'",
-        "coming soon: 'coming soon.'"
-      ],
-      "ru_candidate": false
-    },
-    {
-      "name": "enable-hdr-oneplus13-webui",
-      "full_name": "HoneyWhiteCloud/enable-hdr-oneplus13-webui",
-      "stars": 34,
-      "url": "https://github.com/HoneyWhiteCloud/enable-hdr-oneplus13-webui",
-      "description": "\u4e00\u4e2a\u7528\u4e8e\u7ed9OnePlus13\uff08\u7406\u8bba\u4e0aOPPO\uff0crealme\uff0cOnePlus\u90fd\u80fd\u591f\u4f7f\u7528\uff09\u6dfb\u52a0HDR\u5305\u540d\u767d\u540d\u5355\u7684\u7684\u6a21\u5757\uff08\u57fa\u4e8e\u4eba\u5de5\u667a\u80fd\u795e\u529b\uff09\uff0c\u4ece\u201chttps://github.com/HoneyWhiteCloud/enable-hdr-oneplus13-webui-old \u201d \u8f6c\u79fb\u5230\u8fd9\u4e2a\u50a8\u5b58\u5e93\u3002",
-      "created_at": "2025-08-30",
-      "updated_at": "2026-01-10",
-      "status": "no_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "Restore-RWKV",
-      "full_name": "Yaziwel/Restore-RWKV",
-      "stars": 128,
-      "url": "https://github.com/Yaziwel/Restore-RWKV",
-      "description": "Restore-RWKV: Efficient and Effective Medical Image Restoration with RWKV",
-      "created_at": "2024-07-12",
-      "updated_at": "2026-01-10",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/12Qdkdms14Kfv3P60cl...",
-        "baidu: pan.baidu.com/s/1oBBG_Stcn7cfO8U49S146w?pwd=3x13"
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2407.11087",
-      "conference_details": [
-        "arXiv: 2407.11087"
-      ],
-      "topics": [
-        "all-in-one",
-        "ct-denoising",
-        "image-restoration",
-        "low-level",
-        "mamba",
-        "mri-reconstruction",
-        "pet-image-synthesis",
-        "rwkv",
-        "transformer"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "wdm-3d",
-      "full_name": "pfriedri/wdm-3d",
-      "stars": 124,
-      "url": "https://github.com/pfriedri/wdm-3d",
-      "description": "PyTorch implementation for \"WDM: 3D Wavelet Diffusion Models for High-Resolution Medical Image Synthesis\" (DGM4MICCAI 2024)",
-      "created_at": "2024-02-28",
-      "updated_at": "2025-12-22",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/pfriedri/wdm-3d",
-        "HF: huggingface.co/pfriedri/wdm-3d/blob/main/brats_unet_128_1200...",
-        "HF: huggingface.co/pfriedri/wdm-3d/blob/main/lidc-idri_unet_128_..."
-      ],
-      "conference": "MICCAI",
-      "conference_year": null,
-      "arxiv_id": "2402.19043",
-      "conference_details": [
-        "MICCAI: MICCAI",
-        "arXiv: 2402.19043"
-      ],
-      "topics": [
-        "3d",
-        "diffusion-models",
-        "image-generation",
-        "wavelet-transform"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "DenoMamba",
-      "full_name": "icon-lab/DenoMamba",
-      "stars": 34,
-      "url": "https://github.com/icon-lab/DenoMamba",
-      "description": "Official implementation of DenoMamba: A fused state-space model for low-dose CT denoising",
-      "created_at": "2024-09-20",
-      "updated_at": "2025-12-25",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2409.13094",
-      "conference_details": [
-        "arXiv: 2409.13094"
-      ],
-      "topics": [
-        "computed-tomography",
-        "contextualized-representation",
-        "deep-learning",
-        "denoising",
-        "long-range",
-        "low-dose-ct-denoising",
-        "mamba",
-        "medical-imaging",
-        "python",
-        "pytorch",
-        "sequence-models",
-        "state-space-models"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "CVPR-MIA",
-      "full_name": "MedAIerHHL/CVPR-MIA",
-      "stars": 471,
-      "url": "https://github.com/MedAIerHHL/CVPR-MIA",
-      "description": "Papers of Medical Image Analysis on CVPR",
-      "created_at": "2024-03-02",
-      "updated_at": "2026-01-12",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": "CVPR",
-      "conference_year": null,
-      "arxiv_id": "2412.20651",
-      "conference_details": [
-        "CVPR: CVPR",
-        "arXiv: 2412.20651"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "LDAE",
-      "full_name": "GabrieleLozupone/LDAE",
-      "stars": 27,
-      "url": "https://github.com/GabrieleLozupone/LDAE",
-      "description": "Official PyTorch implementation of \"Latent Diffusion Autoencoders: Toward Efficient and Meaningful Unsupervised Representation Learning in Medical Ima",
-      "created_at": "2025-04-11",
-      "updated_at": "2026-01-09",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/file/d/1GwavUxV6n_oLGwrUvXAGj6wme...",
-        "google_drive: drive.google.com/file/d/1IfFOwtnsYoup3LvVmkkQCvC6c..."
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2212.12990",
-      "conference_details": [
-        "arXiv: 2212.12990"
-      ],
-      "topics": [
-        "3d-mri",
-        "alzheimers-disease",
-        "alzheimers-research",
-        "autoencoders",
-        "data-augmentation",
-        "diffusion-models",
-        "foundation-models",
-        "image-editing",
-        "latent-diffusion-models",
-        "representation-learning",
-        "unsupervised-learning"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "ViTa",
-      "full_name": "Yundi-Zhang/ViTa",
-      "stars": 25,
-      "url": "https://github.com/Yundi-Zhang/ViTa",
-      "description": "\ud83d\udd25 Medical Image Analysis 2025: Towards Cardiac MRI Foundation Models: Comprehensive Visual-Tabular Representations for Whole-Heart Assessment and Beyo",
-      "created_at": "2025-05-23",
-      "updated_at": "2026-01-05",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/UKBB-Foundational-Models/ViTa"
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2504.13037",
-      "conference_details": [
-        "arXiv: 2504.13037"
-      ],
-      "topics": [
-        "cardiac-mri",
-        "foundation-models",
-        "health-indicator-prediction",
-        "phenotype-prediction",
-        "segmentation"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "CMRxRecon2025",
-      "full_name": "CmrxRecon/CMRxRecon2025",
-      "stars": 20,
-      "url": "https://github.com/CmrxRecon/CMRxRecon2025",
-      "description": "Code for the Cardiac MRI Reconstruction Challenge 2025 (CMRxRecon2025)",
-      "created_at": "2025-01-24",
-      "updated_at": "2026-01-02",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": "MICCAI",
-      "conference_year": "2025",
-      "arxiv_id": null,
-      "conference_details": [
-        "MICCAI: MICCAI 2025"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "CMRxRecon2024",
-      "full_name": "CmrxRecon/CMRxRecon2024",
-      "stars": 35,
-      "url": "https://github.com/CmrxRecon/CMRxRecon2024",
-      "description": "Code for the Cardiac MRI Reconstruction Challenge 2024 (CMRxRecon2024)",
-      "created_at": "2024-04-09",
-      "updated_at": "2025-12-29",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": "MICCAI",
-      "conference_year": "2024",
-      "arxiv_id": null,
-      "conference_details": [
-        "MICCAI: MICCAI 2024"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "atommic",
-      "full_name": "wdika/atommic",
-      "stars": 19,
-      "url": "https://github.com/wdika/atommic",
-      "description": "ATOMMIC: Advanced Toolbox for Multitask Medical Imaging Consistency",
-      "created_at": "2024-04-07",
-      "updated_at": "2025-12-25",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/wdika",
-        "HF: huggingface.co/wdika",
-        "HF: huggingface.co/wdika"
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [
-        "deep-learning",
-        "medical-image-analysis",
-        "medical-imaging",
-        "mri"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "monalisa",
-      "full_name": "MattechLab/monalisa",
-      "stars": 19,
-      "url": "https://github.com/MattechLab/monalisa",
-      "description": "This repository contains code for performing MRI reconstruction with non-cartesian or cartesian data. Several iterative reconstruction are implemented",
-      "created_at": "2024-05-23",
-      "updated_at": "2026-01-10",
-      "status": "no_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "MIR",
-      "full_name": "junyuchen245/MIR",
-      "stars": 15,
-      "url": "https://github.com/junyuchen245/MIR",
-      "description": "A deep learning-based medical image registration package based on PyTorch.",
-      "created_at": "2025-05-01",
-      "updated_at": "2026-01-08",
-      "status": "no_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": "CVPR",
-      "conference_year": "2025",
-      "arxiv_id": "2412.17982",
-      "conference_details": [
-        "CVPR: CVPR",
-        "arXiv: 2412.17982"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "segmentation-guided-diffusion",
-      "full_name": "mazurowski-lab/segmentation-guided-diffusion",
-      "stars": 203,
-      "url": "https://github.com/mazurowski-lab/segmentation-guided-diffusion",
-      "description": "[MICCAI 2024] Easy diffusion models (optionally with segmentation guidance) for medical images and beyond.",
-      "created_at": "2024-01-31",
-      "updated_at": "2026-01-09",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1OaOGBLfpUFe_tmpvZG...",
-        "google_drive: drive.google.com/file/d/1yaLLdzMhAjWUEzdkTa5FjbX3d..."
-      ],
-      "conference": "MICCAI",
-      "conference_year": "2024",
-      "arxiv_id": "2402.05210",
-      "conference_details": [
-        "MICCAI: MICCAI 2024",
-        "arXiv: 2402.05210"
-      ],
-      "topics": [
-        "conditional-diffusion",
-        "ddpm",
-        "diffusers",
-        "diffusion-models",
-        "miccai2024",
-        "semantic-synthesis"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "CMC",
-      "full_name": "med-air/CMC",
-      "stars": 51,
-      "url": "https://github.com/med-air/CMC",
-      "description": "This code is implementation of MICCAI 2024 \"Robust Semi-Supervised Multimodal Medical Image Segmentation via Cross Modality Collaboration\"",
-      "created_at": "2024-07-07",
-      "updated_at": "2026-01-08",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": "MICCAI",
-      "conference_year": "2024",
-      "arxiv_id": null,
-      "conference_details": [
-        "MICCAI: MICCAI 2024"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "flemme",
-      "full_name": "wlsdzyzl/flemme",
-      "stars": 25,
-      "url": "https://github.com/wlsdzyzl/flemme",
-      "description": "A flexible and modular learning platform for medical images",
-      "created_at": "2024-08-16",
-      "updated_at": "2026-01-07",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/datasets/wlsdzyzl/MedPointS-cls",
-        "HF: huggingface.co/datasets/wlsdzyzl/MedPointS-cpl",
-        "HF: huggingface.co/datasets/wlsdzyzl/MedPointS-seg"
-      ],
-      "conference": "MICCAI",
-      "conference_year": "2025",
-      "arxiv_id": "2408.09369",
-      "conference_details": [
-        "MICCAI: MICCAI 2025",
-        "arXiv: 2408.09369"
-      ],
-      "topics": [
-        "ddpm",
-        "deep-learning",
-        "generation",
-        "mamba",
-        "medical-imaging",
-        "point-cloud",
-        "segmentation",
-        "swin-transformer"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "MK-UNet",
-      "full_name": "SLDGroup/MK-UNet",
-      "stars": 49,
-      "url": "https://github.com/SLDGroup/MK-UNet",
-      "description": "Official repository of ICCV 2025 CVAMD Oral paper: MK-UNet: Multi-kernel Lightweight CNN for Medical Image Segmentation",
-      "created_at": "2025-08-17",
-      "updated_at": "2026-01-12",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1FPJr5f91uUCikxMvkw...",
-        "google_drive: drive.google.com/drive/folders/1u4_8dMztnEBUaX-w3X..."
-      ],
-      "conference": "CVPR",
-      "conference_year": "2025",
-      "arxiv_id": "2509.18493",
-      "conference_details": [
-        "CVPR: CVPR 2025",
-        "arXiv: 2509.18493"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "LoMix",
-      "full_name": "SLDGroup/LoMix",
-      "stars": 11,
-      "url": "https://github.com/SLDGroup/LoMix",
-      "description": "Official repository of NeurIPS 2025 paper \"LoMix: Learnable Weighted Multi\u2011Scale Logits Mixing for Medical Image Segmentation\"",
-      "created_at": "2025-10-22",
-      "updated_at": "2025-12-24",
-      "status": "has_weights",
-      "last_checked": "2026-01-10",
-      "status_changed_date": "2026-01-10",
-      "previous_status": "no_weights",
-      "weight_status": "Release",
-      "weight_confidence": "high",
-      "weight_details": [
-        "Release: github.com/whai362/PVT/releases/tag/v2"
-      ],
-      "conference": "CVPR",
-      "conference_year": "2025",
-      "arxiv_id": "2510.22995",
-      "conference_details": [
-        "CVPR: CVPR 2025",
-        "arXiv: 2510.22995"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "2022-CVPR-AirNet",
-      "full_name": "XLearning-SCU/2022-CVPR-AirNet",
-      "stars": 214,
-      "url": "https://github.com/XLearning-SCU/2022-CVPR-AirNet",
-      "description": "PyTorch implementation for All-In-One Image Restoration for Unknown Corruption (AirNet) (CVPR 2022)",
-      "created_at": "2022-03-03",
-      "updated_at": "2026-01-12",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/file/d/1idKFDkAHJGAFDn1OyXZxsTbOS...",
-        "google_drive: drive.google.com/drive/folders/1B3DJGQKB6eNdwuQIhd...",
-        "baidu: pan.baidu.com/s/1usrpGA8FIyj1ogsZQE_Emg"
-      ],
-      "conference": "CVPR",
-      "conference_year": "2022",
-      "arxiv_id": null,
-      "conference_details": [
-        "CVPR: CVPR 2022"
-      ],
-      "topics": [
-        "dehazing",
-        "denoising",
-        "deraining",
-        "image-restoration"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "ComfyUI-Ultimate-Auto-Sampler-Config-Grid-Testing-Suite",
-      "full_name": "JasonHoku/ComfyUI-Ultimate-Auto-Sampler-Config-Grid-Testing-Suite",
-      "stars": 20,
-      "url": "https://github.com/JasonHoku/ComfyUI-Ultimate-Auto-Sampler-Config-Grid-Testing-Suite",
-      "description": "ComfyUI Sampler testing & benchmarking tool for testing Stable Diffusion samplers, schedulers, CFG scales, prompts, img2img denoise values, and LoRA c",
-      "created_at": "2026-01-07",
-      "updated_at": "2026-01-12",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": "no_weights",
-      "weight_status": "Extension",
-      "weight_confidence": "low",
-      "weight_details": [
-        "File: sd_xl_base_1.0.safetensors",
-        "File: d_xl_base_1.0.safetensors",
-        "File: autXL_v9.safetensors"
-      ],
-      "conference": "TOG",
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [
-        "TOG: Tog"
-      ],
-      "topics": [
-        "comfyui",
-        "comfyui-custom-node",
-        "comfyui-nodes"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "MangaTranslator",
-      "full_name": "meangrinch/MangaTranslator",
-      "stars": 45,
-      "url": "https://github.com/meangrinch/MangaTranslator",
-      "description": "Manga translation app powered by AI",
-      "created_at": "2025-04-08",
-      "updated_at": "2026-01-12",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/deepghs/AnimeText_yolo",
-        "HF: huggingface.co/black-forest-labs/FLUX.1-Kontext-dev",
-        "HF: huggingface.co/kitsumed/yolov8m_seg-speech-bubble"
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [
-        "ai",
-        "comics",
-        "inpainting",
-        "manga",
-        "manga-translator",
-        "ocr",
-        "segmentation",
-        "text-detection",
-        "translation"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "CEM",
-      "full_name": "J-FHu/CEM",
-      "stars": 31,
-      "url": "https://github.com/J-FHu/CEM",
-      "description": "Codes of Interpreting Low-level Vision Models with Causal Effect Maps",
-      "created_at": "2024-03-22",
-      "updated_at": "2025-12-11",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1Ns6-LQNJSBzF6ke57v...",
-        "baidu: pan.baidu.com/s/1nb86GtKsNHHyHMmpASw13g?pwd=353p"
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2407.19789",
-      "conference_details": [
-        "arXiv: 2407.19789"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "PW-FNet",
-      "full_name": "deng-ai-lab/PW-FNet",
-      "stars": 46,
-      "url": "https://github.com/deng-ai-lab/PW-FNet",
-      "description": "Global Modeling Matters: A Fast, Lightweight and Effective Baseline for Efficient Image Restoration",
-      "created_at": "2025-07-21",
-      "updated_at": "2026-01-05",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "baidu: pan.baidu.com/s/1OCaSuwQRgkpm3kU55Hef0Q?pwd=sakm",
-        "baidu: pan.baidu.com/s/1zknuXnv5MR6yhS0I8u2uZg?pwd=h8vv"
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "DFPIR",
-      "full_name": "TxpHome/DFPIR",
-      "stars": 45,
-      "url": "https://github.com/TxpHome/DFPIR",
-      "description": "all-in-one image restoration",
-      "created_at": "2025-03-03",
-      "updated_at": "2026-01-10",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/15bOk4xrsK1b3nIu3-O...",
-        "baidu: pan.baidu.com/s/1W8mjjSB4XiL70cVK9B9Eng",
-        "baidu: pan.baidu.com/s/1hk5JgOpl3VYEsWEecPpJkg?pwd=tjkd"
-      ],
-      "conference": "CVPR",
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [
-        "CVPR: CVPR"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "CycleRDM",
-      "full_name": "hejh8/CycleRDM",
-      "stars": 21,
-      "url": "https://github.com/hejh8/CycleRDM",
-      "description": "Unified Image Restoration and Enhancement: Degradation Calibrated Cycle Reconstruction Diffusion Model. (PR)",
-      "created_at": "2024-12-13",
-      "updated_at": "2025-12-25",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": "no_weights",
-      "weight_status": "Cloud",
-      "weight_confidence": "medium",
-      "weight_details": [
-        "google_drive: drive.google.com/drive/folders/1TbYBrxsTqPd8x6dqVL...",
-        "google_drive: drive.google.com/drive/folders/1TbYBrxsTqPd8x6dqVL..."
-      ],
-      "conference": "PR",
-      "conference_year": null,
-      "arxiv_id": "2412.14630",
-      "conference_details": [
-        "PR: Pattern Recognition",
-        "arXiv: 2412.14630"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "Diff-Dehazer",
-      "full_name": "ywxjm/Diff-Dehazer",
-      "stars": 23,
-      "url": "https://github.com/ywxjm/Diff-Dehazer",
-      "description": "AAAI2025-Exploiting Diffusion Prior for Real-World Image Dehazing with Unpaired Training",
-      "created_at": "2025-03-19",
-      "updated_at": "2026-01-06",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/stabilityai/sd-turbo/tree/main"
-      ],
-      "conference": "AAAI",
-      "conference_year": "2025",
-      "arxiv_id": null,
-      "conference_details": [
-        "AAAI: AAAI2025"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "traiNNer-redux",
-      "full_name": "the-database/traiNNer-redux",
-      "stars": 101,
-      "url": "https://github.com/the-database/traiNNer-redux",
-      "description": "Deep learning training framework for image super resolution and restoration.",
-      "created_at": "2024-06-02",
-      "updated_at": "2026-01-12",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": null,
-      "conference_details": [],
-      "topics": [
-        "deep-learning",
-        "image-restoration",
-        "machine-learning",
-        "neural-network",
-        "python",
-        "pytorch",
-        "super-resolution",
-        "upscale"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "CasualHDRSplat",
-      "full_name": "WU-CVGL/CasualHDRSplat",
-      "stars": 28,
-      "url": "https://github.com/WU-CVGL/CasualHDRSplat",
-      "description": "[ACMMM 2025] \"Casual3DHDR: High Dynamic Range 3D Gaussian Splatting from Casually Captured Videos\"",
-      "created_at": "2025-04-24",
-      "updated_at": "2025-12-06",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": "ACMMM",
-      "conference_year": "2025",
-      "arxiv_id": "2504.17728",
-      "conference_details": [
-        "ACMMM: ACMMM 2025",
-        "arXiv: 2504.17728"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "3D-MedDiffusion",
-      "full_name": "ShanghaiTech-IMPACT/3D-MedDiffusion",
-      "stars": 111,
-      "url": "https://github.com/ShanghaiTech-IMPACT/3D-MedDiffusion",
-      "description": "[IEEE TMI 2025] 3D MedDiffusion: A 3D Medical Diffusion Model for Controllable and High-quality Medical Image Generation",
-      "created_at": "2024-12-16",
-      "updated_at": "2026-01-06",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/MMorss/3D-MedDiffusion"
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2412.13059",
-      "conference_details": [
-        "arXiv: 2412.13059"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "MedSegFactory",
-      "full_name": "jwmao1/MedSegFactory",
-      "stars": 30,
-      "url": "https://github.com/jwmao1/MedSegFactory",
-      "description": "MedSegFactory: Text-Guided Generation of Medical Image-Mask Pairs",
-      "created_at": "2025-04-10",
-      "updated_at": "2025-12-22",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/spaces/JohnWeck/medsegfactory",
-        "HF: huggingface.co/spaces/JohnWeck/medsegfactory/tree/main",
-        "HF: huggingface.co/JohnWeck/StableDiffusion/resolve/main/checkpo..."
-      ],
-      "conference": null,
-      "conference_year": null,
-      "arxiv_id": "2504.06897",
-      "conference_details": [
-        "arXiv: 2504.06897"
-      ],
-      "topics": [
-        "diffusion-models",
-        "generative-model",
-        "medical-image-analysis",
-        "medical-imaging"
-      ],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "PrevMatch",
-      "full_name": "wooseok-shin/PrevMatch",
-      "stars": 21,
-      "url": "https://github.com/wooseok-shin/PrevMatch",
-      "description": "Official implementation of PrevMatch: Revisiting and Maximizing Temporal Knowledge in Semi-supervised Semantic Segmentation",
-      "created_at": "2024-05-16",
-      "updated_at": "2026-01-11",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": "no_weights",
-      "weight_status": "Release",
-      "weight_confidence": "high",
-      "weight_details": [
-        "Release: github.com/wooseok-shin/PrevMatch/releases/download/checkpoi...",
-        "Release: github.com/wooseok-shin/PrevMatch/releases/download/checkpoi...",
-        "Release: github.com/wooseok-shin/PrevMatch/releases/download/checkpoi..."
-      ],
-      "conference": "CVPR",
-      "conference_year": null,
-      "arxiv_id": "2405.20610",
-      "conference_details": [
-        "CVPR: CVPR",
-        "arXiv: 2405.20610"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
-    },
-    {
-      "name": "CrossMatch",
-      "full_name": "AiEson/CrossMatch",
-      "stars": 47,
-      "url": "https://github.com/AiEson/CrossMatch",
-      "description": "CrossMatch: Enhance Semi-Supervised Medical Image Segmentation with Perturbation Strategies and Knowledge Distillation",
-      "created_at": "2024-04-30",
-      "updated_at": "2026-01-12",
-      "status": "no_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": null,
-      "weight_status": "None",
-      "weight_confidence": "none",
-      "weight_details": [],
-      "conference": "CVPR",
-      "conference_year": null,
-      "arxiv_id": "2405.00354",
-      "conference_details": [
-        "CVPR: CVPR",
-        "arXiv: 2405.00354"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": false
-    },
-    {
-      "name": "DiffRect",
-      "full_name": "CUHK-AIM-Group/DiffRect",
-      "stars": 62,
-      "url": "https://github.com/CUHK-AIM-Group/DiffRect",
-      "description": "[MICCAI' 24] DiffRect: Latent Diffusion Label Rectification for Semi-supervised Medical Image Segmentation",
-      "created_at": "2024-07-03",
-      "updated_at": "2026-01-12",
-      "status": "has_weights",
-      "last_checked": "2026-01-12",
-      "status_changed_date": "2026-01-12",
-      "previous_status": "no_weights",
-      "weight_status": "HF",
-      "weight_confidence": "high",
-      "weight_details": [
-        "HF: huggingface.co/datasets/jeffrey423/diffrect"
-      ],
-      "conference": "MICCAI",
-      "conference_year": null,
-      "arxiv_id": "2407.09918",
-      "conference_details": [
-        "MICCAI: MICCAI",
-        "arXiv: 2407.09918"
-      ],
-      "topics": [],
-      "coming_soon_detected": false,
-      "coming_soon_details": [],
-      "ru_candidate": true
+      "coming_soon_details": []
     }
   ]
 }
