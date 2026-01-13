@@ -55,9 +55,9 @@
       "conference": "NeurIPS",
       "conference_year": "2024",
       "weight_source": "Cloud",
-      "status": "new",
+      "status": "confirmed",
       "added_at": "2026-01-13T05:27:41.545827",
-      "reviewed_at": null,
+      "reviewed_at": "2026-01-13T10:35:42.633798",
       "source": "auto"
     },
     "smthemex/ComfyUI_LucidFlux": {
@@ -259,9 +259,9 @@
       "conference": "ECCV",
       "conference_year": "2024",
       "weight_source": "Cloud",
-      "status": "new",
+      "status": "confirmed",
       "added_at": "2026-01-13T05:27:41.545886",
-      "reviewed_at": null,
+      "reviewed_at": "2026-01-13T10:35:42.633831",
       "source": "auto"
     },
     "csxyhe/SADT": {
@@ -439,9 +439,9 @@
       "conference": "CVPR",
       "conference_year": "2025",
       "weight_source": "HF",
-      "status": "new",
+      "status": "confirmed",
       "added_at": "2026-01-13T05:27:41.545935",
-      "reviewed_at": null,
+      "reviewed_at": "2026-01-13T10:35:42.633728",
       "source": "auto"
     },
     "JianghaiSCU/LightenDiffusion": {
@@ -451,9 +451,9 @@
       "conference": "ECCV",
       "conference_year": "2024",
       "weight_source": "Cloud",
-      "status": "new",
+      "status": "confirmed",
       "added_at": "2026-01-13T05:27:41.545938",
-      "reviewed_at": null,
+      "reviewed_at": "2026-01-13T10:35:42.633764",
       "source": "auto"
     },
     "qtlark/GMNet": {
@@ -511,9 +511,9 @@
       "conference": "ICCV",
       "conference_year": null,
       "weight_source": "HF",
-      "status": "new",
+      "status": "confirmed",
       "added_at": "2026-01-13T05:27:41.546168",
-      "reviewed_at": null,
+      "reviewed_at": "2026-01-13T10:35:42.633863",
       "source": "auto"
     },
     "QMoQ/OAPT": {
@@ -571,9 +571,9 @@
       "conference": "ICLR",
       "conference_year": "2025",
       "weight_source": "HF",
-      "status": "new",
+      "status": "confirmed",
       "added_at": "2026-01-13T05:27:41.546182",
-      "reviewed_at": null,
+      "reviewed_at": "2026-01-13T10:35:42.633675",
       "source": "auto"
     },
     "KAIST-VICLab/FMA-Net": {
@@ -691,9 +691,9 @@
       "conference": "MICCAI",
       "conference_year": "2025",
       "weight_source": "HF",
-      "status": "new",
+      "status": "confirmed",
       "added_at": "2026-01-13T05:27:41.546210",
-      "reviewed_at": null,
+      "reviewed_at": "2026-01-13T10:35:42.633894",
       "source": "auto"
     },
     "SLDGroup/MK-UNet": {
@@ -731,15 +731,46 @@
       "added_at": "2026-01-13T05:31:17.846245",
       "reviewed_at": null,
       "source": "manual"
+    },
+    "mantasu/glasses-detector": {
+      "url": "https://github.com/mantasu/glasses-detector",
+      "name": "glasses-detector",
+      "stars": 0,
+      "conference": "",
+      "conference_year": "",
+      "weight_source": "manual",
+      "status": "new",
+      "added_at": "2026-01-13T11:23:45.129885",
+      "reviewed_at": null,
+      "source": "manual"
+    },
+    "joshyZhou/AST": {
+      "url": "https://github.com/joshyZhou/AST",
+      "name": "AST",
+      "stars": 0,
+      "conference": "",
+      "conference_year": "",
+      "weight_source": "manual",
+      "status": "new",
+      "added_at": "2026-01-13T11:24:01.248624",
+      "reviewed_at": null,
+      "source": "manual"
     }
   },
   "cart": [
-    "csxyhe/SADT",
-    "Zhao0100/UHDRes",
+    "ohayonguy/PMRF",
+    "JianghaiSCU/LightenDiffusion",
+    "deng-ai-lab/SFHformer",
+    "TMElyralab/MuseTalk",
     "wdika/atommic",
-    "AdemBoukhris457/Doctra",
+    "wlsdzyzl/flemme",
+    "csxyhe/SADT",
     "DachunKai/EvTexture",
-    "TMElyralab/MuseTalk"
+    "Fediory/HVI-CIDNet",
+    "Ascend-Research/Turtle",
+    "Zhao0100/UHDRes",
+    "AdemBoukhris457/Doctra",
+    "jp-guo/CODiff"
   ],
-  "last_sync": "2026-01-13T05:58:39.190561"
+  "last_sync": "2026-01-13T11:24:01.249597"
 }
