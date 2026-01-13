@@ -12,3 +12,7 @@ python-dotenv==1.0.0
 
 # Optional: Rich output (uncomment if needed)
 # rich==13.7.0
+
+# Web UI dependencies
+gradio>=4.0.0
+pandas>=2.0.0
