@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-01-13
+
+### Session: Model Shop Web UI for Paper-to-RU Workflow [#9ea0]
+
+- **Added**: Gradio web interface ("Model Shop") for browsing and selecting ML paper repos #webui
+  - Files: `paper_tracker/web_ui.py`, `paper_tracker/ru_sync.py`, `run_web_ui.sh`
+- **Added**: RU unit synchronization to exclude already-converted repos from candidates #webui
+  - Files: `paper_tracker/ru_sync.py`
+- **Added**: Cart system for collecting repos and exporting GitHub URLs #webui
+  - Files: `data/ru_candidates.json`
+- **Added**: Manual URL addition (add to cart or add to database) #webui
+- **Added**: Hot reload support for development (`./run_web_ui.sh --reload`) #webui
+- **Changed**: Modern single-page UI design with stats, filters, and styled components #webui
+
+---
+
 ## [Unreleased]
 
 ### Added
