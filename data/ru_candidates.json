@@ -7,7 +7,7 @@
       "conference": null,
       "conference_year": null,
       "weight_source": "HF",
-      "status": "confirmed",
+      "status": "new",
       "added_at": "2026-01-13T05:27:41.545782",
       "reviewed_at": "2026-01-13T05:37:27.666894",
       "source": "auto"
@@ -45,19 +45,7 @@
       "weight_source": "Cloud",
       "status": "new",
       "added_at": "2026-01-13T05:27:41.545823",
-      "reviewed_at": null,
-      "source": "auto"
-    },
-    "Ascend-Research/Turtle": {
-      "url": "https://github.com/Ascend-Research/Turtle",
-      "name": "Turtle",
-      "stars": 120,
-      "conference": "NeurIPS",
-      "conference_year": "2024",
-      "weight_source": "Cloud",
-      "status": "confirmed",
-      "added_at": "2026-01-13T05:27:41.545827",
-      "reviewed_at": "2026-01-13T10:35:42.633798",
+      "reviewed_at": "2026-01-13T12:08:01.430271",
       "source": "auto"
     },
     "smthemex/ComfyUI_LucidFlux": {
@@ -108,18 +96,6 @@
       "reviewed_at": null,
       "source": "auto"
     },
-    "DachunKai/EvTexture": {
-      "url": "https://github.com/DachunKai/EvTexture",
-      "name": "EvTexture",
-      "stars": 1186,
-      "conference": "ICML",
-      "conference_year": "2024",
-      "weight_source": "Cloud",
-      "status": "confirmed",
-      "added_at": "2026-01-13T05:27:41.545843",
-      "reviewed_at": "2026-01-13T05:57:50.628559",
-      "source": "auto"
-    },
     "ogkalu2/comic-translate": {
       "url": "https://github.com/ogkalu2/comic-translate",
       "name": "comic-translate",
@@ -154,18 +130,6 @@
       "status": "new",
       "added_at": "2026-01-13T05:27:41.545852",
       "reviewed_at": null,
-      "source": "auto"
-    },
-    "AdemBoukhris457/Doctra": {
-      "url": "https://github.com/AdemBoukhris457/Doctra",
-      "name": "Doctra",
-      "stars": 32,
-      "conference": null,
-      "conference_year": null,
-      "weight_source": "HF",
-      "status": "confirmed",
-      "added_at": "2026-01-13T05:27:41.545854",
-      "reviewed_at": "2026-01-13T05:53:17.504369",
       "source": "auto"
     },
     "Ivan-Ayub97/Warlock-Studio": {
@@ -252,30 +216,6 @@
       "reviewed_at": null,
       "source": "auto"
     },
-    "deng-ai-lab/SFHformer": {
-      "url": "https://github.com/deng-ai-lab/SFHformer",
-      "name": "SFHformer",
-      "stars": 107,
-      "conference": "ECCV",
-      "conference_year": "2024",
-      "weight_source": "Cloud",
-      "status": "confirmed",
-      "added_at": "2026-01-13T05:27:41.545886",
-      "reviewed_at": "2026-01-13T10:35:42.633831",
-      "source": "auto"
-    },
-    "csxyhe/SADT": {
-      "url": "https://github.com/csxyhe/SADT",
-      "name": "SADT",
-      "stars": 33,
-      "conference": "CVPR",
-      "conference_year": "2025",
-      "weight_source": "HF",
-      "status": "confirmed",
-      "added_at": "2026-01-13T05:27:41.545889",
-      "reviewed_at": "2026-01-13T05:53:17.504301",
-      "source": "auto"
-    },
     "zs1314/CPRAformer": {
       "url": "https://github.com/zs1314/CPRAformer",
       "name": "CPRAformer",
@@ -286,30 +226,6 @@
       "status": "new",
       "added_at": "2026-01-13T05:27:41.545892",
       "reviewed_at": null,
-      "source": "auto"
-    },
-    "ShugoYamashita/DFSSM": {
-      "url": "https://github.com/ShugoYamashita/DFSSM",
-      "name": "DFSSM",
-      "stars": 14,
-      "conference": "ACCV",
-      "conference_year": "2024",
-      "weight_source": "Cloud",
-      "status": "new",
-      "added_at": "2026-01-13T05:27:41.545894",
-      "reviewed_at": null,
-      "source": "auto"
-    },
-    "Zhao0100/UHDRes": {
-      "url": "https://github.com/Zhao0100/UHDRes",
-      "name": "UHDRes",
-      "stars": 17,
-      "conference": null,
-      "conference_year": null,
-      "weight_source": "HF",
-      "status": "confirmed",
-      "added_at": "2026-01-13T05:27:41.545897",
-      "reviewed_at": "2026-01-13T05:58:39.190264",
       "source": "auto"
     },
     "wlydlut/UHDDIP": {
@@ -345,18 +261,6 @@
       "weight_source": "Cloud",
       "status": "new",
       "added_at": "2026-01-13T05:27:41.545908",
-      "reviewed_at": null,
-      "source": "auto"
-    },
-    "c-yn/BioIR": {
-      "url": "https://github.com/c-yn/BioIR",
-      "name": "BioIR",
-      "stars": 14,
-      "conference": null,
-      "conference_year": null,
-      "weight_source": "Cloud",
-      "status": "new",
-      "added_at": "2026-01-13T05:27:41.545911",
       "reviewed_at": null,
       "source": "auto"
     },
@@ -408,18 +312,6 @@
       "reviewed_at": null,
       "source": "auto"
     },
-    "cloor/HazeFlow": {
-      "url": "https://github.com/cloor/HazeFlow",
-      "name": "HazeFlow",
-      "stars": 21,
-      "conference": "ICCV",
-      "conference_year": "2025",
-      "weight_source": "Cloud",
-      "status": "new",
-      "added_at": "2026-01-13T05:27:41.545928",
-      "reviewed_at": null,
-      "source": "auto"
-    },
     "tanvirnwu/HazeSpace2M_ACMMN_2024": {
       "url": "https://github.com/tanvirnwu/HazeSpace2M_ACMMN_2024",
       "name": "HazeSpace2M_ACMMN_2024",
@@ -430,30 +322,6 @@
       "status": "new",
       "added_at": "2026-01-13T05:27:41.545931",
       "reviewed_at": null,
-      "source": "auto"
-    },
-    "Fediory/HVI-CIDNet": {
-      "url": "https://github.com/Fediory/HVI-CIDNet",
-      "name": "HVI-CIDNet",
-      "stars": 709,
-      "conference": "CVPR",
-      "conference_year": "2025",
-      "weight_source": "HF",
-      "status": "confirmed",
-      "added_at": "2026-01-13T05:27:41.545935",
-      "reviewed_at": "2026-01-13T10:35:42.633728",
-      "source": "auto"
-    },
-    "JianghaiSCU/LightenDiffusion": {
-      "url": "https://github.com/JianghaiSCU/LightenDiffusion",
-      "name": "LightenDiffusion",
-      "stars": 255,
-      "conference": "ECCV",
-      "conference_year": "2024",
-      "weight_source": "Cloud",
-      "status": "confirmed",
-      "added_at": "2026-01-13T05:27:41.545938",
-      "reviewed_at": "2026-01-13T10:35:42.633764",
       "source": "auto"
     },
     "qtlark/GMNet": {
@@ -504,18 +372,6 @@
       "reviewed_at": null,
       "source": "auto"
     },
-    "jp-guo/CODiff": {
-      "url": "https://github.com/jp-guo/CODiff",
-      "name": "CODiff",
-      "stars": 69,
-      "conference": "ICCV",
-      "conference_year": null,
-      "weight_source": "HF",
-      "status": "confirmed",
-      "added_at": "2026-01-13T05:27:41.546168",
-      "reviewed_at": "2026-01-13T10:35:42.633863",
-      "source": "auto"
-    },
     "QMoQ/OAPT": {
       "url": "https://github.com/QMoQ/OAPT",
       "name": "OAPT",
@@ -562,18 +418,6 @@
       "status": "new",
       "added_at": "2026-01-13T05:27:41.546179",
       "reviewed_at": null,
-      "source": "auto"
-    },
-    "ohayonguy/PMRF": {
-      "url": "https://github.com/ohayonguy/PMRF",
-      "name": "PMRF",
-      "stars": 732,
-      "conference": "ICLR",
-      "conference_year": "2025",
-      "weight_source": "HF",
-      "status": "confirmed",
-      "added_at": "2026-01-13T05:27:41.546182",
-      "reviewed_at": "2026-01-13T10:35:42.633675",
       "source": "auto"
     },
     "KAIST-VICLab/FMA-Net": {
@@ -667,7 +511,7 @@
       "conference": null,
       "conference_year": null,
       "weight_source": "HF",
-      "status": "confirmed",
+      "status": "new",
       "added_at": "2026-01-13T05:27:41.546205",
       "reviewed_at": "2026-01-13T05:58:39.190195",
       "source": "auto"
@@ -691,7 +535,7 @@
       "conference": "MICCAI",
       "conference_year": "2025",
       "weight_source": "HF",
-      "status": "confirmed",
+      "status": "new",
       "added_at": "2026-01-13T05:27:41.546210",
       "reviewed_at": "2026-01-13T10:35:42.633894",
       "source": "auto"
@@ -705,7 +549,7 @@
       "weight_source": "Cloud",
       "status": "new",
       "added_at": "2026-01-13T05:27:41.546213",
-      "reviewed_at": null,
+      "reviewed_at": "2026-01-13T12:08:01.430210",
       "source": "auto"
     },
     "SLDGroup/LoMix": {
@@ -720,18 +564,6 @@
       "reviewed_at": null,
       "source": "auto"
     },
-    "va1shn9v/PromptIR": {
-      "url": "https://github.com/va1shn9v/PromptIR",
-      "name": "PromptIR",
-      "stars": 0,
-      "conference": "",
-      "conference_year": "",
-      "weight_source": "manual",
-      "status": "new",
-      "added_at": "2026-01-13T05:31:17.846245",
-      "reviewed_at": null,
-      "source": "manual"
-    },
     "mantasu/glasses-detector": {
       "url": "https://github.com/mantasu/glasses-detector",
       "name": "glasses-detector",
@@ -741,36 +573,10 @@
       "weight_source": "manual",
       "status": "new",
       "added_at": "2026-01-13T11:23:45.129885",
-      "reviewed_at": null,
-      "source": "manual"
-    },
-    "joshyZhou/AST": {
-      "url": "https://github.com/joshyZhou/AST",
-      "name": "AST",
-      "stars": 0,
-      "conference": "",
-      "conference_year": "",
-      "weight_source": "manual",
-      "status": "new",
-      "added_at": "2026-01-13T11:24:01.248624",
-      "reviewed_at": null,
+      "reviewed_at": "2026-01-13T12:08:01.430441",
       "source": "manual"
     }
   },
-  "cart": [
-    "ohayonguy/PMRF",
-    "JianghaiSCU/LightenDiffusion",
-    "deng-ai-lab/SFHformer",
-    "TMElyralab/MuseTalk",
-    "wdika/atommic",
-    "wlsdzyzl/flemme",
-    "csxyhe/SADT",
-    "DachunKai/EvTexture",
-    "Fediory/HVI-CIDNet",
-    "Ascend-Research/Turtle",
-    "Zhao0100/UHDRes",
-    "AdemBoukhris457/Doctra",
-    "jp-guo/CODiff"
-  ],
-  "last_sync": "2026-01-13T11:24:01.249597"
+  "cart": [],
+  "last_sync": "2026-01-13T21:27:08.034189"
 }

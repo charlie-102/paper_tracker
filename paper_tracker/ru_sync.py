@@ -17,6 +17,9 @@ RU_UNITS_PATH = "/Users/long/Downloads/claudegit/RU/zoo/units"
 # Path to candidates tracking file
 CANDIDATES_FILE = Path(__file__).parent.parent / "data" / "ru_candidates.json"
 
+# Path to search results file (from Search tab)
+SEARCH_RESULTS_FILE = Path(__file__).parent.parent / "data" / "search_results.json"
+
 
 def normalize_name(name: str) -> str:
     """Normalize a repo name for comparison.
@@ -231,12 +234,65 @@ def export_cart_links(status_data: dict) -> str:
     return "\n".join(urls)
 
 
-def add_manual_repo(url: str, status_data: dict) -> tuple[bool, str]:
+def fetch_repo_metadata(url: str) -> Optional[dict]:
+    """Fetch repository metadata from GitHub API.
+
+    Args:
+        url: GitHub repo URL (e.g., https://github.com/owner/repo)
+
+    Returns:
+        Dict with repo metadata or None if failed
+    """
+    # Parse URL to get owner/repo
+    match = re.match(r'https?://github\.com/([^/]+)/([^/]+)/?', url)
+    if not match:
+        return None
+
+    owner = match.group(1)
+    repo = match.group(2).rstrip('/')
+
+    try:
+        from .github_client import GitHubClient
+        client = GitHubClient()
+        repo_data = client.get_repo_details(owner, repo)
+
+        if not repo_data:
+            return None
+
+        # Get README for detection
+        readme = client.get_readme(owner, repo)
+
+        # Run weight detection
+        from .detectors import WeightDetector, ConferenceDetector
+        weight_detector = WeightDetector()
+        conf_detector = ConferenceDetector()
+
+        weight_result = weight_detector.detect(readme)
+        conf_result = conf_detector.detect(readme, repo_data.get("description", "") or "")
+
+        return {
+            "full_name": repo_data.get("full_name", f"{owner}/{repo}"),
+            "name": repo_data.get("name", repo),
+            "url": repo_data.get("html_url", f"https://github.com/{owner}/{repo}"),
+            "stars": repo_data.get("stargazers_count", 0),
+            "description": (repo_data.get("description", "") or "")[:200],
+            "weight_status": weight_result.status if weight_result.status != "None" else "",
+            "conference": conf_result.conference or "",
+            "conference_year": conf_result.year or "",
+            "arxiv_id": conf_result.arxiv_id or "",
+        }
+    except Exception as e:
+        print(f"Error fetching metadata for {url}: {e}")
+        return None
+
+
+def add_manual_repo(url: str, status_data: dict, fetch_metadata: bool = True) -> tuple[bool, str]:
     """Add a manual repo URL to candidates.
 
     Args:
         url: GitHub repo URL
         status_data: Current status data
+        fetch_metadata: If True, fetch stars/description from GitHub API
 
     Returns:
         (success, message) tuple
@@ -254,10 +310,31 @@ def add_manual_repo(url: str, status_data: dict) -> tuple[bool, str]:
     if full_name in candidates:
         return False, f"Repo {name} already in candidates"
 
+    # Fetch metadata from GitHub if requested
+    if fetch_metadata:
+        metadata = fetch_repo_metadata(url)
+        if metadata:
+            candidates[full_name] = {
+                "url": metadata["url"],
+                "name": metadata["name"],
+                "stars": metadata["stars"],
+                "description": metadata["description"],
+                "conference": metadata["conference"],
+                "conference_year": metadata["conference_year"],
+                "weight_source": metadata["weight_status"] or "manual",
+                "status": "new",
+                "added_at": datetime.now().isoformat(),
+                "reviewed_at": None,
+                "source": "manual"
+            }
+            status_data["candidates"] = candidates
+            return True, f"Added {name} ({metadata['stars']} stars)"
+
+    # Fallback: add with minimal info
     candidates[full_name] = {
         "url": f"https://github.com/{full_name}",
         "name": name,
-        "stars": 0,  # Unknown for manual adds
+        "stars": 0,
         "conference": "",
         "conference_year": "",
         "weight_source": "manual",
@@ -269,3 +346,21 @@ def add_manual_repo(url: str, status_data: dict) -> tuple[bool, str]:
 
     status_data["candidates"] = candidates
     return True, f"Added {name} to candidates"
+
+
+def load_search_results_for_shop() -> list[dict]:
+    """Load repos from search_results.json for Shop tab.
+
+    Returns:
+        List of repo dicts from search results
+    """
+    if not SEARCH_RESULTS_FILE.exists():
+        return []
+
+    try:
+        with open(SEARCH_RESULTS_FILE, 'r') as f:
+            data = json.load(f)
+        return data.get("repos", [])
+    except Exception as e:
+        print(f"Error loading search results: {e}")
+        return []
