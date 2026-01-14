@@ -6,7 +6,7 @@ Complete development history of the Paper Implementation Tracker.
 
 ## 2026-01-13
 
-### Model Shop: Search/Shop Tab Separation
+### Model Shop: Search/Shop Tab Separation [#0b00]
 
 Major refactor of the Model Shop web UI to separate GitHub search from model shopping.
 

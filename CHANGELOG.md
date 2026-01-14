@@ -2,6 +2,21 @@
 
 ## 2026-01-13
 
+### Session: Search/Shop Tab Separation [#0b00]
+
+- **Added**: New `github_search.py` module with stateless GitHub search for web UI #webui
+  - Files: `paper_tracker/github_search.py`
+- **Added**: Quick search templates (CVPR'24 Vision, Medical Imaging, Video Processing, etc.) #webui
+- **Added**: Two-tab layout separating Search (GitHub discovery) from Shop (model selection) #webui
+  - Files: `paper_tracker/web_ui.py`
+- **Added**: Preview workflow - search results shown before saving, can adjust and re-search #webui
+- **Added**: `fetch_repo_metadata()` for manual URLs - now fetches stars/description from GitHub #webui
+  - Files: `paper_tracker/ru_sync.py`
+- **Added**: `CHANGELOG_DETAILED.md` documenting full project history #webui
+- **Changed**: Shop tab now loads from `data/search_results.json` instead of re-searching GitHub #webui
+
+---
+
 ### Session: Model Shop Web UI for Paper-to-RU Workflow [#9ea0]
 
 - **Added**: Gradio web interface ("Model Shop") for browsing and selecting ML paper repos #webui

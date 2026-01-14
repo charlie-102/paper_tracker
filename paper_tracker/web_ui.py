@@ -163,156 +163,203 @@ CONFERENCE_OPTIONS = [
 # SEARCH TAB FUNCTIONS
 # =============================================================================
 
+def check_github_token():
+    """Check GitHub token status and return formatted status."""
+    from .github_client import GitHubClient
+    import os
+
+    token = os.environ.get("GITHUB_TOKEN")
+    if not token:
+        return "**Token Status:** Not configured. Set `GITHUB_TOKEN` env var for higher rate limits."
+
+    try:
+        client = GitHubClient(token)
+        info = client.verify_token()
+
+        if info["authenticated"]:
+            return f"**Token Status:** ✓ Authenticated | Limit: {info['limit']}/hr | Remaining: {info['remaining']}"
+        else:
+            return f"**Token Status:** ⚠ Unauthenticated (invalid token?) | Limit: {info['limit']}/hr"
+    except Exception as e:
+        return f"**Token Status:** ✗ Error checking token: {str(e)}"
+
+
 def apply_template(template_name: str):
     """Apply a search template to populate fields."""
     if template_name not in SEARCH_TEMPLATES:
-        return gr.update(), gr.update(), gr.update(), gr.update()
+        return gr.update(), gr.update(), gr.update()
 
     template = SEARCH_TEMPLATES[template_name]
     return (
         template.get("keywords", ""),
         template.get("conferences", []),
         template.get("year", "2024"),
-        template.get("weights", "Has Weights"),
     )
 
 
-def do_search(keywords_str: str, conferences: list, year: str, weights: str, min_stars: int):
-    """Execute GitHub search and return preview results."""
+def _make_progress_bar(value: int, max_val: int = 100) -> str:
+    """Generate HTML progress bar."""
+    pct = int((value / max_val) * 100) if max_val > 0 else 0
+    return f'<progress value="{pct}" max="100" style="width:100%; height:20px;"></progress>'
+
+
+def do_search(keywords_str: str, conferences: list, year: str, min_stars: int, page: int = 1):
+    """Fast GitHub search with pagination."""
     if not keywords_str.strip():
-        return pd.DataFrame(), "Enter keywords to search"
+        return pd.DataFrame(), "Enter keywords to search", "", 1, 0
 
-    # Parse keywords
-    keywords = [k.strip() for k in keywords_str.split(",") if k.strip()]
-
-    # Map weight filter
-    weight_map = {
-        "Has Weights": "has_weights",
-        "No Weights": "no_weights",
-        "All": "all"
-    }
-    weight_filter = weight_map.get(weights, "has_weights")
-
-    # Conference year
-    conf_year = None if year == "Any" else year
+    # Split by semicolon (allows commas in search terms)
+    keywords = [k.strip() for k in keywords_str.split(";") if k.strip()]
 
     try:
         searcher = GitHubSearcher()
-        results = searcher.search(
+
+        # Fast search with pagination
+        results, total_count = searcher.search_fast(
             keywords=keywords,
             conferences=conferences or [],
-            conference_year=conf_year,
-            weight_filter=weight_filter,
+            year=year if year != "Any" else None,
             min_stars=min_stars,
-            max_results_per_keyword=30,
+            page=page,
+            per_page=30,
         )
 
         if not results:
-            return pd.DataFrame(), "No repos found matching criteria"
+            return pd.DataFrame(), "No repos found matching criteria", "", 1, 0
 
-        # Build dataframe for preview
+        # Build dataframe
         rows = []
         for repo in results:
-            conf_display = repo.get("conference", "")
-            if conf_display and repo.get("conference_year"):
-                conf_display = f"{conf_display}'{repo['conference_year'][-2:]}"
-
             rows.append({
                 "Select": False,
                 "Repository": f"[{repo['name']}]({repo['url']})",
                 "Stars": repo.get("stars", 0),
-                "Conference": conf_display or "-",
-                "Weights": repo.get("weight_status", "-") or "-",
+                "Description": (repo.get("description") or "-")[:100],
                 "full_name": repo["full_name"],
             })
 
         df = pd.DataFrame(rows)
-        status = f"Found {len(results)} repos (preview - not saved yet)"
-        return df, status
+        total_pages = (total_count + 29) // 30  # Ceiling division
+        status = f"Page {page}/{total_pages} ({total_count} total results)"
+        return df, status, "", page, total_count
 
     except Exception as e:
-        return pd.DataFrame(), f"Search error: {str(e)}"
+        return pd.DataFrame(), f"Search error: {str(e)}", "", 1, 0
 
 
-def save_all_to_db(preview_df: pd.DataFrame, keywords_str: str, conferences: list, year: str, weights: str, min_stars: int):
-    """Save all preview results to search_results.json."""
+def do_search_page(keywords_str: str, conferences: list, year: str, min_stars: int, current_page: int, total: int, direction: str):
+    """Navigate to next/previous page."""
+    if direction == "next":
+        new_page = current_page + 1
+    elif direction == "prev":
+        new_page = max(1, current_page - 1)
+    else:
+        new_page = current_page
+
+    return do_search(keywords_str, conferences, year, min_stars, new_page)
+
+
+def save_all_to_db(preview_df: pd.DataFrame, keywords_str: str, conferences: list, year: str, min_stars: int):
+    """Save all preview results with weight detection."""
     if preview_df is None or len(preview_df) == 0:
-        return "No results to save"
+        yield "No results to save"
+        return
 
-    # Get the full search results (need to re-run or cache)
-    keywords = [k.strip() for k in keywords_str.split(",") if k.strip()]
-    weight_map = {"Has Weights": "has_weights", "No Weights": "no_weights", "All": "all"}
+    keywords = [k.strip() for k in keywords_str.split(";") if k.strip()]
+    repo_names = preview_df["full_name"].tolist()
 
     try:
         searcher = GitHubSearcher()
-        results = searcher.search(
-            keywords=keywords,
-            conferences=conferences or [],
-            conference_year=None if year == "Any" else year,
-            weight_filter=weight_map.get(weights, "has_weights"),
-            min_stars=min_stars,
-            max_results_per_keyword=30,
-        )
+        results = []
+
+        # Detect weights for each repo (this is the slow part)
+        for i, full_name in enumerate(repo_names):
+            yield f"Checking weights for repo {i+1}/{len(repo_names)}..."
+
+            # Get basic info from preview
+            row = preview_df[preview_df["full_name"] == full_name].iloc[0]
+
+            # Detect weights
+            weight_info = searcher.detect_weights_for_repo(full_name)
+
+            results.append({
+                "full_name": full_name,
+                "name": full_name.split("/")[1],
+                "url": f"https://github.com/{full_name}",
+                "stars": int(row["Stars"]),
+                "description": row.get("Description", ""),
+                "weight_status": weight_info["weight_status"],
+                "weight_details": weight_info["weight_details"],
+                "conference": "",  # Not detected in fast search
+                "conference_year": "",
+            })
 
         query_info = {
             "keywords": keywords,
             "conferences": conferences,
             "conference_year": year,
-            "weight_filter": weights,
             "min_stars": min_stars,
         }
 
         save_search_results(results, query_info)
-        return f"Saved {len(results)} repos to database"
+        yield f"Saved {len(results)} repos with weight info"
 
     except Exception as e:
-        return f"Error saving: {str(e)}"
+        yield f"Error saving: {str(e)}"
 
 
-def save_selected_to_db(preview_df: pd.DataFrame, keywords_str: str, conferences: list, year: str, weights: str, min_stars: int):
-    """Save only selected repos to search_results.json."""
+def save_selected_to_db(preview_df: pd.DataFrame, keywords_str: str, conferences: list, year: str, min_stars: int):
+    """Save selected repos with weight detection."""
     if preview_df is None or len(preview_df) == 0:
-        return "No results to save"
+        yield "No results to save"
+        return
 
     selected = preview_df[preview_df["Select"] == True]
     if len(selected) == 0:
-        return "No repos selected"
+        yield "No repos selected"
+        return
 
-    # Get full names of selected repos
-    selected_names = set(selected["full_name"].tolist())
-
-    # Re-run search to get full data
-    keywords = [k.strip() for k in keywords_str.split(",") if k.strip()]
-    weight_map = {"Has Weights": "has_weights", "No Weights": "no_weights", "All": "all"}
+    keywords = [k.strip() for k in keywords_str.split(";") if k.strip()]
+    repo_names = selected["full_name"].tolist()
 
     try:
         searcher = GitHubSearcher()
-        all_results = searcher.search(
-            keywords=keywords,
-            conferences=conferences or [],
-            conference_year=None if year == "Any" else year,
-            weight_filter=weight_map.get(weights, "has_weights"),
-            min_stars=min_stars,
-            max_results_per_keyword=30,
-        )
+        results = []
 
-        # Filter to selected only
-        selected_results = [r for r in all_results if r["full_name"] in selected_names]
+        # Detect weights for each selected repo
+        for i, full_name in enumerate(repo_names):
+            yield f"Checking weights for repo {i+1}/{len(repo_names)}..."
+
+            row = selected[selected["full_name"] == full_name].iloc[0]
+
+            # Detect weights
+            weight_info = searcher.detect_weights_for_repo(full_name)
+
+            results.append({
+                "full_name": full_name,
+                "name": full_name.split("/")[1],
+                "url": f"https://github.com/{full_name}",
+                "stars": int(row["Stars"]),
+                "description": row.get("Description", ""),
+                "weight_status": weight_info["weight_status"],
+                "weight_details": weight_info["weight_details"],
+                "conference": "",
+                "conference_year": "",
+            })
 
         query_info = {
             "keywords": keywords,
             "conferences": conferences,
             "conference_year": year,
-            "weight_filter": weights,
             "min_stars": min_stars,
             "selection": "manual",
         }
 
-        save_search_results(selected_results, query_info)
-        return f"Saved {len(selected_results)} selected repos to database"
+        save_search_results(results, query_info)
+        yield f"Saved {len(results)} selected repos with weight info"
 
     except Exception as e:
-        return f"Error saving: {str(e)}"
+        yield f"Error saving: {str(e)}"
 
 
 # =============================================================================
@@ -555,6 +602,15 @@ def create_ui():
             # =================================================================
             with gr.TabItem("Search", id="search_tab"):
 
+                # GitHub Settings Accordion
+                with gr.Accordion("GitHub Settings", open=False):
+                    with gr.Row():
+                        token_status = gr.Markdown("**Token Status:** Click 'Check Token' to verify")
+                        check_token_btn = gr.Button("Check Token", size="sm", scale=0)
+                    gr.Markdown(
+                        "*Set `GITHUB_TOKEN` environment variable for higher rate limits (5000/hr vs 60/hr)*"
+                    )
+
                 gr.Markdown("### Quick Templates")
                 with gr.Row():
                     template_btns = {}
@@ -564,8 +620,8 @@ def create_ui():
                 gr.Markdown("### Search Parameters")
 
                 keywords_input = gr.Textbox(
-                    label="Keywords (comma-separated)",
-                    placeholder="image restoration, super resolution, denoising",
+                    label="Keywords (semicolon-separated)",
+                    placeholder="image restoration; super resolution; implicit neural representation",
                     lines=1,
                 )
 
@@ -574,10 +630,13 @@ def create_ui():
                     label="Filter by Conference (empty = all)",
                     value=[],
                 )
+                with gr.Row():
+                    select_all_conf_btn = gr.Button("Select All", size="sm", scale=0)
+                    clear_conf_btn = gr.Button("Clear", size="sm", scale=0)
 
                 with gr.Row():
                     year_input = gr.Dropdown(
-                        choices=["Any", "2024", "2025", "2026"],
+                        choices=["Any", "2020", "2021", "2022", "2023", "2024", "2025", "2026"],
                         value="2024",
                         label="Conference Year",
                     )
@@ -588,24 +647,29 @@ def create_ui():
                         step=10,
                         label="Min Stars",
                     )
-                    weights_input = gr.Radio(
-                        choices=["Has Weights", "All", "No Weights"],
-                        value="Has Weights",
-                        label="Weight Filter",
-                    )
 
                 search_btn = gr.Button("Search GitHub", variant="primary")
+
+                # Pagination state
+                current_page = gr.State(1)
+                total_count = gr.State(0)
 
                 # Preview section
                 gr.Markdown("### Preview Results")
                 search_status = gr.Markdown("*Click Search to find repos*")
+                search_progress = gr.HTML("")
 
                 preview_table = gr.Dataframe(
-                    headers=["Select", "Repository", "Stars", "Conference", "Weights"],
-                    datatype=["bool", "markdown", "number", "str", "str"],
+                    headers=["Select", "Repository", "Stars", "Description"],
+                    datatype=["bool", "markdown", "number", "str"],
                     interactive=True,
                     wrap=True,
                 )
+
+                # Pagination controls
+                with gr.Row():
+                    prev_btn = gr.Button("← Previous", size="sm", scale=0)
+                    next_btn = gr.Button("Next →", size="sm", scale=0)
 
                 gr.HTML("""
                     <div class="preview-warning">
@@ -620,30 +684,58 @@ def create_ui():
 
                 save_status = gr.Markdown("")
 
+                # GitHub token check handler
+                check_token_btn.click(
+                    check_github_token,
+                    outputs=token_status,
+                )
+
+                # Conference filter button handlers
+                select_all_conf_btn.click(
+                    fn=lambda: CONFERENCE_OPTIONS,
+                    outputs=conferences_input,
+                )
+                clear_conf_btn.click(
+                    fn=lambda: [],
+                    outputs=conferences_input,
+                )
+
                 # Template button handlers
                 for name, btn in template_btns.items():
                     btn.click(
                         lambda n=name: apply_template(n),
-                        outputs=[keywords_input, conferences_input, year_input, weights_input],
+                        outputs=[keywords_input, conferences_input, year_input],
                     )
 
-                # Search button handler
+                # Search button handler (starts at page 1)
                 search_btn.click(
                     do_search,
-                    inputs=[keywords_input, conferences_input, year_input, weights_input, stars_input],
-                    outputs=[preview_table, search_status],
+                    inputs=[keywords_input, conferences_input, year_input, stars_input],
+                    outputs=[preview_table, search_status, search_progress, current_page, total_count],
+                )
+
+                # Pagination handlers
+                prev_btn.click(
+                    lambda kw, conf, yr, stars, page, total: do_search_page(kw, conf, yr, stars, page, total, "prev"),
+                    inputs=[keywords_input, conferences_input, year_input, stars_input, current_page, total_count],
+                    outputs=[preview_table, search_status, search_progress, current_page, total_count],
+                )
+                next_btn.click(
+                    lambda kw, conf, yr, stars, page, total: do_search_page(kw, conf, yr, stars, page, total, "next"),
+                    inputs=[keywords_input, conferences_input, year_input, stars_input, current_page, total_count],
+                    outputs=[preview_table, search_status, search_progress, current_page, total_count],
                 )
 
                 # Save button handlers
                 save_all_btn.click(
                     save_all_to_db,
-                    inputs=[preview_table, keywords_input, conferences_input, year_input, weights_input, stars_input],
+                    inputs=[preview_table, keywords_input, conferences_input, year_input, stars_input],
                     outputs=[save_status],
                 )
 
                 save_selected_btn.click(
                     save_selected_to_db,
-                    inputs=[preview_table, keywords_input, conferences_input, year_input, weights_input, stars_input],
+                    inputs=[preview_table, keywords_input, conferences_input, year_input, stars_input],
                     outputs=[save_status],
                 )
 

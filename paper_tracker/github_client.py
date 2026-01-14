@@ -8,6 +8,7 @@ import urllib.parse
 import urllib.request
 from dataclasses import dataclass
 from datetime import datetime
+from http.client import IncompleteRead
 from typing import Dict, List, Optional
 
 from .config_loader import config
@@ -128,35 +129,57 @@ class GitHubClient:
                 time.sleep(wait_time)
                 continue
 
+            except IncompleteRead as e:
+                # Handle truncated response - try to use partial data
+                if e.partial:
+                    try:
+                        return json.loads(e.partial.decode())
+                    except (json.JSONDecodeError, UnicodeDecodeError):
+                        pass
+                # Retry on next attempt
+                wait_time = 2 ** attempt
+                print(f"Incomplete read. Retrying in {wait_time}s...")
+                time.sleep(wait_time)
+                continue
+
         return None
 
     def search_repos(
         self,
         query: str,
         min_stars: int = 10,
-        created_after: str = "2024-01-01",
-        max_results: int = 50,
-        sort: str = "stars"
-    ) -> List[Dict]:
-        """Search GitHub repositories.
+        per_page: int = 30,
+        page: int = 1,
+        sort: str = ""
+    ) -> tuple[List[Dict], int]:
+        """Search GitHub repositories with pagination.
 
         Args:
             query: Search query
             min_stars: Minimum stars filter
-            created_after: Filter repos created after this date
-            max_results: Maximum results to return
-            sort: Sort order - "stars" or "updated"
+            per_page: Results per page (max 100)
+            page: Page number (1-indexed)
+            sort: Sort order - "" (relevance/best match), "stars", or "updated"
+
+        Returns:
+            Tuple of (items list, total_count)
         """
-        full_query = f"{query} in:name,description,readme stars:>={min_stars} created:>={created_after}"
+        # Don't auto-wrap in quotes - let GitHub match all words naturally
+        # User can manually add quotes if they want exact phrase matching
+        full_query = f"{query} in:name,description,readme stars:>={min_stars}"
         encoded_query = urllib.parse.quote(full_query)
 
-        url = (f"{self.BASE_URL}/search/repositories"
-               f"?q={encoded_query}&sort={sort}&order=desc&per_page={min(max_results, 100)}")
+        # Build URL with pagination
+        url = f"{self.BASE_URL}/search/repositories?q={encoded_query}&per_page={min(per_page, 100)}&page={page}"
+        if sort:
+            url += f"&sort={sort}&order=desc"
 
         result = self._request(url)
         time.sleep(self._request_delay)
 
-        return result.get("items", []) if result else []
+        if result:
+            return result.get("items", []), result.get("total_count", 0)
+        return [], 0
 
     def get_readme(self, owner: str, repo: str) -> str:
         """Fetch README content from a repository."""
@@ -194,3 +217,20 @@ class GitHubClient:
             if reset_timestamp:
                 self.rate_limit.reset_time = datetime.fromtimestamp(reset_timestamp)
         return self.rate_limit
+
+    def verify_token(self) -> dict:
+        """Verify token and return status info.
+
+        Returns:
+            Dict with: valid, authenticated, limit, remaining, reset_time
+        """
+        info = self.get_rate_limit_status()
+        is_authenticated = info.limit > 60  # 60 is unauthenticated limit
+
+        return {
+            "valid": info.remaining >= 0,
+            "authenticated": is_authenticated,
+            "limit": info.limit,
+            "remaining": info.remaining,
+            "reset_time": info.reset_time.isoformat() if info.reset_time else None,
+        }

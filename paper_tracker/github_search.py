@@ -53,6 +53,19 @@ SEARCH_TEMPLATES = {
 SEARCH_RESULTS_PATH = Path(__file__).parent.parent / "data" / "search_results.json"
 
 
+def build_search_query(keyword: str, conferences: list, year: str) -> str:
+    """Build optimized GitHub search query with conference and year.
+
+    Example: "image restoration CVPR 2024" or "denoising NeurIPS"
+    """
+    parts = [keyword]
+    if conferences:
+        parts.append(" ".join(conferences))
+    if year and year != "Any":
+        parts.append(year)
+    return " ".join(parts)
+
+
 class GitHubSearcher:
     """Stateless GitHub search for web UI.
 
@@ -71,6 +84,88 @@ class GitHubSearcher:
         self.github = GitHubClient(self.token)
         self.weight_detector = WeightDetector()
         self.conference_detector = ConferenceDetector()
+
+    def search_fast(
+        self,
+        keywords: list[str],
+        conferences: list[str] = None,
+        year: str = None,
+        min_stars: int = 10,
+        page: int = 1,
+        per_page: int = 30,
+    ) -> tuple[list[dict], int]:
+        """Fast search - returns GitHub metadata only, no README/weight detection.
+
+        Args:
+            keywords: List of search terms
+            conferences: Conference names to include in query (e.g., ["CVPR", "ECCV"])
+            year: Year to include in query (e.g., "2024")
+            min_stars: Minimum stars filter
+            page: Page number (1-indexed)
+            per_page: Results per page
+
+        Returns:
+            Tuple of (list of repo dicts, total_count)
+        """
+        conferences = conferences or []
+        results = []
+        seen = set()
+        total_count = 0
+
+        for keyword in keywords:
+            keyword = keyword.strip()
+            if not keyword:
+                continue
+
+            # Build optimized query with conference and year
+            query = build_search_query(keyword, conferences, year)
+
+            repos, count = self.github.search_repos(
+                query=query,
+                min_stars=min_stars,
+                per_page=per_page,
+                page=page,
+                sort=""
+            )
+            total_count = max(total_count, count)  # Use max for multiple keywords
+
+            for repo in repos:
+                full_name = repo.get("full_name", "")
+                if not full_name or full_name in seen:
+                    continue
+                seen.add(full_name)
+
+                results.append({
+                    "full_name": full_name,
+                    "name": repo.get("name", ""),
+                    "url": repo.get("html_url", f"https://github.com/{full_name}"),
+                    "stars": repo.get("stargazers_count", 0),
+                    "description": (repo.get("description") or "")[:200],
+                    "weight_status": "Unknown",  # Not checked yet
+                    "created_at": (repo.get("created_at") or "")[:10],
+                    "updated_at": (repo.get("updated_at") or "")[:10],
+                })
+
+        # Keep GitHub's relevance order
+        return results, total_count
+
+    def detect_weights_for_repo(self, full_name: str) -> dict:
+        """Detect weights for a single repo by fetching its README.
+
+        Args:
+            full_name: Repo full name (e.g., "owner/repo")
+
+        Returns:
+            Dict with weight_status and weight_details
+        """
+        owner, name = full_name.split("/")
+        readme = self.github.get_readme(owner, name)
+        weight_result = self.weight_detector.detect(readme)
+
+        return {
+            "weight_status": weight_result.status if weight_result.status != "None" else "None",
+            "weight_details": weight_result.details[:3] if weight_result.details else [],
+        }
 
     def search(
         self,
@@ -111,7 +206,7 @@ class GitHubSearcher:
                 query=keyword,
                 min_stars=min_stars,
                 max_results=max_results_per_keyword,
-                sort="stars"
+                sort=""
             )
 
             for repo_data in repos:
@@ -165,9 +260,108 @@ class GitHubSearcher:
                 }
                 results.append(result)
 
-        # Sort by stars descending
-        results.sort(key=lambda x: x["stars"], reverse=True)
+        # Keep GitHub's relevance order
         return results
+
+    def search_iter(
+        self,
+        keywords: list[str],
+        conferences: list[str] = None,
+        conference_year: str = None,
+        weight_filter: str = "has_weights",
+        min_stars: int = 10,
+        max_results_per_keyword: int = 30,
+    ):
+        """Generator that yields repos one at a time as they're processed.
+
+        Args:
+            Same as search()
+
+        Yields:
+            Tuple of (repo_dict or None, processed_count, total_count, status_msg)
+            - repo_dict is None during "fetching" phase, contains repo during "processing" phase
+        """
+        conferences = conferences or []
+        if conference_year == "Any":
+            conference_year = None
+
+        # Phase 1: Gather all repo data from API (fast)
+        all_repos = []
+        seen_repos = set()
+        keywords_clean = [k.strip() for k in keywords if k.strip()]
+
+        for kw_idx, keyword in enumerate(keywords_clean):
+            yield None, kw_idx, len(keywords_clean), f"Fetching repos for '{keyword}'..."
+
+            repos = self.github.search_repos(
+                query=keyword,
+                min_stars=min_stars,
+                max_results=max_results_per_keyword,
+                sort=""
+            )
+
+            for repo_data in repos:
+                full_name = repo_data.get("full_name", "")
+                if full_name and full_name not in seen_repos:
+                    seen_repos.add(full_name)
+                    all_repos.append(repo_data)
+
+        total = len(all_repos)
+        if total == 0:
+            return
+
+        # Phase 2: Process each repo (slow - fetches README)
+        for idx, repo_data in enumerate(all_repos):
+            full_name = repo_data.get("full_name", "")
+            owner, name = full_name.split("/")
+
+            # Get README and run detection
+            readme = self.github.get_readme(owner, name)
+
+            # Detect weights
+            weight_result = self.weight_detector.detect(readme)
+            has_weights = weight_result.status != "None"
+
+            # Apply weight filter
+            if weight_filter == "has_weights" and not has_weights:
+                yield None, idx + 1, total, f"Processing {idx + 1}/{total}..."
+                continue
+            if weight_filter == "no_weights" and has_weights:
+                yield None, idx + 1, total, f"Processing {idx + 1}/{total}..."
+                continue
+
+            # Detect conference
+            description = repo_data.get("description", "") or ""
+            conf_result = self.conference_detector.detect(readme, description)
+
+            # Apply conference filter
+            if conferences:
+                if not conf_result.conference or conf_result.conference not in conferences:
+                    yield None, idx + 1, total, f"Processing {idx + 1}/{total}..."
+                    continue
+
+            # Apply year filter
+            if conference_year:
+                if not conf_result.year or conf_result.year != conference_year:
+                    yield None, idx + 1, total, f"Processing {idx + 1}/{total}..."
+                    continue
+
+            # Build result dict
+            result = {
+                "full_name": full_name,
+                "name": repo_data.get("name", name),
+                "url": repo_data.get("html_url", f"https://github.com/{full_name}"),
+                "stars": repo_data.get("stargazers_count", 0),
+                "description": description[:200] if description else "",
+                "weight_status": weight_result.status if has_weights else "None",
+                "weight_details": weight_result.details[:3] if weight_result.details else [],
+                "conference": conf_result.conference or "",
+                "conference_year": conf_result.year or "",
+                "arxiv_id": conf_result.arxiv_id or "",
+                "created_at": repo_data.get("created_at", "")[:10],
+                "updated_at": repo_data.get("updated_at", "")[:10],
+            }
+            yield result, idx + 1, total, f"Processing {idx + 1}/{total}..."
 
     def search_single_query(
         self,
