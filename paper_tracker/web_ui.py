@@ -203,10 +203,13 @@ def _make_progress_bar(value: int, max_val: int = 100) -> str:
     return f'<progress value="{pct}" max="100" style="width:100%; height:20px;"></progress>'
 
 
-def do_search(keywords_str: str, conferences: list, year: str, min_stars: int, page: int = 1):
-    """Fast GitHub search with pagination."""
+RESULTS_PER_PAGE = 30
+
+
+def do_search(keywords_str: str, conferences: list, year: str, min_stars: int):
+    """Fast GitHub search - fetches all results, returns first page."""
     if not keywords_str.strip():
-        return pd.DataFrame(), "Enter keywords to search", "", 1, 0
+        return pd.DataFrame(), "Enter keywords to search", "", 1, 0, []
 
     # Split by semicolon (allows commas in search terms)
     keywords = [k.strip() for k in keywords_str.split(";") if k.strip()]
@@ -214,22 +217,26 @@ def do_search(keywords_str: str, conferences: list, year: str, min_stars: int, p
     try:
         searcher = GitHubSearcher()
 
-        # Fast search with pagination
-        results, total_count = searcher.search_fast(
+        # Fetch all results (search_fast now returns all results sorted by stars)
+        all_results = searcher.search_fast(
             keywords=keywords,
             conferences=conferences or [],
             year=year if year != "Any" else None,
             min_stars=min_stars,
-            page=page,
-            per_page=30,
         )
 
-        if not results:
-            return pd.DataFrame(), "No repos found matching criteria", "", 1, 0
+        if not all_results:
+            return pd.DataFrame(), "No repos found matching criteria", "", 1, 0, []
 
-        # Build dataframe
+        total_count = len(all_results)
+        total_pages = (total_count + RESULTS_PER_PAGE - 1) // RESULTS_PER_PAGE
+
+        # Get first page slice
+        page_results = all_results[:RESULTS_PER_PAGE]
+
+        # Build dataframe for first page
         rows = []
-        for repo in results:
+        for repo in page_results:
             rows.append({
                 "Select": False,
                 "Repository": f"[{repo['name']}]({repo['url']})",
@@ -239,24 +246,49 @@ def do_search(keywords_str: str, conferences: list, year: str, min_stars: int, p
             })
 
         df = pd.DataFrame(rows)
-        total_pages = (total_count + 29) // 30  # Ceiling division
-        status = f"Page {page}/{total_pages} ({total_count} total results)"
-        return df, status, "", page, total_count
+        status = f"Page 1/{total_pages} ({total_count} total results)"
+        return df, status, "", 1, total_count, all_results
 
     except Exception as e:
-        return pd.DataFrame(), f"Search error: {str(e)}", "", 1, 0
+        return pd.DataFrame(), f"Search error: {str(e)}", "", 1, 0, []
 
 
-def do_search_page(keywords_str: str, conferences: list, year: str, min_stars: int, current_page: int, total: int, direction: str):
-    """Navigate to next/previous page."""
+def do_search_page(all_results: list, current_page: int, total_count: int, direction: str):
+    """Navigate to next/previous page using stored results."""
+    if not all_results:
+        return pd.DataFrame(), "No results. Run a search first.", "", 1, 0, []
+
+    total_pages = (total_count + RESULTS_PER_PAGE - 1) // RESULTS_PER_PAGE
+
     if direction == "next":
-        new_page = current_page + 1
+        new_page = min(current_page + 1, total_pages)
     elif direction == "prev":
         new_page = max(1, current_page - 1)
     else:
         new_page = current_page
 
-    return do_search(keywords_str, conferences, year, min_stars, new_page)
+    # Calculate slice for the requested page
+    start_idx = (new_page - 1) * RESULTS_PER_PAGE
+    end_idx = start_idx + RESULTS_PER_PAGE
+    page_results = all_results[start_idx:end_idx]
+
+    if not page_results:
+        return pd.DataFrame(), f"No more results (page {new_page})", "", new_page, total_count, all_results
+
+    # Build dataframe for this page
+    rows = []
+    for repo in page_results:
+        rows.append({
+            "Select": False,
+            "Repository": f"[{repo['name']}]({repo['url']})",
+            "Stars": repo.get("stars", 0),
+            "Description": (repo.get("description") or "-")[:100],
+            "full_name": repo["full_name"],
+        })
+
+    df = pd.DataFrame(rows)
+    status = f"Page {new_page}/{total_pages} ({total_count} total results)"
+    return df, status, "", new_page, total_count, all_results
 
 
 def save_all_to_db(preview_df: pd.DataFrame, keywords_str: str, conferences: list, year: str, min_stars: int):
@@ -653,6 +685,7 @@ def create_ui():
                 # Pagination state
                 current_page = gr.State(1)
                 total_count = gr.State(0)
+                search_results = gr.State([])  # Store all results for local pagination
 
                 # Preview section
                 gr.Markdown("### Preview Results")
@@ -711,19 +744,19 @@ def create_ui():
                 search_btn.click(
                     do_search,
                     inputs=[keywords_input, conferences_input, year_input, stars_input],
-                    outputs=[preview_table, search_status, search_progress, current_page, total_count],
+                    outputs=[preview_table, search_status, search_progress, current_page, total_count, search_results],
                 )
 
-                # Pagination handlers
+                # Pagination handlers - use stored results for local pagination
                 prev_btn.click(
-                    lambda kw, conf, yr, stars, page, total: do_search_page(kw, conf, yr, stars, page, total, "prev"),
-                    inputs=[keywords_input, conferences_input, year_input, stars_input, current_page, total_count],
-                    outputs=[preview_table, search_status, search_progress, current_page, total_count],
+                    lambda results, page, total: do_search_page(results, page, total, "prev"),
+                    inputs=[search_results, current_page, total_count],
+                    outputs=[preview_table, search_status, search_progress, current_page, total_count, search_results],
                 )
                 next_btn.click(
-                    lambda kw, conf, yr, stars, page, total: do_search_page(kw, conf, yr, stars, page, total, "next"),
-                    inputs=[keywords_input, conferences_input, year_input, stars_input, current_page, total_count],
-                    outputs=[preview_table, search_status, search_progress, current_page, total_count],
+                    lambda results, page, total: do_search_page(results, page, total, "next"),
+                    inputs=[search_results, current_page, total_count],
+                    outputs=[preview_table, search_status, search_progress, current_page, total_count, search_results],
                 )
 
                 # Save button handlers

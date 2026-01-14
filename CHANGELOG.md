@@ -1,5 +1,26 @@
 # Changelog
 
+## 2026-01-14
+
+### Session: Search Optimization & Pagination [#04a2]
+
+- **Added**: Fast search mode - returns results instantly without README fetching #search #optimization
+  - Files: `paper_tracker/github_search.py` (`search_fast()`, `build_search_query()`)
+- **Added**: Pagination with Prev/Next navigation (30 results per page) #search
+  - Files: `paper_tracker/github_client.py`, `paper_tracker/web_ui.py`
+- **Added**: GitHub token verification UI in settings accordion #search
+  - Files: `paper_tracker/github_client.py` (`verify_token()`), `paper_tracker/web_ui.py`
+- **Added**: Select All / Clear buttons for conference filter #ui
+- **Changed**: Search results now sorted by relevance instead of stars #search #optimization
+- **Changed**: Keywords now separated by semicolon (`;`) to allow commas in search terms #search
+- **Changed**: Year dropdown extended to 2020-2026 #ui
+- **Changed**: Weight detection moved to save phase (runs synchronously with progress) #optimization
+- **Fixed**: IncompleteRead errors when fetching large README files #bugfix
+  - Files: `paper_tracker/github_client.py`
+- **Fixed**: Search too strict - removed auto quote-wrapping for exact phrase #bugfix
+
+---
+
 ## 2026-01-13
 
 ### Session: Search/Shop Tab Separation [#0b00]

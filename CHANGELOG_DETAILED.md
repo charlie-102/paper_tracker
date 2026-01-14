@@ -4,6 +4,45 @@ Complete development history of the Paper Implementation Tracker.
 
 ---
 
+## 2026-01-14
+
+### Search Optimization & Pagination [#04a2]
+
+Major performance improvements to the search functionality.
+
+**Modified Files:**
+- `paper_tracker/github_client.py`:
+  - Added `page` parameter for pagination support
+  - Returns `(items, total_count)` tuple
+  - Added `verify_token()` for GitHub token verification
+  - Added `IncompleteRead` error handling for large READMEs
+  - Removed `created_after` filter (was too restrictive)
+
+- `paper_tracker/github_search.py`:
+  - Added `build_search_query()` - combines keywords + conference + year
+  - Added `search_fast()` - instant search without README fetching
+  - Added `detect_weights_for_repo()` - on-demand weight detection
+  - Changed sort order from stars to relevance
+
+- `paper_tracker/web_ui.py`:
+  - Added pagination with Prev/Next buttons (30 per page)
+  - Added `current_page` and `total_count` state
+  - Added GitHub Settings accordion with token verification
+  - Added Select All / Clear buttons for conference filter
+  - Changed keyword separator from comma to semicolon
+  - Extended year dropdown to 2020-2026
+  - Moved weight detection to save phase with progress display
+
+**Performance:**
+- Search: ~45+ seconds → <5 seconds (no README fetching)
+- Weight detection now runs during save, with progress feedback
+
+**Search Query:**
+- Before: `"exact phrase" in:name,description,readme stars:>=20 created:>=2024`
+- After: `all words in:name,description,readme stars:>=20` (matches all words, any order)
+
+---
+
 ## 2026-01-13
 
 ### Model Shop: Search/Shop Tab Separation [#0b00]

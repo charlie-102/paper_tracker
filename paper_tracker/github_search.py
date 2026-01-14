@@ -91,26 +91,26 @@ class GitHubSearcher:
         conferences: list[str] = None,
         year: str = None,
         min_stars: int = 10,
-        page: int = 1,
-        per_page: int = 30,
-    ) -> tuple[list[dict], int]:
+        max_results_per_keyword: int = 100,
+    ) -> list[dict]:
         """Fast search - returns GitHub metadata only, no README/weight detection.
+
+        Fetches all results for all keywords, combines and deduplicates them,
+        then sorts by stars (descending) for relevance. UI handles pagination.
 
         Args:
             keywords: List of search terms
             conferences: Conference names to include in query (e.g., ["CVPR", "ECCV"])
             year: Year to include in query (e.g., "2024")
             min_stars: Minimum stars filter
-            page: Page number (1-indexed)
-            per_page: Results per page
+            max_results_per_keyword: Max results to fetch per keyword from GitHub API
 
         Returns:
-            Tuple of (list of repo dicts, total_count)
+            List of repo dicts (combined, deduplicated, sorted by stars)
         """
         conferences = conferences or []
         results = []
         seen = set()
-        total_count = 0
 
         for keyword in keywords:
             keyword = keyword.strip()
@@ -120,14 +120,13 @@ class GitHubSearcher:
             # Build optimized query with conference and year
             query = build_search_query(keyword, conferences, year)
 
-            repos, count = self.github.search_repos(
+            repos, _ = self.github.search_repos(
                 query=query,
                 min_stars=min_stars,
-                per_page=per_page,
-                page=page,
+                per_page=max_results_per_keyword,
+                page=1,
                 sort=""
             )
-            total_count = max(total_count, count)  # Use max for multiple keywords
 
             for repo in repos:
                 full_name = repo.get("full_name", "")
@@ -146,8 +145,9 @@ class GitHubSearcher:
                     "updated_at": (repo.get("updated_at") or "")[:10],
                 })
 
-        # Keep GitHub's relevance order
-        return results, total_count
+        # Sort by stars descending for relevance
+        results.sort(key=lambda x: x.get("stars", 0), reverse=True)
+        return results
 
     def detect_weights_for_repo(self, full_name: str) -> dict:
         """Detect weights for a single repo by fetching its README.
