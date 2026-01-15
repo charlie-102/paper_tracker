@@ -6,6 +6,98 @@ Complete development history of the Paper Implementation Tracker.
 
 ## 2026-01-14
 
+### Add Awesome List Integration for Curated Paper Discovery [#ebee]
+
+Integrated curated "awesome" GitHub lists as a searchable data source to improve discovery of relevant papers/repos beyond GitHub search.
+
+**New Files:**
+- `paper_tracker/awesome_parser.py` - Parses markdown tables from awesome list READMEs
+  - Extracts: title, model name, conference, year, arXiv ID, GitHub URL
+  - Handles flexible table formats with Title/Model/Published/Code columns
+  - Conference detection for 18+ venues (CVPR, ECCV, NeurIPS, etc.)
+
+- `paper_tracker/awesome_manager.py` - Manages syncing, caching, and searching curated lists
+  - `sync_list()` / `sync_all()` - Fetch and parse awesome lists from GitHub
+  - `search()` - Query cached entries by keyword, conference, year
+  - `to_search_results()` - Convert to format compatible with existing UI
+  - Cache stored in `data/awesome_cache.json`
+
+**Modified Files:**
+- `paper_tracker/models.py` - Added `AwesomeEntry` dataclass:
+  - Core: `id`, `source_list`, `title`, `model_name`
+  - Publication: `conference`, `year`, `arxiv_id`, `paper_url`
+  - Code: `github_url`, `github_full_name`, `has_repo`
+  - Methods: `to_dict()`, `from_dict()`, `to_repo_format()`
+
+- `paper_tracker/config.yaml` - Added `awesome_lists` configuration:
+  ```yaml
+  awesome_lists:
+    - repo: "ChaofWang/Awesome-Super-Resolution"
+      name: "Super Resolution"
+      enabled: true
+    - repo: "subeeshvasu/Awesome-Deblurring"
+    - repo: "hongwang01/Video-and-Single-Image-Deraining"
+  ```
+
+- `paper_tracker/web_ui.py` - Added curated search UI:
+  - Search source radio: "GitHub", "Curated Lists", "Both"
+  - Curated source checkboxes for filtering
+  - New "Curated Lists" tab for sync and stats
+  - `do_curated_search()`, `do_combined_search()` functions
+  - `sync_awesome_lists()`, `get_awesome_stats()` for management
+
+- `paper_tracker/__main__.py` - Added CLI flags:
+  - `--sync-awesome` - Sync all configured awesome lists
+  - `--awesome-stats` - Show statistics for cached entries
+
+**Usage:**
+```bash
+# Sync awesome lists
+python -m paper_tracker --sync-awesome
+
+# View stats
+python -m paper_tracker --awesome-stats
+
+# Web UI: Select "Curated Lists" or "Both" in Search tab
+```
+
+**Architecture:**
+```
+Config (awesome_lists) → AwesomeListManager → GitHubClient (fetch README)
+                                           → AwesomeListParser (parse tables)
+                                           → Cache (JSON) → Search/UI
+```
+
+---
+
+### Fix Search Pagination Bug [#b085]
+
+Fixed pagination failing when navigating to page 2+ with multiple keywords.
+
+**Root Cause:**
+When searching with multiple keywords (e.g., "super resolution; image restoration"), each keyword was queried with the same page number. If keyword A had 100 results but keyword B had only 20, page 2 would return empty results for keyword B, causing the combined results to be empty.
+
+**Solution:**
+Changed from API-based pagination to local pagination:
+1. Fetch all results for all keywords in a single search call
+2. Combine, deduplicate, and sort by stars (descending)
+3. Store full results in Gradio state
+4. Paginate locally from stored results
+
+**Modified Files:**
+- `paper_tracker/github_search.py`:
+  - `search_fast()` now fetches up to 100 results per keyword, combines and sorts them
+  - Removed `page` and `per_page` parameters (UI handles pagination)
+  - Returns sorted list instead of (results, count) tuple
+
+- `paper_tracker/web_ui.py`:
+  - Added `search_results = gr.State([])` to store full results
+  - `do_search()` now returns all results + first page slice
+  - `do_search_page()` now slices from stored results (no API call)
+  - Updated button handlers to pass/receive results state
+
+---
+
 ### Search Optimization & Pagination [#04a2]
 
 Major performance improvements to the search functionality.

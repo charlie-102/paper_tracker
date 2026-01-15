@@ -128,6 +128,18 @@ Environment variables:
         help="Create dated archive copies of output files (e.g., tracker_20260110.json)"
     )
 
+    # Awesome list arguments
+    parser.add_argument(
+        "--sync-awesome",
+        action="store_true",
+        help="Sync all configured awesome lists from GitHub"
+    )
+    parser.add_argument(
+        "--awesome-stats",
+        action="store_true",
+        help="Show statistics for cached awesome list entries"
+    )
+
     args = parser.parse_args()
 
     # Initialize tracker
@@ -187,6 +199,33 @@ Environment variables:
         tracker.ru_queue.update_status(repo, status)
         tracker.ru_queue.save()
         print(f"Updated {repo} status to {status}")
+        return 0
+
+    # Handle awesome list commands (exit early without running search)
+    if args.sync_awesome or args.awesome_stats:
+        from .awesome_manager import AwesomeListManager
+        manager = AwesomeListManager()
+
+        if args.sync_awesome:
+            print("Syncing awesome lists...")
+            results = manager.sync_all(force=True)
+            for repo, count in results.items():
+                if count >= 0:
+                    print(f"  {repo}: {count} entries")
+                else:
+                    print(f"  {repo}: Error")
+            print()
+
+        if args.awesome_stats or args.sync_awesome:
+            stats = manager.get_stats()
+            print(f"Total entries: {stats['total_entries']}")
+            print(f"Entries with code: {stats['entries_with_code']}")
+            print(f"Sources: {', '.join(stats['sources'])}")
+            if stats['by_conference']:
+                print(f"By conference: {stats['by_conference']}")
+            if stats['by_year']:
+                print(f"By year: {stats['by_year']}")
+
         return 0
 
     # Process repos added via GitHub Issues

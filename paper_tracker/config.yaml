@@ -362,3 +362,23 @@ output:
     - "conference"
     - "updated_at"
     - "url"
+
+# Awesome list sources for curated paper discovery
+awesome_lists:
+  - repo: "ChaofWang/Awesome-Super-Resolution"
+    name: "Super Resolution"
+    enabled: true
+
+  - repo: "subeeshvasu/Awesome-Deblurring"
+    name: "Deblurring"
+    enabled: true
+
+  - repo: "hongwang01/Video-and-Single-Image-Deraining"
+    name: "Deraining"
+    enabled: true
+
+# Awesome list settings
+awesome_settings:
+  cache_path: "data/awesome_cache.json"
+  auto_sync_on_startup: false
+  sync_interval_days: 7

@@ -31,6 +31,7 @@ try:
         is_in_ru,
         RU_UNITS_PATH,
     )
+    from .awesome_manager import AwesomeListManager, get_awesome_manager
 except ImportError:
     from github_search import (
         GitHubSearcher,
@@ -49,6 +50,7 @@ except ImportError:
         is_in_ru,
         RU_UNITS_PATH,
     )
+    from awesome_manager import AwesomeListManager, get_awesome_manager
 
 
 # Custom CSS for beautiful UI
@@ -289,6 +291,206 @@ def do_search_page(all_results: list, current_page: int, total_count: int, direc
     df = pd.DataFrame(rows)
     status = f"Page {new_page}/{total_pages} ({total_count} total results)"
     return df, status, "", new_page, total_count, all_results
+
+
+def do_curated_search(query: str, sources: list, conference: str, year: str, has_code_only: bool):
+    """Search in curated awesome lists."""
+    try:
+        manager = get_awesome_manager()
+
+        # Convert sources to full repo names if needed
+        source_repos = None
+        if sources:
+            configured = manager.get_configured_sources()
+            source_repos = [s["repo"] for s in configured if s["name"] in sources]
+
+        results = manager.search(
+            query=query,
+            sources=source_repos,
+            conference=conference if conference and conference != "All" else None,
+            year=year if year and year != "Any" else None,
+            has_code_only=has_code_only,
+        )
+
+        if not results:
+            return pd.DataFrame(), "No entries found in curated lists", "", 1, 0, []
+
+        # Convert to search results format
+        all_results = manager.to_search_results(results, include_no_code=not has_code_only)
+        total_count = len(all_results)
+        total_pages = (total_count + RESULTS_PER_PAGE - 1) // RESULTS_PER_PAGE
+
+        # Get first page
+        page_results = all_results[:RESULTS_PER_PAGE]
+
+        rows = []
+        for repo in page_results:
+            url = repo.get("url", "")
+            name = repo.get("name", "Unknown")
+            repo_link = f"[{name}]({url})" if url else name
+            rows.append({
+                "Select": False,
+                "Repository": repo_link,
+                "Stars": repo.get("stars", 0),
+                "Description": (repo.get("description") or "-")[:100],
+                "full_name": repo.get("full_name", ""),
+            })
+
+        df = pd.DataFrame(rows)
+        status = f"Page 1/{total_pages} ({total_count} curated entries)"
+        return df, status, "", 1, total_count, all_results
+
+    except Exception as e:
+        return pd.DataFrame(), f"Search error: {str(e)}", "", 1, 0, []
+
+
+def do_combined_search(
+    keywords_str: str,
+    conferences: list,
+    year: str,
+    min_stars: int,
+    curated_sources: list,
+    has_code_only: bool
+):
+    """Search both GitHub and curated lists, merge results."""
+    github_results = []
+    curated_results = []
+
+    # Search GitHub
+    if keywords_str.strip():
+        keywords = [k.strip() for k in keywords_str.split(";") if k.strip()]
+        try:
+            searcher = GitHubSearcher()
+            github_results = searcher.search_fast(
+                keywords=keywords,
+                conferences=conferences or [],
+                year=year if year != "Any" else None,
+                min_stars=min_stars,
+            )
+        except Exception as e:
+            print(f"GitHub search error: {e}")
+
+    # Search curated lists
+    try:
+        manager = get_awesome_manager()
+        source_repos = None
+        if curated_sources:
+            configured = manager.get_configured_sources()
+            source_repos = [s["repo"] for s in configured if s["name"] in curated_sources]
+
+        entries = manager.search(
+            query=keywords_str,
+            sources=source_repos,
+            conference=conferences[0] if conferences else None,
+            year=year if year != "Any" else None,
+            has_code_only=has_code_only,
+        )
+        curated_results = manager.to_search_results(entries, include_no_code=not has_code_only)
+    except Exception as e:
+        print(f"Curated search error: {e}")
+
+    # Merge results (dedupe by full_name, prefer GitHub data for star counts)
+    merged = {}
+    for repo in github_results:
+        full_name = repo["full_name"]
+        merged[full_name] = repo
+        merged[full_name]["_source"] = "github"
+
+    for repo in curated_results:
+        full_name = repo.get("full_name", "")
+        if not full_name or full_name.startswith("paper:"):
+            # No GitHub repo, add as paper-only
+            key = repo.get("_entry_id", repo.get("name", ""))
+            if key not in merged:
+                merged[key] = repo
+                merged[key]["_source"] = "curated"
+        elif full_name in merged:
+            # Enhance with curated metadata
+            merged[full_name]["_source"] = "both"
+        else:
+            merged[full_name] = repo
+            merged[full_name]["_source"] = "curated"
+
+    all_results = list(merged.values())
+    # Sort by stars descending
+    all_results.sort(key=lambda x: x.get("stars", 0), reverse=True)
+
+    if not all_results:
+        return pd.DataFrame(), "No results found", "", 1, 0, []
+
+    total_count = len(all_results)
+    total_pages = (total_count + RESULTS_PER_PAGE - 1) // RESULTS_PER_PAGE
+    page_results = all_results[:RESULTS_PER_PAGE]
+
+    rows = []
+    for repo in page_results:
+        url = repo.get("url", "")
+        name = repo.get("name", "Unknown")
+        repo_link = f"[{name}]({url})" if url else name
+        rows.append({
+            "Select": False,
+            "Repository": repo_link,
+            "Stars": repo.get("stars", 0),
+            "Description": (repo.get("description") or "-")[:100],
+            "full_name": repo.get("full_name", ""),
+        })
+
+    df = pd.DataFrame(rows)
+    gh_count = sum(1 for r in all_results if r.get("_source") in ("github", "both"))
+    cur_count = sum(1 for r in all_results if r.get("_source") in ("curated", "both"))
+    status = f"Page 1/{total_pages} ({total_count} total: {gh_count} GitHub, {cur_count} curated)"
+    return df, status, "", 1, total_count, all_results
+
+
+def sync_awesome_lists():
+    """Sync all configured awesome lists."""
+    try:
+        manager = get_awesome_manager()
+        results = manager.sync_all(force=True)
+
+        status_lines = []
+        for repo, count in results.items():
+            if count >= 0:
+                status_lines.append(f"{repo.split('/')[-1]}: {count} entries")
+            else:
+                status_lines.append(f"{repo.split('/')[-1]}: Error")
+
+        return "\n".join(status_lines) if status_lines else "No lists configured"
+    except Exception as e:
+        return f"Error syncing: {str(e)}"
+
+
+def get_awesome_stats():
+    """Get statistics about cached awesome list entries."""
+    try:
+        manager = get_awesome_manager()
+        stats = manager.get_stats()
+        sources = manager.get_configured_sources()
+
+        rows = []
+        for source in sources:
+            rows.append({
+                "Source": source["name"],
+                "Entries": source["entry_count"],
+                "With Code": source["entries_with_code"],
+                "Last Sync": source["last_synced"][:10] if source["last_synced"] != "Never" else "Never",
+            })
+
+        df = pd.DataFrame(rows) if rows else pd.DataFrame(columns=["Source", "Entries", "With Code", "Last Sync"])
+        total_msg = f"Total: {stats['total_entries']} entries ({stats['entries_with_code']} with code)"
+        return df, total_msg
+    except Exception as e:
+        return pd.DataFrame(), f"Error: {str(e)}"
+
+
+def get_curated_source_choices():
+    """Get list of curated source names for checkbox."""
+    try:
+        manager = get_awesome_manager()
+        sources = manager.get_configured_sources()
+        return [s["name"] for s in sources if s["enabled"]]
+    except Exception:
+        return []
 
 
 def save_all_to_db(preview_df: pd.DataFrame, keywords_str: str, conferences: list, year: str, min_stars: int):
@@ -649,6 +851,28 @@ def create_ui():
                     for name in SEARCH_TEMPLATES:
                         template_btns[name] = gr.Button(name, size="sm", elem_classes="template-btn")
 
+                gr.Markdown("### Search Source")
+                with gr.Row():
+                    search_source = gr.Radio(
+                        choices=["GitHub", "Curated Lists", "Both"],
+                        value="GitHub",
+                        label="Search in",
+                        scale=2
+                    )
+                    has_code_only = gr.Checkbox(
+                        label="Has Code Only",
+                        value=True,
+                        scale=1,
+                        info="Only show entries with GitHub repos"
+                    )
+
+                curated_sources = gr.CheckboxGroup(
+                    choices=get_curated_source_choices(),
+                    label="Curated Sources (for Curated/Both modes)",
+                    value=get_curated_source_choices(),
+                    visible=True,
+                )
+
                 gr.Markdown("### Search Parameters")
 
                 keywords_input = gr.Textbox(
@@ -740,10 +964,19 @@ def create_ui():
                         outputs=[keywords_input, conferences_input, year_input],
                     )
 
+                # Search dispatcher based on source selection
+                def dispatch_search(source, keywords, conferences, year, min_stars, curated_srcs, code_only):
+                    if source == "GitHub":
+                        return do_search(keywords, conferences, year, min_stars)
+                    elif source == "Curated Lists":
+                        return do_curated_search(keywords, curated_srcs, conferences[0] if conferences else None, year, code_only)
+                    else:  # Both
+                        return do_combined_search(keywords, conferences, year, min_stars, curated_srcs, code_only)
+
                 # Search button handler (starts at page 1)
                 search_btn.click(
-                    do_search,
-                    inputs=[keywords_input, conferences_input, year_input, stars_input],
+                    dispatch_search,
+                    inputs=[search_source, keywords_input, conferences_input, year_input, stars_input, curated_sources, has_code_only],
                     outputs=[preview_table, search_status, search_progress, current_page, total_count, search_results],
                 )
 
@@ -909,6 +1142,60 @@ def create_ui():
                 clear_btn.click(
                     clear_cart,
                     outputs=[shop_status, shop_table, cart_links, shop_df_state]
+                )
+
+            # =================================================================
+            # TAB 3: CURATED LISTS
+            # =================================================================
+            with gr.TabItem("Curated Lists", id="curated_tab"):
+
+                gr.Markdown("""
+                ### Curated Awesome Lists
+
+                Manage curated paper lists from GitHub "awesome" repositories.
+                These lists provide human-curated collections of ML papers with code.
+                """)
+
+                # Stats and sync
+                with gr.Row():
+                    awesome_stats_table = gr.Dataframe(
+                        headers=["Source", "Entries", "With Code", "Last Sync"],
+                        datatype=["str", "number", "number", "str"],
+                        interactive=False,
+                    )
+
+                with gr.Row():
+                    sync_btn = gr.Button("Sync All Lists", variant="primary")
+                    refresh_stats_btn = gr.Button("Refresh Stats")
+
+                awesome_status = gr.Textbox(label="Status", interactive=False, lines=3)
+
+                gr.Markdown("---")
+                gr.Markdown("""
+                ### Configuration
+
+                Add or modify awesome lists in `config.yaml`:
+
+                ```yaml
+                awesome_lists:
+                  - repo: "ChaofWang/Awesome-Super-Resolution"
+                    name: "Super Resolution"
+                    enabled: true
+                ```
+                """)
+
+                # Event handlers
+                sync_btn.click(
+                    sync_awesome_lists,
+                    outputs=[awesome_status]
+                ).then(
+                    get_awesome_stats,
+                    outputs=[awesome_stats_table, awesome_status]
+                )
+
+                refresh_stats_btn.click(
+                    get_awesome_stats,
+                    outputs=[awesome_stats_table, awesome_status]
                 )
 
         # Load shop data on start

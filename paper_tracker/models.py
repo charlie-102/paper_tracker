@@ -156,3 +156,90 @@ class RepoInfo:
             updated_at=repo.get("updated_at", "")[:10],
             topics=repo.get("topics", []),
         )
+
+
+@dataclass
+class AwesomeEntry:
+    """Entry parsed from an awesome list markdown table."""
+    # Core identity
+    id: str  # Unique ID: "{source}:{model_name}"
+    source_list: str  # e.g., "ChaofWang/Awesome-Super-Resolution"
+
+    # Paper info
+    title: str  # Full paper title
+    model_name: str  # Model acronym (e.g., "ESRGAN", "SwinIR")
+
+    # Publication info
+    conference: Optional[str] = None
+    year: Optional[str] = None
+    arxiv_id: Optional[str] = None
+    paper_url: Optional[str] = None
+
+    # Code info
+    github_url: Optional[str] = None
+    github_full_name: Optional[str] = None
+
+    # Metadata
+    keywords: List[str] = field(default_factory=list)
+    section: str = ""  # Section from awesome list (e.g., "2024", "Video SR")
+
+    # Tracking
+    last_synced: str = ""
+    has_repo: bool = False
+
+    def to_dict(self) -> dict:
+        """Convert to dictionary for JSON serialization."""
+        return {
+            "id": self.id,
+            "source_list": self.source_list,
+            "title": self.title,
+            "model_name": self.model_name,
+            "conference": self.conference,
+            "year": self.year,
+            "arxiv_id": self.arxiv_id,
+            "paper_url": self.paper_url,
+            "github_url": self.github_url,
+            "github_full_name": self.github_full_name,
+            "keywords": self.keywords,
+            "section": self.section,
+            "last_synced": self.last_synced,
+            "has_repo": self.has_repo,
+        }
+
+    @classmethod
+    def from_dict(cls, data: dict) -> "AwesomeEntry":
+        """Create from dictionary (JSON deserialization)."""
+        return cls(
+            id=data.get("id", ""),
+            source_list=data.get("source_list", ""),
+            title=data.get("title", ""),
+            model_name=data.get("model_name", ""),
+            conference=data.get("conference"),
+            year=data.get("year"),
+            arxiv_id=data.get("arxiv_id"),
+            paper_url=data.get("paper_url"),
+            github_url=data.get("github_url"),
+            github_full_name=data.get("github_full_name"),
+            keywords=data.get("keywords", []),
+            section=data.get("section", ""),
+            last_synced=data.get("last_synced", ""),
+            has_repo=data.get("has_repo", False),
+        )
+
+    def to_repo_format(self) -> Optional[dict]:
+        """Convert to repo dict format for search results integration."""
+        if not self.github_url:
+            return None
+
+        return {
+            "full_name": self.github_full_name or "",
+            "name": self.model_name,
+            "url": self.github_url,
+            "stars": 0,  # Unknown from awesome list
+            "description": self.title[:200] if self.title else "",
+            "weight_status": "Curated",
+            "conference": self.conference or "",
+            "conference_year": self.year or "",
+            "arxiv_id": self.arxiv_id or "",
+            "source": f"awesome:{self.source_list.split('/')[-1]}",
+        }

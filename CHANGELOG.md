@@ -2,6 +2,30 @@
 
 ## 2026-01-14
 
+### Session: Add Awesome List Integration for Curated Paper Discovery [#ebee]
+- **Added**: New curated search feature integrating GitHub "awesome" lists as a data source #feature #curated-lists
+  - Files: `paper_tracker/awesome_parser.py`, `paper_tracker/awesome_manager.py`
+- **Added**: `AwesomeEntry` dataclass for parsed awesome list entries #feature
+  - Files: `paper_tracker/models.py`
+- **Added**: Search source toggle in UI: "GitHub", "Curated Lists", or "Both" #feature
+  - Files: `paper_tracker/web_ui.py`
+- **Added**: New "Curated Lists" tab for managing and syncing awesome list sources #feature
+  - Files: `paper_tracker/web_ui.py`
+- **Added**: CLI flags `--sync-awesome` and `--awesome-stats` for awesome list management #feature
+  - Files: `paper_tracker/__main__.py`
+- **Added**: Configurable awesome list sources in config.yaml (Super Resolution, Deblurring, Deraining) #feature
+  - Files: `paper_tracker/config.yaml`
+
+---
+
+### Session: Fix Search Pagination Bug [#b085]
+- **Fixed**: Pagination fails when navigating to page 2+ with multiple keywords #bugfix
+  - Root cause: Each keyword query sent to GitHub with same page number; if any keyword had <30 results, page 2 returned empty
+  - Solution: Fetch all results once, store in Gradio state, paginate locally
+  - Files: `paper_tracker/github_search.py`, `paper_tracker/web_ui.py`
+
+---
+
 ### Session: Search Optimization & Pagination [#04a2]
 
 - **Added**: Fast search mode - returns results instantly without README fetching #search #optimization
