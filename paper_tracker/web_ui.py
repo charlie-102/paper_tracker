@@ -293,7 +293,7 @@ def do_search_page(all_results: list, current_page: int, total_count: int, direc
     return df, status, "", new_page, total_count, all_results
 
 
-def do_curated_search(query: str, sources: list, conference: str, year: str, has_code_only: bool):
+def do_curated_search(query: str, sources: list, conference: str, year: str, has_code_only: bool, domain: str = None):
     """Search in curated awesome lists."""
     try:
         manager = get_awesome_manager()
@@ -310,6 +310,7 @@ def do_curated_search(query: str, sources: list, conference: str, year: str, has
             conference=conference if conference and conference != "All" else None,
             year=year if year and year != "Any" else None,
             has_code_only=has_code_only,
+            domain=domain if domain and domain != "All" else None,
         )
 
         if not results:
@@ -350,7 +351,8 @@ def do_combined_search(
     year: str,
     min_stars: int,
     curated_sources: list,
-    has_code_only: bool
+    has_code_only: bool,
+    domain: str = None
 ):
     """Search both GitHub and curated lists, merge results."""
     github_results = []
@@ -384,6 +386,7 @@ def do_combined_search(
             conference=conferences[0] if conferences else None,
             year=year if year != "Any" else None,
             has_code_only=has_code_only,
+            domain=domain if domain and domain != "All" else None,
         )
         curated_results = manager.to_search_results(entries, include_no_code=not has_code_only)
     except Exception as e:
@@ -471,12 +474,13 @@ def get_awesome_stats():
         for source in sources:
             rows.append({
                 "Source": source["name"],
+                "Domain": source.get("domain", "-") or "-",
+                "Parser": source.get("parser", "auto"),
                 "Entries": source["entry_count"],
-                "With Code": source["entries_with_code"],
                 "Last Sync": source["last_synced"][:10] if source["last_synced"] != "Never" else "Never",
             })
 
-        df = pd.DataFrame(rows) if rows else pd.DataFrame(columns=["Source", "Entries", "With Code", "Last Sync"])
+        df = pd.DataFrame(rows) if rows else pd.DataFrame(columns=["Source", "Domain", "Parser", "Entries", "Last Sync"])
         total_msg = f"Total: {stats['total_entries']} entries ({stats['entries_with_code']} with code)"
         return df, total_msg
     except Exception as e:
@@ -491,6 +495,16 @@ def get_curated_source_choices():
         return [s["name"] for s in sources if s["enabled"]]
     except Exception:
         return []
+
+
+def get_domain_choices():
+    """Get list of unique domains for filter dropdown."""
+    try:
+        manager = get_awesome_manager()
+        domains = manager.get_domains()
+        return ["All"] + sorted(domains)
+    except Exception:
+        return ["All"]
 
 
 def save_all_to_db(preview_df: pd.DataFrame, keywords_str: str, conferences: list, year: str, min_stars: int):
@@ -866,12 +880,20 @@ def create_ui():
                         info="Only show entries with GitHub repos"
                     )
 
-                curated_sources = gr.CheckboxGroup(
-                    choices=get_curated_source_choices(),
-                    label="Curated Sources (for Curated/Both modes)",
-                    value=get_curated_source_choices(),
-                    visible=True,
-                )
+                with gr.Row():
+                    curated_sources = gr.CheckboxGroup(
+                        choices=get_curated_source_choices(),
+                        label="Curated Sources (for Curated/Both modes)",
+                        value=get_curated_source_choices(),
+                        visible=True,
+                        scale=3,
+                    )
+                    domain_filter = gr.Dropdown(
+                        choices=get_domain_choices(),
+                        value="All",
+                        label="Domain Filter",
+                        scale=1,
+                    )
 
                 gr.Markdown("### Search Parameters")
 
@@ -965,18 +987,18 @@ def create_ui():
                     )
 
                 # Search dispatcher based on source selection
-                def dispatch_search(source, keywords, conferences, year, min_stars, curated_srcs, code_only):
+                def dispatch_search(source, keywords, conferences, year, min_stars, curated_srcs, code_only, domain):
                     if source == "GitHub":
                         return do_search(keywords, conferences, year, min_stars)
                     elif source == "Curated Lists":
-                        return do_curated_search(keywords, curated_srcs, conferences[0] if conferences else None, year, code_only)
+                        return do_curated_search(keywords, curated_srcs, conferences[0] if conferences else None, year, code_only, domain)
                     else:  # Both
-                        return do_combined_search(keywords, conferences, year, min_stars, curated_srcs, code_only)
+                        return do_combined_search(keywords, conferences, year, min_stars, curated_srcs, code_only, domain)
 
                 # Search button handler (starts at page 1)
                 search_btn.click(
                     dispatch_search,
-                    inputs=[search_source, keywords_input, conferences_input, year_input, stars_input, curated_sources, has_code_only],
+                    inputs=[search_source, keywords_input, conferences_input, year_input, stars_input, curated_sources, has_code_only, domain_filter],
                     outputs=[preview_table, search_status, search_progress, current_page, total_count, search_results],
                 )
 
@@ -1159,8 +1181,8 @@ def create_ui():
                 # Stats and sync
                 with gr.Row():
                     awesome_stats_table = gr.Dataframe(
-                        headers=["Source", "Entries", "With Code", "Last Sync"],
-                        datatype=["str", "number", "number", "str"],
+                        headers=["Source", "Domain", "Parser", "Entries", "Last Sync"],
+                        datatype=["str", "str", "str", "number", "str"],
                         interactive=False,
                     )
 
@@ -1181,7 +1203,16 @@ def create_ui():
                   - repo: "ChaofWang/Awesome-Super-Resolution"
                     name: "Super Resolution"
                     enabled: true
+                    parser: "table_sr"  # or "table_aio" for All-in-One format
+                    domain: "super_resolution"
+                    subtopics:
+                      - image_sr
+                      - video_sr
                 ```
+
+                **Available parsers:**
+                - `table_sr`: 5-column format (Title | Model | Published | Code | Keywords)
+                - `table_aio`: 4-column format with authors (Title+Authors | Venue | Link | Code)
                 """)
 
                 # Event handlers

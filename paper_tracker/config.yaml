@@ -368,14 +368,36 @@ awesome_lists:
   - repo: "ChaofWang/Awesome-Super-Resolution"
     name: "Super Resolution"
     enabled: true
+    parser: "table_sr"
+    domain: "super_resolution"
 
   - repo: "subeeshvasu/Awesome-Deblurring"
     name: "Deblurring"
     enabled: true
+    parser: "table_sr"
+    domain: "image_deblurring"
 
   - repo: "hongwang01/Video-and-Single-Image-Deraining"
     name: "Deraining"
     enabled: true
+    parser: "table_sr"
+    domain: "image_deraining"
+
+  - repo: "Harbinzzy/All-in-One-Image-Restoration-Survey"
+    name: "All-in-One Restoration"
+    enabled: true
+    parser: "table_aio"
+    domain: "image_restoration"
+    subtopics:
+      - dehazing
+      - deraining
+      - denoising
+      - deblurring
+      - low_light
+    skip_sections:
+      - "Performance"
+      - "Benchmark"
+      - "Results"
 
 # Awesome list settings
 awesome_settings:

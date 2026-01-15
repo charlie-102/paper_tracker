@@ -168,6 +168,7 @@ class AwesomeEntry:
     # Paper info
     title: str  # Full paper title
     model_name: str  # Model acronym (e.g., "ESRGAN", "SwinIR")
+    authors: List[str] = field(default_factory=list)  # Paper authors
 
     # Publication info
     conference: Optional[str] = None
@@ -182,6 +183,8 @@ class AwesomeEntry:
     # Metadata
     keywords: List[str] = field(default_factory=list)
     section: str = ""  # Section from awesome list (e.g., "2024", "Video SR")
+    domain: str = ""  # Domain tag (e.g., "image_restoration", "super_resolution")
+    subtopics: List[str] = field(default_factory=list)  # Subtopic tags
 
     # Tracking
     last_synced: str = ""
@@ -194,6 +197,7 @@ class AwesomeEntry:
             "source_list": self.source_list,
             "title": self.title,
             "model_name": self.model_name,
+            "authors": self.authors,
             "conference": self.conference,
             "year": self.year,
             "arxiv_id": self.arxiv_id,
@@ -202,6 +206,8 @@ class AwesomeEntry:
             "github_full_name": self.github_full_name,
             "keywords": self.keywords,
             "section": self.section,
+            "domain": self.domain,
+            "subtopics": self.subtopics,
             "last_synced": self.last_synced,
             "has_repo": self.has_repo,
         }
@@ -214,6 +220,7 @@ class AwesomeEntry:
             source_list=data.get("source_list", ""),
             title=data.get("title", ""),
             model_name=data.get("model_name", ""),
+            authors=data.get("authors", []),
             conference=data.get("conference"),
             year=data.get("year"),
             arxiv_id=data.get("arxiv_id"),
@@ -222,6 +229,8 @@ class AwesomeEntry:
             github_full_name=data.get("github_full_name"),
             keywords=data.get("keywords", []),
             section=data.get("section", ""),
+            domain=data.get("domain", ""),
+            subtopics=data.get("subtopics", []),
             last_synced=data.get("last_synced", ""),
             has_repo=data.get("has_repo", False),
         )

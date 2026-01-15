@@ -1,20 +1,25 @@
-"""Manager for awesome list data - syncing, caching, and searching."""
+"""Manager for awesome list data - syncing, caching, and searching.
 
-import json
-from datetime import datetime, timedelta
+Uses the parser plugin system for different markdown formats and
+indexed cache for efficient search.
+"""
+
+from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
 try:
     from .github_client import GitHubClient
-    from .awesome_parser import AwesomeListParser
     from .models import AwesomeEntry
-    from .config_loader import config
+    from .cache_manager import IndexedCache, SearchQuery
+    from .source_registry import SourceRegistry, SourceConfig
+    from .parsers import ParserRegistry
 except ImportError:
     from github_client import GitHubClient
-    from awesome_parser import AwesomeListParser
     from models import AwesomeEntry
-    from config_loader import config
+    from cache_manager import IndexedCache, SearchQuery
+    from source_registry import SourceRegistry, SourceConfig
+    from parsers import ParserRegistry
 
 
 # Default paths
@@ -23,7 +28,13 @@ DEFAULT_CACHE_FILE = DATA_DIR / "awesome_cache.json"
 
 
 class AwesomeListManager:
-    """Manage fetching, caching, and searching awesome list entries."""
+    """Manage fetching, caching, and searching awesome list entries.
+
+    Features:
+    - Parser plugin system for different markdown formats
+    - Indexed JSON cache for fast search
+    - Source registry for configuration management
+    """
 
     def __init__(self, cache_path: Optional[Path] = None):
         """
@@ -34,47 +45,8 @@ class AwesomeListManager:
         """
         self.cache_path = cache_path or DEFAULT_CACHE_FILE
         self.github = GitHubClient()
-        self.parser = AwesomeListParser()
-        self.entries: Dict[str, AwesomeEntry] = {}
-        self.source_metadata: Dict[str, Dict[str, Any]] = {}
-        self._load_cache()
-
-    def _load_cache(self) -> None:
-        """Load cached entries from JSON file."""
-        if not self.cache_path.exists():
-            return
-
-        try:
-            with open(self.cache_path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
-
-            # Load source metadata
-            self.source_metadata = data.get("sources", {})
-
-            # Load entries
-            entries_data = data.get("entries", {})
-            for entry_id, entry_dict in entries_data.items():
-                self.entries[entry_id] = AwesomeEntry.from_dict(entry_dict)
-
-        except (json.JSONDecodeError, IOError) as e:
-            print(f"Warning: Could not load awesome cache: {e}")
-
-    def _save_cache(self) -> None:
-        """Save entries to JSON cache file."""
-        # Ensure data directory exists
-        self.cache_path.parent.mkdir(parents=True, exist_ok=True)
-
-        data = {
-            "last_updated": datetime.now().isoformat(),
-            "sources": self.source_metadata,
-            "entries": {
-                entry_id: entry.to_dict()
-                for entry_id, entry in self.entries.items()
-            }
-        }
-
-        with open(self.cache_path, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
+        self.cache = IndexedCache(self.cache_path)
+        self.registry = SourceRegistry()
 
     def sync_list(self, repo_full_name: str, force: bool = False) -> int:
         """
@@ -85,21 +57,20 @@ class AwesomeListManager:
             force: If True, fetch even if recently synced
 
         Returns:
-            Number of new/updated entries
+            Number of entries synced
         """
+        # Get source configuration
+        source = self.registry.get_source(repo_full_name)
+        if not source:
+            # Create minimal config for unknown sources
+            source = SourceConfig(
+                repo=repo_full_name,
+                name=repo_full_name.split("/")[-1]
+            )
+
         # Check if we should skip (recently synced)
-        if not force and repo_full_name in self.source_metadata:
-            last_synced_str = self.source_metadata[repo_full_name].get("last_synced", "")
-            if last_synced_str:
-                try:
-                    last_synced = datetime.fromisoformat(last_synced_str)
-                    sync_interval = config.get("awesome_settings", {}).get(
-                        "sync_interval_days", 7
-                    )
-                    if datetime.now() - last_synced < timedelta(days=sync_interval):
-                        return 0
-                except ValueError:
-                    pass
+        if not force and not self.registry.needs_sync(source):
+            return 0
 
         # Fetch README from GitHub
         parts = repo_full_name.split("/")
@@ -113,30 +84,54 @@ class AwesomeListManager:
 
         if not readme:
             print(f"Could not fetch README from {repo_full_name}")
+            self.registry.update_source_state(
+                repo_full_name, 0, "Failed to fetch README"
+            )
+            self.registry.save_state()
             return 0
 
-        # Parse markdown tables
-        new_entries = self.parser.parse_readme(readme, repo_full_name)
-        print(f"Parsed {len(new_entries)} entries from {repo_full_name}")
+        # Get parser hints from source config
+        hints = self.registry.get_parser_hints(repo_full_name)
 
-        # Update entries
-        updated_count = 0
-        for entry in new_entries:
-            if entry.id not in self.entries:
-                updated_count += 1
-            self.entries[entry.id] = entry
+        # Select parser (explicit or auto-detect)
+        try:
+            if source.parser:
+                parser_class = ParserRegistry.get_parser(source.parser)
+                if parser_class:
+                    parser = parser_class()
+                else:
+                    print(f"Unknown parser '{source.parser}', using auto-detect")
+                    parser = ParserRegistry.auto_select(readme, hints)
+            else:
+                parser = ParserRegistry.auto_select(readme, hints)
 
-        # Update source metadata
-        self.source_metadata[repo_full_name] = {
-            "last_synced": datetime.now().isoformat(),
-            "entry_count": len(new_entries),
-            "entries_with_code": sum(1 for e in new_entries if e.has_repo),
-        }
+            print(f"Using parser: {parser.name} v{parser.version}")
+        except ValueError as e:
+            print(f"No suitable parser found for {repo_full_name}: {e}")
+            self.registry.update_source_state(
+                repo_full_name, 0, str(e)
+            )
+            self.registry.save_state()
+            return 0
 
-        # Save to cache
-        self._save_cache()
+        # Parse markdown
+        entries = parser.parse(readme, repo_full_name, hints)
+        print(f"Parsed {len(entries)} entries from {repo_full_name}")
 
-        return updated_count
+        # Add to cache with domain metadata
+        self.cache.add_entries(
+            entries,
+            source=repo_full_name,
+            domain=source.domain,
+            subtopics=source.subtopics
+        )
+        self.cache.save()
+
+        # Update source state
+        self.registry.update_source_state(repo_full_name, len(entries))
+        self.registry.save_state()
+
+        return len(entries)
 
     def sync_all(self, force: bool = False) -> Dict[str, int]:
         """
@@ -146,32 +141,19 @@ class AwesomeListManager:
             force: If True, fetch all lists regardless of sync time
 
         Returns:
-            Dict mapping source names to number of updated entries
+            Dict mapping source names to number of entries
         """
-        awesome_lists = config.get("awesome_lists", [])
-        if not awesome_lists:
-            print("No awesome lists configured in config.yaml")
-            return {}
-
         results = {}
-        for list_config in awesome_lists:
-            if isinstance(list_config, dict):
-                repo = list_config.get("repo", "")
-                enabled = list_config.get("enabled", True)
-            else:
-                repo = list_config
-                enabled = True
 
-            if not enabled:
-                continue
+        for source in self.registry.list_enabled():
+            try:
+                results[source.repo] = self.sync_list(source.repo, force)
+            except Exception as e:
+                print(f"Error syncing {source.repo}: {e}")
+                results[source.repo] = -1
+                self.registry.update_source_state(source.repo, 0, str(e))
 
-            if repo:
-                try:
-                    results[repo] = self.sync_list(repo, force)
-                except Exception as e:
-                    print(f"Error syncing {repo}: {e}")
-                    results[repo] = -1
-
+        self.registry.save_state()
         return results
 
     def search(
@@ -181,113 +163,57 @@ class AwesomeListManager:
         conference: Optional[str] = None,
         year: Optional[str] = None,
         has_code_only: bool = False,
+        domain: Optional[str] = None,
+        limit: int = 100,
     ) -> List[AwesomeEntry]:
         """
         Search entries in cached awesome lists.
 
         Args:
-            query: Search query (matches title, model name, keywords)
+            query: Search query (matches title, model name, keywords, authors)
             sources: Filter by source lists (None = all)
             conference: Filter by conference
             year: Filter by year
             has_code_only: Only return entries with GitHub links
+            domain: Filter by domain (e.g., "image_restoration")
+            limit: Maximum results to return
 
         Returns:
             List of matching AwesomeEntry objects
         """
-        results = []
-        query_lower = query.lower() if query else ""
+        search_query = SearchQuery(
+            text=query if query else None,
+            sources=sources,
+            years=[year] if year else None,
+            conferences=[conference] if conference else None,
+            domains=[domain] if domain else None,
+            has_code_only=has_code_only,
+            limit=limit,
+        )
 
-        for entry in self.entries.values():
-            # Filter by source
-            if sources and entry.source_list not in sources:
-                continue
+        results = self.cache.search(search_query)
 
-            # Filter by has_code
-            if has_code_only and not entry.has_repo:
-                continue
-
-            # Filter by conference
-            if conference and entry.conference != conference:
-                continue
-
-            # Filter by year
-            if year and entry.year != year:
-                continue
-
-            # Filter by query
-            if query_lower:
-                searchable = " ".join([
-                    entry.title.lower(),
-                    entry.model_name.lower(),
-                    " ".join(entry.keywords).lower(),
-                    entry.section.lower(),
-                ])
-                if query_lower not in searchable:
-                    continue
-
-            results.append(entry)
-
-        # Sort by model name for consistent ordering
-        results.sort(key=lambda e: e.model_name.lower())
-
-        return results
+        # Convert to AwesomeEntry objects
+        return [AwesomeEntry.from_dict(r) for r in results]
 
     def get_stats(self) -> Dict[str, Any]:
         """Get statistics about cached entries."""
-        by_source = {}
-        by_conference = {}
-        by_year = {}
-
-        for entry in self.entries.values():
-            # By source
-            source_short = entry.source_list.split('/')[-1]
-            by_source[source_short] = by_source.get(source_short, 0) + 1
-
-            # By conference
-            if entry.conference:
-                by_conference[entry.conference] = by_conference.get(entry.conference, 0) + 1
-
-            # By year
-            if entry.year:
-                by_year[entry.year] = by_year.get(entry.year, 0) + 1
-
-        return {
-            "total_entries": len(self.entries),
-            "entries_with_code": sum(1 for e in self.entries.values() if e.has_repo),
-            "by_source": by_source,
-            "by_conference": dict(sorted(by_conference.items())),
-            "by_year": dict(sorted(by_year.items(), reverse=True)),
-            "sources": list(self.source_metadata.keys()),
-            "last_sync": max(
-                (m.get("last_synced", "") for m in self.source_metadata.values()),
-                default=""
-            ),
-        }
+        return self.cache.get_stats()
 
     def get_configured_sources(self) -> List[Dict[str, Any]]:
         """Get list of configured awesome list sources with their status."""
-        awesome_lists = config.get("awesome_lists", [])
         sources = []
 
-        for list_config in awesome_lists:
-            if isinstance(list_config, dict):
-                repo = list_config.get("repo", "")
-                name = list_config.get("name", repo.split('/')[-1])
-                enabled = list_config.get("enabled", True)
-            else:
-                repo = list_config
-                name = repo.split('/')[-1]
-                enabled = True
-
-            meta = self.source_metadata.get(repo, {})
+        for source in self.registry.list_all():
             sources.append({
-                "repo": repo,
-                "name": name,
-                "enabled": enabled,
-                "entry_count": meta.get("entry_count", 0),
-                "entries_with_code": meta.get("entries_with_code", 0),
-                "last_synced": meta.get("last_synced", "Never"),
+                "repo": source.repo,
+                "name": source.name,
+                "enabled": source.enabled,
+                "parser": source.parser or "auto",
+                "domain": source.domain,
+                "entry_count": source.entry_count,
+                "last_synced": source.last_synced or "Never",
+                "last_error": source.last_error,
             })
 
         return sources
@@ -324,11 +250,38 @@ class AwesomeListManager:
                 "arxiv_id": entry.arxiv_id or "",
                 "source": f"awesome:{entry.source_list.split('/')[-1]}",
                 "has_repo": entry.has_repo,
+                "domain": entry.domain,
+                "authors": entry.authors,
                 "_entry_id": entry.id,
             }
             results.append(result)
 
         return results
+
+    def get_domains(self) -> List[str]:
+        """Get list of unique domains from cached entries."""
+        stats = self.cache.get_stats()
+        return list(stats.get("by_domain", {}).keys())
+
+    # Legacy compatibility
+    @property
+    def entries(self) -> Dict[str, AwesomeEntry]:
+        """Legacy property for backward compatibility."""
+        return {
+            entry_id: AwesomeEntry.from_dict(entry)
+            for entry_id, entry in self.cache.entries.items()
+        }
+
+    @property
+    def source_metadata(self) -> Dict[str, Dict[str, Any]]:
+        """Legacy property for backward compatibility."""
+        metadata = {}
+        for source in self.registry.list_all():
+            metadata[source.repo] = {
+                "last_synced": source.last_synced or "",
+                "entry_count": source.entry_count,
+            }
+        return metadata
 
 
 def get_awesome_manager() -> AwesomeListManager:
