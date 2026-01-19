@@ -41,7 +41,7 @@ env/
 .env
 .env.local
 .env.*.local
-.env.example
+# .env.example is tracked (template for users)
 
 # Jupyter
 .ipynb_checkpoints/

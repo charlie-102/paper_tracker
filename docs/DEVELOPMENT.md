@@ -209,30 +209,51 @@ conferences:
 paper_tracker/
 ├── .github/
 │   └── workflows/
-│       └── main.yml              # GitHub Actions workflow
-├── paper_tracker/                # Python package
+│       ├── main.yml                  # Weekly tracker workflow
+│       └── add-repo-from-issue.yml   # Issue-triggered repo addition
+├── paper_tracker/                    # Python package
 │   ├── __init__.py
-│   ├── __main__.py               # CLI entry point
-│   ├── config.yaml               # Configuration
-│   ├── config_loader.py          # Config management
-│   ├── detectors.py              # Weight, Conference, ComingSoon detection
-│   ├── github_client.py          # GitHub API with rate limiting
-│   ├── models.py                 # RepoInfo, RepoState
-│   └── tracker.py                # Main stateful tracker
+│   ├── __main__.py                   # CLI entry point
+│   ├── config.yaml                   # Configuration (queries, patterns)
+│   ├── config_loader.py              # Config management
+│   ├── detectors.py                  # Weight, Conference, ComingSoon detection
+│   ├── github_client.py              # GitHub API with rate limiting
+│   ├── github_search.py              # Stateless search for web UI
+│   ├── models.py                     # RepoInfo, RepoState, AwesomeEntry
+│   ├── tracker.py                    # Main stateful tracker
+│   ├── web_ui.py                     # Gradio web interface
+│   ├── ru_sync.py                    # RU unit synchronization
+│   ├── awesome_parser.py             # Awesome list markdown parser
+│   ├── awesome_manager.py            # Awesome list cache/sync manager
+│   ├── cache_manager.py              # Multi-level caching system
+│   ├── source_registry.py            # Data source tracking
+│   └── parsers/                      # Plugin-based survey parsers
+│       ├── __init__.py               # Plugin loader
+│       ├── base_parser.py            # Abstract base parser
+│       ├── table_sr_parser.py        # Super-resolution table parser
+│       └── table_aio_parser.py       # All-in-One restoration parser
 ├── tests/
-│   └── test_pipeline.py          # Tests
+│   └── test_pipeline.py              # Tests
 ├── data/
-│   ├── history.json              # Persistent state (auto-created)
-│   └── ru_queue.yaml             # RU candidate queue (auto-created)
+│   ├── history.json                  # Persistent repo tracking state
+│   ├── ru_queue.yaml                 # RU candidate queue
+│   ├── ru_candidates.json            # Cart exports from web UI
+│   ├── repos_from_issues.yaml        # Repos queued via GitHub Issues
+│   ├── source_registry.json          # Data source registry
+│   └── awesome_cache.json            # Cached awesome list entries
 ├── results/
-│   ├── latest.md                 # Latest markdown report
-│   ├── latest.json               # Latest JSON data
-│   └── tracker_YYYYMMDD.*        # Dated snapshots
+│   ├── latest.md                     # Latest markdown report
+│   ├── latest.json                   # Latest JSON data
+│   ├── latest.csv                    # Latest CSV export
+│   └── tracker_YYYYMMDD.*            # Dated snapshots (auto-cleaned)
 ├── docs/
-│   └── DEVELOPMENT.md            # This file
-├── .env.example                  # Environment template
+│   └── DEVELOPMENT.md                # This file
+├── .env.example                      # Environment template
 ├── .gitignore
 ├── README.md
+├── CHANGELOG.md                      # Recent changes summary
+├── CHANGELOG_DETAILED.md             # Full development history
+├── run_web_ui.sh                     # Web UI launcher script
 └── requirements.txt
 ```
 
